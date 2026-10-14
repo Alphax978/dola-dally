@@ -1,0 +1,50 @@
+{
+  "url": "https://youmind.com/video-prompts/balloon-ride-morning-mist-video-12507",
+  "slug": "balloon-ride-morning-mist-video-12507",
+  "title": "Balloon Ride in Morning Mist",
+  "video_url": "https://cms-assets.youmind.com/media/1791961599299_nnol86_Balloon-Ride-in-Morning-Mist.mp4",
+  "x_post": "https://x.com/akiyoshisan/status/2110152435448811913",
+  "duration": 60.25,
+  "width": 854,
+  "height": 480,
+  "cuts": [
+    3.04,
+    8.83,
+    11.75,
+    14.54,
+    16.62,
+    19.42,
+    21.38,
+    22.38,
+    24.21,
+    26.04,
+    32.92,
+    33.71,
+    36.33,
+    38.79,
+    39.62,
+    41.79,
+    42.75,
+    44.75,
+    46.12,
+    47.62,
+    48.79,
+    50.46,
+    51.75,
+    53.5,
+    56.71,
+    58.46
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg",
+    "frames_3.jpg",
+    "frames_4.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg",
+    "text_3.jpg",
+    "text_4.jpg"
+  ]
+}
