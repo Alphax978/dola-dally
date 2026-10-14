@@ -57,6 +57,49 @@ def gallery_items():
     return out
 
 
+def page_text(page, limit=15000):
+    """Readable text of a YouMind page (holds the creator's prompt), for Claude to read later.
+
+    Visible text first, then any long text found in the page's embedded data, in case the
+    prompt is only rendered by JavaScript.
+    """
+    body = re.sub(r"<(script|style|noscript)[^>]*>.*?</\1>", " ", page, flags=re.S | re.I)
+    visible = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", body))).strip()
+    extra = []
+
+    def collect(t, depth=0):
+        t = t.strip()
+        if depth < 4 and t[:1] in "{[":
+            try:
+                v = json.loads(t)
+            except Exception:
+                v = None
+            if v is not None:
+                stack = [v]
+                while stack:
+                    o = stack.pop()
+                    if isinstance(o, dict):
+                        stack.extend(o.values())
+                    elif isinstance(o, list):
+                        stack.extend(o)
+                    elif isinstance(o, str) and len(o) >= 150:
+                        collect(o, depth + 1)
+                return
+        if (len(t) >= 150 and " " in t and not t.startswith(("http", "data:"))
+                and t not in visible and t not in extra):
+            extra.append(t)
+
+    for m in re.finditer(r'"((?:[^"\\]|\\.){150,})"', page):
+        try:
+            collect(json.loads('"' + m.group(1) + '"'))
+        except Exception:
+            continue
+    out = "VISIBLE PAGE TEXT:\n" + visible
+    if extra:
+        out += "\n\nLONGER TEXT FROM THE PAGE DATA:\n" + "\n\n".join(extra)
+    return out[:limit]
+
+
 def item_details(url):
     page = get(url)
     title = re.search(r"<title>(.*?)</title>", page, re.S)
@@ -79,6 +122,7 @@ def item_details(url):
         "title": title,
         "video_url": best if score > 0 else None,
         "x_post": x.group(0) if x else None,
+        "page_text": page_text(page),
     }
 
 
@@ -174,6 +218,8 @@ def main():
                      frame_grids=frame_grids(vid, out_dir, dur, w, h),
                      text_strips=text_strips(vid, out_dir, dur, w, h))
             os.remove(vid)  # keep only the images in the repo
+            with open(os.path.join(out_dir, "creator_page.txt"), "w", encoding="utf-8") as f:
+                f.write(d.pop("page_text"))
             json.dump(d, open(os.path.join(out_dir, "meta.json"), "w"), indent=2, ensure_ascii=False)
             prepared.append({"slug": d["slug"], "title": d["title"], "url": url,
                              "duration": d["duration"], "dir": f"days/{today}/{d['slug']}"})
