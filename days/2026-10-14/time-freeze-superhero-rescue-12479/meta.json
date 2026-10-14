@@ -1,0 +1,21 @@
+{
+  "url": "https://youmind.com/video-prompts/time-freeze-superhero-rescue-12479",
+  "slug": "time-freeze-superhero-rescue-12479",
+  "title": "Time Freeze Superhero Rescue Video",
+  "video_url": "https://cms-assets.youmind.com/media/1791957554002_0ecyf9_Superhero-Rescue-with-Fried-Chicken.mp4",
+  "x_post": "https://x.com/abs_uiux/status/2110055769408151803",
+  "duration": 10.05,
+  "width": 720,
+  "height": 1280,
+  "cuts": [
+    3.08,
+    7.08,
+    8.88
+  ],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ]
+}
