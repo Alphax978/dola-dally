@@ -1,0 +1,30 @@
+{
+  "url": "https://youmind.com/video-prompts/alien-river-dragon-flight-12495",
+  "slug": "alien-river-dragon-flight-12495",
+  "title": "Alien River Dragon Flight Prompt",
+  "video_url": "https://cms-assets.youmind.com/media/1791961579905_xnu431_Alien-River-Dragon-Flight-Prompt.mp4",
+  "x_post": "https://x.com/TaliaAariz/status/2110124217588908145",
+  "duration": 30.14,
+  "width": 854,
+  "height": 480,
+  "cuts": [
+    3.3,
+    6.0,
+    9.08,
+    10.83,
+    13.83,
+    15.75,
+    18.72,
+    20.97,
+    22.75,
+    25.0
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ]
+}
