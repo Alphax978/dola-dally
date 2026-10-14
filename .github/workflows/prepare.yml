@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: "15 1 * * *"    # 01:15 UTC = 7:00 AM Nepal time (GitHub can start a little late)
   workflow_dispatch:          # run it by hand from the Actions tab
+  push:
+    paths:
+      - run-now.txt           # editing this file starts a run (used for test runs)
 
 permissions:
   contents: write
