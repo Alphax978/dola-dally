@@ -1,0 +1,30 @@
+{
+  "url": "https://youmind.com/video-prompts/korean-highschool-comedy-fight-12501",
+  "slug": "korean-highschool-comedy-fight-12501",
+  "title": "Korean High School Comedy Prank",
+  "video_url": "https://cms-assets.youmind.com/media/1791961590305_k3guh1_Korean-High-School-Comedy-Prank.mp4",
+  "x_post": "https://x.com/Sadiya_50/status/2110214907530559990",
+  "duration": 29.61,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    0.8,
+    0.83,
+    1.07,
+    1.57,
+    2.07,
+    2.57,
+    3.23,
+    23.83,
+    24.4,
+    26.93
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ]
+}
