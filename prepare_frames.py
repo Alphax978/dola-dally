@@ -25,7 +25,7 @@ import urllib.parse
 import urllib.request
 
 GALLERY = "https://youmind.com/seedance-2-5-prompts/explore"
-HOW_MANY = 3          # prepare a few so the daily task can skip one if it has to
+HOW_MANY = 2          # one for today plus one backup in case the first has to be skipped
 KEEP_DAYS = 7         # delete older days to keep the repo small
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 TZ = dt.timezone(dt.timedelta(hours=5, minutes=45))  # Nepal

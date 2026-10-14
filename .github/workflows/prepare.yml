@@ -4,9 +4,6 @@ on:
   schedule:
     - cron: "15 23 * * *"   # 23:15 UTC = 5:00 AM Nepal time (GitHub can start a little late)
   workflow_dispatch:          # run it by hand from the Actions tab
-  push:
-    paths:
-      - prepare_frames.py     # also runs whenever the script changes, as a test
 
 permissions:
   contents: write
