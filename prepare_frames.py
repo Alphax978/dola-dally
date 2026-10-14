@@ -27,6 +27,7 @@ import urllib.request
 GALLERY = "https://youmind.com/seedance-2-5-prompts/explore"
 HOW_MANY = 2          # one for today plus one backup in case the first has to be skipped
 KEEP_DAYS = 7         # delete older days to keep the repo small
+MAX_SECONDS = 31      # Dola makes 15s clips and allows 3 Pro generations a day: 2 parts max
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 TZ = dt.timezone(dt.timedelta(hours=5, minutes=45))  # Nepal
 
@@ -163,6 +164,12 @@ def main():
             with open(vid, "wb") as f:
                 f.write(get(d["video_url"], binary=True, timeout=180))
             dur, w, h = probe(vid)
+            if dur > MAX_SECONDS:
+                os.remove(vid)
+                os.rmdir(out_dir)
+                used.append(url)  # too long for 2 Dola parts; never pick it again
+                print(f"  skip (too long, {dur:.0f}s): {d['title']}")
+                continue
             d.update(duration=round(dur, 2), width=w, height=h, cuts=cut_times(vid),
                      frame_grids=frame_grids(vid, out_dir, dur, w, h),
                      text_strips=text_strips(vid, out_dir, dur, w, h))
