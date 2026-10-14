@@ -1,0 +1,37 @@
+name: Prepare daily video frames
+
+on:
+  schedule:
+    - cron: "15 23 * * *"   # 23:15 UTC = 5:00 AM Nepal time (GitHub can start a little late)
+  workflow_dispatch:          # run it by hand from the Actions tab
+  push:
+    paths:
+      - prepare_frames.py     # also runs whenever the script changes, as a test
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prepare
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
+
+      - name: Download videos and make frame grids
+        run: python3 prepare_frames.py
+
+      - name: Save to the repo
+        if: always()
+        run: |
+          git config user.name "dola-daily bot"
+          git config user.email "dola-daily@users.noreply.github.com"
+          git add -A days used.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Frames for $(TZ=Asia/Kathmandu date +%F)" && git pull --rebase && git push)
