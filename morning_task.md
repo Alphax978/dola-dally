@@ -30,7 +30,7 @@ Write each prompt in this format, in its own code block:
 - SOUND: per shot or as one block. Name the sounds; use an "upbeat instrumental beat" or similar instead of any real song; say "no music" when there should be none; keep spoken lines short and in double quotes, in the original's language.
 
 STEP 4 — Save the prompts to GitHub for Dola's scheduled task (it reads them from a fixed link a little later).
-- In <repo>: git pull, then write these files (Nepal date for <date>):
+- In <repo>: first run git fetch origin && git checkout -B main origin/main (work directly on main, never on a claude/ branch), then write these files (Nepal date for <date>):
   - prompts/today.md — exactly this layout and nothing else:
       DATE: <YYYY-MM-DD>
       STATUS: READY
@@ -43,7 +43,7 @@ STEP 4 — Save the prompts to GitHub for Dola's scheduled task (it reads them f
       ----- END -----
   - prompts/today-parts.md — only for videos longer than 15 s: same DATE/STATUS/TITLE lines, then "PART 1 (generate as its own video):" with ----- START -----/----- END ----- around Part 1, then the same for PART 2.  For videos of 15 s or less, write "No parts today (single prompt)." instead.
   - prompts/<date>.md — a copy of today.md, as history.
-- git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add prompts; git commit -m "Prompts for <date>"; git push origin HEAD:main (if rejected because the remote moved: git pull --rebase, then push again once).
+- git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add prompts; git commit -m "Prompts for <date>"; git push origin main (if rejected because the remote moved: git pull --rebase origin main, then push again once). Push nothing else: no other branches, no pull requests. Once main is pushed, nothing is left unpushed.
 - The commit message must be exactly that one line: no trailers, no Co-Authored-By, no session or chat links (the repo is public and the user does not want chat links in it).
 - Use no token, password or credentials of any kind. If the push fails (for example for lack of permission), don't look for a way around it: remember the exact error for the message and carry on.
 
