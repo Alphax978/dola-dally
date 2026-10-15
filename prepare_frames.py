@@ -139,7 +139,7 @@ def probe(path):
 
 
 def cut_times(path):
-    o = run(["ffmpeg", "-i", path, "-vf", "select='gt(scene,0.25)',showinfo", "-an", "-f", "null", "-"]).stderr
+    o = run(["ffmpeg", "-i", path, "-vf", "select='gt(scene,0.15)',showinfo", "-an", "-f", "null", "-"]).stderr
     return [round(float(t), 2) for t in re.findall(r"pts_time:([0-9.]+)", o)]
 
 

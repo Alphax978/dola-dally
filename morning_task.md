@@ -32,6 +32,14 @@ Write each prompt in this format, in its own code block:
 - Shot list with timecodes matching the real cuts (SHOT n (00:00.0-00:01.5) — title. what happens, framing, camera move, speed), using specific camera language (push-in, dolly, tracking, crane, whip pan, locked-off, low angle) and physical cause and effect.
 - SOUND: per shot or as one block. Name the sounds; use an "upbeat instrumental beat" or similar instead of any real song; say "no music" when there should be none; keep spoken lines short and in double quotes, in the original's language.
 
+FIDELITY RULES (video models drop or blur anything vague, so be concrete):
+- One SHOT per real cut. The cut list in meta.json misses soft cuts and transitions, so find every change of shot in the frame grids yourself and give each its own SHOT line. Never lump several cuts into one long shot.
+- Settings: name exactly what is visible: era and architecture (e.g. "modern glass skyscrapers and high-rise apartment blocks along a wide river with long road bridges" vs "traditional tiled-roof hanok houses"). Never write a mix like "modern city with traditional houses" unless both are clearly on screen, and then say which is in the foreground and which dominates.
+- Hair, clothing and props: describe the state actually seen in each phase (e.g. "hair long and loose" vs "tied back"); don't guess.
+- Signature elements: list every distinct object or effect the original shows (a water sphere, wings, a glowing magic circle, a vortex...), and in the shot where each appears write it as "MUST SHOW: ..." with its look, size and position in frame.
+- Camera angle of each key moment exactly as seen: side view vs top-down, close-up vs wide, from behind vs from the front.
+- Before saving, review your prompt against the frame grids one frame at a time (every 0.5 s): for each frame, check the prompt already describes what is on screen at that time. Fix anything missing, wrong or out of order, then save.
+
 STEP 4 — Save the prompts to GitHub for Dola's scheduled task (it reads them from a fixed link a little later).
 - In <repo> (on main, as set up in STEP 1): git pull --ff-only origin main, then write these files (Nepal date for <date>):
   - prompts/today.md — exactly this layout and nothing else:
