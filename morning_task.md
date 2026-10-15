@@ -15,7 +15,7 @@ STEP 1 — Get today's frames. A GitHub Action in the user's PUBLIC repo Alphax9
 - If days/<today's Nepal date>/index.json is missing or lists no videos, start the Action yourself:
   1. Write the current UTC date and time into run-now.txt (replace its contents), then: git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add run-now.txt; git commit -m "Start frames run"; git push origin main. Pushing a change to run-now.txt starts the Action. The commit message must be exactly that one line (no trailers, no links).
   2. Wait for it: every 60 seconds run git pull --ff-only origin main and check for days/<today>/index.json with at least one video. The Action usually takes 1-3 minutes. Wait up to 20 minutes.
-  3. If it still isn't there after 20 minutes, stop: send one SendUserMessage saying "Today's frames didn't arrive: the GitHub Action failed or didn't start. Check Actions at https://github.com/Alphax978/dola-dally/actions, then press Run now on this routine." Leave prompts/today.md untouched and do nothing else. (youmind.com can't be reached from this environment, so there is no other fallback.)
+  3. If it still isn't there after 20 minutes, stop: end with a final reply (and a push notification if that tool exists) saying "Today's frames didn't arrive: the GitHub Action failed or didn't start. Check Actions at https://github.com/Alphax978/dola-dally/actions, then press Run now on this routine." Leave prompts/today.md untouched and do nothing else. (youmind.com can't be reached from this environment, so there is no other fallback.)
 - Read days/<today's Nepal date>/index.json. Take the FIRST video in it (they are already in random order). Re-roll to the second one only if the first is sexual or graphically violent (gore). Do NOT skip a video because it features copyrighted characters, a franchise cast, or real people/celebrities; keep it and handle it in STEP 3.
 
 STEP 2 — Study the video.
@@ -50,7 +50,7 @@ STEP 4 — Save the prompts to GitHub for Dola's scheduled task (it reads them f
 - The commit message must be exactly that one line: no trailers, no Co-Authored-By, no session or chat links (the repo is public and the user does not want chat links in it).
 - Use no token, password or credentials of any kind. If the push fails (for example for lack of permission), don't look for a way around it: remember the exact error for the message and carry on.
 
-STEP 5 — Deliver one message with the SendUserMessage tool (load it via ToolSearch first if needed), formatted exactly like this and nothing more:
+STEP 5 — Deliver the message. Write it as your FINAL REPLY in this session (plain text, so it shows in the chat), formatted exactly like this and nothing more. Don't look for a SendUserMessage tool; routines don't have one. If a push-notification tool is available, also send a one-line notification "Today's Dola prompt is ready: <short title>" (or the failure reason), but the full message always goes in your final reply:
 ## Today's video: <short title>
 **▶ Watch the original:** [YouMind page](<meta.json url>) · [Original X post](<meta.json x_post>)
 <one line: length and aspect ratio, e.g. "29.6s · 16:9". If characters or real people were replaced, add "(characters swapped for originals)".>
@@ -78,4 +78,4 @@ STEP 6 — FINISHING (when the user later uploads clips in this chat; no need to
    - two clips: python3 <repo>/dola_finish.py PART1.mp4 PART2.mp4 -o <short_title>.mp4
    The script finds the "Dola AI" watermark in the bottom-right corner, fills it in frame by frame, keeps the exact original resolution and framing (no crop, no zoom), and for two clips joins them with a hard cut into one ~30s video.
 4. Check the result: extract a frame from the middle of each part and look at the bottom-right corner to confirm the watermark is gone, and confirm the duration with ffprobe. If the script printed "No clear watermark found", say so in one line.
-5. Send the final video with SendUserFile (display "render", status "normal") with the caption "Ready to post", then send the X post caption again in a SendUserMessage so it can be copied. Nothing else.
+5. Deliver the final video: if a SendUserFile tool is available, send it with the caption "Ready to post". If not, say so in one line and tell the user to upload the clip(s) to their regular Claude chat for finishing instead. Then repeat the X post caption in your final reply so it can be copied.
