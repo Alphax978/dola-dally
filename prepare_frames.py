@@ -192,6 +192,12 @@ def main():
     fresh = [u for u in items if u not in used] or items
     random.shuffle(fresh)
 
+    index_path = os.path.join(day_dir, "index.json")
+    if os.path.exists(index_path) and json.load(open(index_path)).get("videos"):
+        # Already done today (e.g. the schedule ran late after the routine started a run itself).
+        print(f"Frames for {today} already exist; nothing to do.")
+        return
+
     os.makedirs(day_dir, exist_ok=True)
     prepared = []
     for url in fresh:
