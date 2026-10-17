@@ -2,7 +2,7 @@
 """
 prepare_frames.py: runs on GitHub Actions every morning.
 
-Picks random videos from the YouMind Seedance 2.5 gallery, downloads them, and saves
+Picks random videos from YouMind's video prompt gallery (all listing pages), downloads them, and saves
 timestamped frame grids so Claude can study each video shot by shot without a browser.
 
 Output (committed to the repo):
@@ -48,14 +48,35 @@ def words(s):
     return set(w for w in re.split(r"[^a-z0-9]+", s.lower()) if len(w) > 1 and w not in GENERIC)
 
 
+# YouMind has no "load more": each listing page shows its newest 12-33 videos, so read them all.
+CATEGORIES = ("product-v food-drink-v crowd-group text-logo-v vehicle-v animal-pet cityscape-urban abstract-vfx-v "
+              "architecture-interior nature-landscape sports-action person-character stop-motion chinese-ink "
+              "2d-animation 3d-cartoon documentary surreal-dreamlike vintage-retro anime cyberpunk-scifi "
+              "fantasy-magical cinematic-realistic game-cinematic channel-intro explainer-tutorial ugc-talking-head "
+              "brand-commercial music-video short-film social-lifestyle cinematic-showcase").split()
+LISTINGS = ([GALLERY, "https://youmind.com/seedance-2-5-prompts", "https://youmind.com/seedance-2-0-prompts",
+             "https://youmind.com/seedance-2-0-prompts/explore", "https://youmind.com/prompts/video"]
+            + [f"https://youmind.com/prompts/video/{c}" for c in CATEGORIES])
+
+
 def gallery_items():
-    page = get(GALLERY)
-    links = re.findall(r'https?://youmind\.com/video-prompts/[a-z0-9-]+|/video-prompts/[a-z0-9-]+', page)
+    """Every video linked from YouMind's video listing pages (a few hundred)."""
+    import concurrent.futures as cf
+
+    def links(url):
+        try:
+            return re.findall(r'https?://youmind\.com/video-prompts/[a-z0-9-]+|/video-prompts/[a-z0-9-]+', get(url))
+        except Exception as e:
+            print(f"  couldn't read {url}: {e}")
+            return []
+
     out = []
-    for l in links:
-        u = l if l.startswith("http") else "https://youmind.com" + l
-        if u not in out:
-            out.append(u)
+    with cf.ThreadPoolExecutor(8) as ex:
+        for found in ex.map(links, LISTINGS):
+            for l in found:
+                u = l if l.startswith("http") else "https://youmind.com" + l
+                if u not in out:
+                    out.append(u)
     return out
 
 

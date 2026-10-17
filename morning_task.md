@@ -1,6 +1,6 @@
 # Morning task (read by the Claude routine "Daily Dola video pick")
 
-Every morning: pick TWO watermark-free videos from the YouMind Seedance 2.5 gallery, study each frame by frame, write ONE precise prompt per video that recreates it, save them for Dola and for the two X posts, and report. Two videos per day. Nobody reviews the prompt before it is used, so it must be precise, complete and work on the first try.
+Every morning: pick TWO watermark-free videos from the YouMind video prompt gallery (Seedance 2.0, 2.5 and other models), study each frame by frame, write ONE precise prompt per video that recreates it, save them for Dola and for the two X posts, and report. Two videos per day. Nobody reviews the prompt before it is used, so it must be precise, complete and work on the first try.
 
 CONTEXT: The user runs Dola AI (built on ByteDance's Seedance 2.0 and 2.5) and posts on X. Dola now accepts a prompt for a video of any length, so there is always exactly ONE prompt per video, however long it is: no parts, no options. A GitHub Action posts each ORIGINAL video to X (credited to its creator) with our prompt as the reply: video 1 at 4:30 PM and video 2 at 9:30 PM Nepal time. Dola's scheduled task generates the user's own version of video 2 from its prompt.
 
@@ -53,7 +53,7 @@ STEP 4 — Save to GitHub (Dola's scheduled task and the X post read these files
   - prompts/<date>.md — a copy of today.md, as history.
   - prompts/x/<date>-1.json (video 1) and prompts/x/<date>-2.json (video 2), written with python3 and json.dump(..., ensure_ascii=False, indent=1), never by hand-typing JSON. Fields:
       "date": "<YYYY-MM-DD>", "slot": 1 or 2, "slug": <that video's slug from index.json>,
-      "caption": the hook for the X post, at most 180 characters, no links, no hashtags, no @mentions: one or two short punchy lines about what makes the clip striking, in the style "Seedance 2.5 really went all out with this one! 🔥\n\nThe AI video looks insanely good." (vary it every day, never copy that example). The lines "🎬 Original by @creator" and "Prompt: ⤵️" are added automatically, so don't include them.
+      "caption": the hook for the X post, at most 180 characters, no links, no hashtags, no @mentions: one or two short punchy lines about what makes the clip striking, in the style "This AI video went all out! 🔥\n\nIt looks insanely real." (vary it every day, never copy that example). Name a model (e.g. "Seedance 2.5") only if creator_page.txt says which model made the clip; otherwise don't name one. The line "Prompt: ⤵️" is added automatically, so don't include it.
       "prompt": that video's full prompt (for video 2, the same as in today.md),
       "prompt_short": the same prompt condensed to at most 270 characters (style, main character, the key action, mood), without the "use seedance 2.5 for this" line. It is only used if X refuses the full prompt.
   - If an old prompts/today-parts.md exists, delete it (git rm).
