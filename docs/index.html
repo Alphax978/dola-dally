@@ -1,3 +1,14 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mira AI</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 16px;color:#111}a{color:#6b4cff}</style></head>
-<body><h1>Mira AI</h1><p>Daily AI videos and the prompts to recreate them.</p><p>dola-daily is the personal tool that posts Mira AI&#x27;s daily videos to its own accounts on X, YouTube, Facebook, Instagram and TikTok.</p><p><a href="./">Mira AI</a> · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></p></body></html>
+<body><div id="tt" style="display:none;border:2px solid #111;border-radius:12px;padding:16px;margin:20px 0">
+<b id="tth">TikTok connected: copy this one-time code</b>
+<textarea id="ttc" readonly style="width:100%;box-sizing:border-box;height:90px;margin-top:10px;font:14px monospace;padding:8px"></textarea>
+<button id="ttb" style="margin-top:8px;padding:10px 16px;font:600 15px system-ui;border:0;border-radius:8px;background:#111;color:#fff">Copy code</button>
+<p style="font-size:14px">Next: GitHub → Actions → <b>TikTok connect</b> → Run workflow → paste the code → Run. Do it within a few minutes; the code expires quickly.</p></div>
+<script>
+(function(){var q=new URLSearchParams(location.search),c=q.get("code"),e=q.get("error");
+if(!c&&!e)return;var b=document.getElementById("tt");b.style.display="block";
+if(e){document.getElementById("tth").textContent="TikTok said: "+e+" "+(q.get("error_description")||"");document.getElementById("ttc").style.display="none";document.getElementById("ttb").style.display="none";return;}
+var t=document.getElementById("ttc");t.value=c;
+document.getElementById("ttb").onclick=function(){t.select();try{navigator.clipboard.writeText(c)}catch(x){document.execCommand("copy")}this.textContent="Copied";};})();
+</script><h1>Mira AI</h1><p>Daily AI videos and the prompts to recreate them.</p><p>dola-daily is the personal tool that posts Mira AI&#x27;s daily videos to its own accounts on X, YouTube, Facebook, Instagram and TikTok.</p><p><a href="./">Mira AI</a> · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></p></body></html>

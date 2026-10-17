@@ -41,6 +41,9 @@ jobs:
       FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
       FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
       IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+      TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+      TIKTOK_MODE: ${{ vars.TIKTOK_MODE }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       DRY: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run == true || inputs.dry_run == 'true') && '--dry-run' || '' }}
     steps:
@@ -49,7 +52,7 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-          pip install -q requests requests-oauthlib opencv-python-headless numpy
+          pip install -q requests requests-oauthlib opencv-python-headless numpy cryptography
 
       - name: Post today's videos at 16:30 and 21:30 Nepal time
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.slot == '' }}

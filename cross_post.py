@@ -36,6 +36,9 @@ def enabled():
         out.append("facebook")
     if env("IG_USER_ID") and env("FB_PAGE_TOKEN"):
         out.append("instagram")
+    import tiktok
+    if tiktok.configured():
+        out.append("tiktok")
     return out
 
 
@@ -208,8 +211,18 @@ def instagram(video, t, video_url=None):
 
 # ---------- all together ----------
 
-NICE = {"youtube": "YouTube", "facebook": "Facebook", "instagram": "Instagram"}
-POSTERS = {"youtube": youtube, "facebook": facebook, "instagram": instagram}
+def tiktok_post(video, t):
+    import tiktok
+    caption = t["instagram"]  # same caption as Instagram (hook, credit, prompt, hashtags; max 2,200)
+    if tiktok.mode() == "draft":  # drafts can't carry a caption, so keep it where it's easy to copy
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prompts", "tiktok_caption.txt")
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(caption + "\n")
+    return tiktok.post(video, caption)
+
+
+NICE = {"youtube": "YouTube", "facebook": "Facebook", "instagram": "Instagram", "tiktok": "TikTok"}
+POSTERS = {"youtube": youtube, "facebook": facebook, "instagram": instagram, "tiktok": tiktok_post}
 
 
 def post_all(video, t, done=None, video_url=None, log=print):
@@ -232,9 +245,9 @@ def check_accounts(log=print):
     """Confirm each platform's keys work, without posting. Returns True if all enabled ones are fine."""
     good = True
     names = enabled()
-    for name in ("youtube", "facebook", "instagram"):
+    for name in ("youtube", "facebook", "instagram", "tiktok"):
         if name not in names:
-            log(f"{NICE[name]}: skipped (secrets not added)")
+            log(f"{NICE[name]}: skipped ({'not connected yet' if name == 'tiktok' else 'secrets not added'})")
     for name in names:
         try:
             if name == "youtube":
@@ -248,6 +261,9 @@ def check_accounts(log=print):
             elif name == "facebook":
                 who = ok(requests.get(f"{GRAPH}/{env('FB_PAGE_ID')}", params={"fields": "name",
                          "access_token": env("FB_PAGE_TOKEN")}, timeout=30), "Facebook Page")["name"]
+            elif name == "tiktok":
+                import tiktok
+                who = f"{tiktok.who(tiktok.access_token())} (mode: {tiktok.mode()})"
             else:
                 who = "@" + ok(requests.get(f"{GRAPH}/{env('IG_USER_ID')}", params={"fields": "username",
                                "access_token": env("FB_PAGE_TOKEN")}, timeout=30), "Instagram account")["username"]
