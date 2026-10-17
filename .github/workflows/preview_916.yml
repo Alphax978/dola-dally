@@ -10,18 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Render crop-fill and black-bar versions
+      - name: Render 9:16 versions (black bars at 100/140/180% zoom, and crop fill)
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-          DIR=$(head -1 previews/request.txt)
-          URL=$(python3 -c "import json;print(json.load(open('$DIR/meta.json'))['video_url'])")
-          curl -sSL -A "Mozilla/5.0" -o /tmp/in.mp4 "$URL"
           O="-c:v libx264 -preset medium -crf 23 -r 30 -c:a aac -b:a 128k -movflags +faststart"
-          for Z in 140 180; do   # video zoomed to Z% of full width, sides trimmed, smaller black bars
-            ffmpeg -v error -y -i /tmp/in.mp4 -vf "scale=720*$Z/100:-2,crop=720:ih,pad=720:1280:0:(oh-ih)/2:black,setsar=1" $O previews/black_bars_zoom$Z.mp4
+          grep -v '^#' previews/request.txt | while read DIR; do
+            [ -z "$DIR" ] && continue
+            NAME=$(basename "$DIR" | cut -d- -f1-2)
+            URL=$(python3 -c "import json;print(json.load(open('$DIR/meta.json'))['video_url'])")
+            curl -sSL -A "Mozilla/5.0" -o /tmp/in.mp4 "$URL"
+            mkdir -p previews/$NAME
+            for Z in 100 140 180; do
+              ffmpeg -nostdin -v error -y -i /tmp/in.mp4 -vf "scale=720*$Z/100:-2,crop=720:ih,pad=720:1280:0:(oh-ih)/2:black,setsar=1" $O previews/$NAME/zoom$Z.mp4
+            done
+            ffmpeg -nostdin -v error -y -i /tmp/in.mp4 -vf "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,setsar=1" $O previews/$NAME/crop_fill.mp4
           done
-          ls -la previews
+          ls -laR previews
       - name: Save
         run: |
           git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"
-          git add previews/*.mp4 && git commit -q -m "9:16 preview videos [skip ci]" && git pull -q --rebase && git push -q
+          git add previews && git commit -q -m "9:16 preview videos [skip ci]" && git pull -q --rebase && git push -q
