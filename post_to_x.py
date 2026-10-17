@@ -187,6 +187,15 @@ SLOTS = {1: "16:30", 2: "21:30"}  # Nepal time: Europe's afternoon, then US late
 MAX_WAIT = 5 * 3600                # GitHub stops a job at 6 hours, so wait at most 5 per run
 
 
+def mark_used(url):
+    """Add a posted video to used.json so it's never picked again."""
+    p = os.path.join(ROOT, "used.json")
+    used = json.load(open(p)) if os.path.exists(p) else []
+    if url and url not in used:
+        used.append(url)
+        json.dump(used[-2000:], open(p, "w"), indent=1)
+
+
 def commit_posted(msg="Posted to X"):
     """Save posted.json to the repo right away, so nothing can be posted twice."""
     if not os.environ.get("GITHUB_ACTIONS"):
@@ -194,7 +203,7 @@ def commit_posted(msg="Posted to X"):
     run = lambda *c: subprocess.run(["git", *c], cwd=ROOT, capture_output=True, text=True)
     run("config", "user.name", "dola-daily bot")
     run("config", "user.email", "dola-daily@users.noreply.github.com")
-    run("add", "posted.json")
+    run("add", "posted.json", "used.json")
     if run("diff", "--cached", "--quiet").returncode == 0:
         return
     run("commit", "-m", msg)
@@ -240,6 +249,7 @@ def post_slot(day, slot, dry_run=False):
             log(f"[{key}] NOT POSTED: the video has a watermark ({info}).")
             if not dry_run:
                 save_posted(key, {"skipped": "watermark", "slug": job["slug"], "details": str(info)})
+                mark_used(job["meta"].get("url"))
                 commit_posted("Skipped a watermarked video")
             return "watermark"
         log(f"[{key}] Video ready: {os.path.getsize(video) // 1024} KB")
@@ -251,6 +261,7 @@ def post_slot(day, slot, dry_run=False):
     first = post(s, text, media_id=media_id)
     # record right away: even if the reply fails, the video must never be posted twice
     save_posted(key, {"post_id": first, "slug": job["slug"], "posted_at": dt.datetime.now(TZ).isoformat()})
+    mark_used(job["meta"].get("url"))
     commit_posted()
     log(f"[{key}] Posted: https://x.com/i/status/{first}")
     time.sleep(2)

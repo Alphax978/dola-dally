@@ -10,7 +10,7 @@ Output (committed to the repo):
   days/<YYYY-MM-DD>/<slug>/meta.json      title, links, duration, size, cut times
   days/<YYYY-MM-DD>/<slug>/frames_N.jpg   frame grids, one frame every 0.5s, timestamped
   days/<YYYY-MM-DD>/<slug>/text_N.jpg     bottom-of-frame strips, every 1s, for subtitles/text
-  used.json                               every video already prepared, so none repeats
+  used.json                               videos already posted or rejected (watermark), never picked again
 """
 import datetime as dt
 import html
@@ -240,7 +240,7 @@ def main():
             json.dump(d, open(os.path.join(out_dir, "meta.json"), "w"), indent=2, ensure_ascii=False)
             prepared.append({"slug": d["slug"], "title": d["title"], "url": url,
                              "duration": d["duration"], "dir": f"days/{today}/{d['slug']}"})
-            used.append(url)
+            # not marked used here: only posted (post_to_x.py) or watermarked videos are
             print(f"  ok: {d['title']} ({d['duration']}s, {len(d['cuts'])} cuts)")
         except Exception as e:  # one bad video shouldn't stop the run
             print(f"  failed: {url}: {e}")
