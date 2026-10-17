@@ -14,7 +14,6 @@ secrets are missing is simply skipped.
 import json
 import os
 import re
-import subprocess
 import time
 
 import requests
@@ -76,60 +75,19 @@ def texts(hook, credit, prompt, prompt_short):
     title = cut(re.sub(r"[<>]", "", hook) or "AI video of the day", 90)
     nb = lambda s: len(s.encode("utf-8"))
     # YouTube: description max 5000 bytes, no angle brackets
-    credit = f"\n\n{credit}" if credit else ""
-    yt_head = f"{hook}{credit}\n\nPrompt to recreate it:\n"
+    yt_head = f"{hook}\n\n{credit}\n\nPrompt to recreate it:\n"
     yt_tail = f"\n\n{HASHTAGS} #Shorts"
     yt_prompt = cut(prompt, 4900 - nb(yt_head) - nb(yt_tail), nb)
     youtube = re.sub(r"[<>]", "", yt_head + yt_prompt + yt_tail)
     # Facebook: long text is fine
-    facebook = f"{hook}{credit}\n\nPrompt to recreate it ⤵️\n{prompt}\n\n{HASHTAGS}"
+    facebook = f"{hook}\n\n{credit}\n\nPrompt to recreate it ⤵️\n{prompt}\n\n{HASHTAGS}"
     # Instagram: max 2200 characters, 30 hashtags
-    ig_head = f"{hook}{credit}\n\nPrompt ⤵️\n"
+    ig_head = f"{hook}\n\n{credit}\n\nPrompt ⤵️\n"
     ig_tail = f"\n\n{HASHTAGS}"
     room = 2200 - len(ig_head) - len(ig_tail)
     body = prompt if len(prompt) <= room else cut(prompt_short or prompt, room)
     instagram = ig_head + body + ig_tail
     return {"title": title, "youtube": youtube, "facebook": facebook, "instagram": instagram}
-
-
-# ---------- 9:16 version for Shorts / Reels ----------
-
-W, H = 1080, 1920
-FILL = "blur"   # "blur": whole video in the middle, blurred copy behind it | "crop": zoom to fill, sides cut off
-
-
-def size(path):
-    o = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
-                        "stream=width,height:stream_side_data=rotation", "-of", "json", path],
-                       capture_output=True, text=True).stdout
-    st = json.loads(o)["streams"][0]
-    w, h = st["width"], st["height"]
-    rot = next((abs(int(d.get("rotation", 0))) for d in st.get("side_data_list", []) if "rotation" in d), 0)
-    return (h, w) if rot in (90, 270) else (w, h)
-
-
-def is_vertical_916(path):
-    w, h = size(path)
-    return h / w >= 1.7  # 9:16 is 1.78; allow small differences
-
-
-def vertical(video, workdir):
-    """A 9:16 copy for YouTube/Facebook/Instagram; videos that are already 9:16 are returned unchanged.
-    No text is added: only the video, reframed."""
-    if is_vertical_916(video):
-        return video
-    cover = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},setsar=1"
-    if FILL == "crop":
-        graph = f"[0:v]{cover},format=yuv420p[v]"
-    else:
-        graph = (f"[0:v]{cover},boxblur=28:2,eq=brightness=-0.15[bg];"
-                 f"[0:v]scale={W}:{H}:force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,setsar=1[fg];"
-                 f"[bg][fg]overlay=(W-w)/2:(H-h)/2,format=yuv420p[v]")
-    out = os.path.join(workdir, "vertical.mp4")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", video, "-filter_complex", graph, "-map", "[v]",
-                    "-map", "0:a?", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-r", "30",
-                    "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", out], check=True)
-    return out
 
 
 # ---------- YouTube ----------
