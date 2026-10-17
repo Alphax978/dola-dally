@@ -48,7 +48,7 @@ def words(s):
     return set(w for w in re.split(r"[^a-z0-9]+", s.lower()) if len(w) > 1 and w not in GENERIC)
 
 
-# YouMind has no "load more": each listing page shows its newest 12-33 videos, so read them all.
+# Listing pages only show their newest 12-33 videos without signing in; they add the latest uploads.
 CATEGORIES = ("product-v food-drink-v crowd-group text-logo-v vehicle-v animal-pet cityscape-urban abstract-vfx-v "
               "architecture-interior nature-landscape sports-action person-character stop-motion chinese-ink "
               "2d-animation 3d-cartoon documentary surreal-dreamlike vintage-retro anime cyberpunk-scifi "
@@ -59,8 +59,22 @@ LISTINGS = ([GALLERY, "https://youmind.com/seedance-2-5-prompts", "https://youmi
             + [f"https://youmind.com/prompts/video/{c}" for c in CATEGORIES])
 
 
+def sitemap_videos():
+    """All public video pages from YouMind's sitemaps (the list it publishes for search engines)."""
+    maps = re.findall(r"(?im)^sitemap:\s*(\S*/sitemaps/prompts/\S+)", get("https://youmind.com/robots.txt"))
+    out = set()
+    for m in maps[:20]:
+        try:
+            for loc in re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", get(m, timeout=90)):
+                if "/video-prompts/" in loc:  # drop language prefixes: /es-419/video-prompts/x -> /video-prompts/x
+                    out.add("https://youmind.com/video-prompts/" + loc.rsplit("/video-prompts/", 1)[1].strip("/"))
+        except Exception as e:
+            print(f"  couldn't read {m}: {e}")
+    return out
+
+
 def gallery_items():
-    """Every video linked from YouMind's video listing pages (a few hundred)."""
+    """Every video we can reach without signing in: the sitemaps (~1,000) plus the newest uploads on the listing pages."""
     import concurrent.futures as cf
 
     def links(url):
@@ -70,14 +84,16 @@ def gallery_items():
             print(f"  couldn't read {url}: {e}")
             return []
 
-    out = []
+    out = set()
+    try:
+        out |= sitemap_videos()
+        print(f"Sitemaps: {len(out)} videos")
+    except Exception as e:
+        print(f"Sitemaps unreadable ({e}); using the listing pages only")
     with cf.ThreadPoolExecutor(8) as ex:
         for found in ex.map(links, LISTINGS):
-            for l in found:
-                u = l if l.startswith("http") else "https://youmind.com" + l
-                if u not in out:
-                    out.append(u)
-    return out
+            out |= {l if l.startswith("http") else "https://youmind.com" + l for l in found}
+    return sorted(out)
 
 
 def page_text(page, limit=15000):
