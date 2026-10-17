@@ -29,7 +29,7 @@ from wm_detect import has_watermark
 GALLERY = "https://youmind.com/seedance-2-5-prompts/explore"
 HOW_MANY = 4          # candidates; the routine double-checks them and uses the first 2 clean ones
 KEEP_DAYS = 7         # delete older days to keep the repo small
-MAX_SECONDS = 31      # Dola makes 15s clips and allows 3 Pro generations a day: 2 parts max
+MAX_SECONDS = 140     # X's video limit (2:20) for normal accounts; Dola's 30 s limit is handled by the routine
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 TZ = dt.timezone(dt.timedelta(hours=5, minutes=45))  # Nepal
 
@@ -219,7 +219,7 @@ def main():
             if dur > MAX_SECONDS:
                 os.remove(vid)
                 os.rmdir(out_dir)
-                used.append(url)  # too long for 2 Dola parts; never pick it again
+                used.append(url)  # too long to post on X; never pick it again
                 print(f"  skip (too long, {dur:.0f}s): {d['title']}")
                 continue
             wm, wm_info = has_watermark(vid)
