@@ -27,7 +27,7 @@ import urllib.request
 from wm_detect import has_watermark
 
 GALLERY = "https://youmind.com/seedance-2-5-prompts/explore"
-HOW_MANY = 2          # one for today plus one backup in case the first has to be skipped
+HOW_MANY = 4          # candidates; the routine double-checks them and uses the first 2 clean ones
 KEEP_DAYS = 7         # delete older days to keep the repo small
 MAX_SECONDS = 31      # Dola makes 15s clips and allows 3 Pro generations a day: 2 parts max
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"

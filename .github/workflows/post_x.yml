@@ -38,7 +38,7 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-          pip install -q requests requests-oauthlib
+          pip install -q requests requests-oauthlib opencv-python-headless numpy
 
       - name: Post video 1
         run: python3 post_to_x.py --slot 1 $DRY

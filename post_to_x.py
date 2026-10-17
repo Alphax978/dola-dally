@@ -225,6 +225,12 @@ def main():
 
     with tempfile.TemporaryDirectory() as tmp:
         video = get_video(job["meta"], tmp)
+        from wm_detect import has_watermark  # last check: never post a watermarked video
+        wm, info = has_watermark(os.path.join(tmp, "original.mp4"))
+        if wm:
+            save_posted(key, {"skipped": "watermark", "slug": job["slug"], "details": str(info)})
+            log(f"NOT POSTED: the video has a watermark ({info}). Skipping {key}.")
+            sys.exit(1)
         log(f"Video ready: {os.path.getsize(video) // 1024} KB")
         if a.dry_run:
             log("Dry run: not posting.")

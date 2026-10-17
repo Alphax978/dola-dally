@@ -19,8 +19,7 @@ import numpy as np
 
 W = 480            # analysis width
 SAMPLES = 24       # frames sampled across the clip
-PERSIST = 0.85     # an edge pixel must be present in this share of frames
-BANDS = ((0.0, 0.18), (0.78, 1.0))  # top and bottom bands (fractions of height)
+PERSIST = 0.7     # an edge pixel must be present in this share of frames
 
 
 def read_frames(path, n=SAMPLES):
@@ -43,8 +42,35 @@ def read_frames(path, n=SAMPLES):
     return frames
 
 
+def _text_line(mask, W):
+    """Largest group of small blobs sharing one line: (count, horizontal span as share of width)."""
+    closed = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3)))
+    n, lab, stats, cent = cv2.connectedComponentsWithStats(closed)
+    blobs = [k for k in range(1, n) if 5 <= stats[k, cv2.CC_STAT_AREA] <= 0.03 * mask.size
+             and stats[k, cv2.CC_STAT_HEIGHT] <= 0.6 * mask.shape[0]]
+    if not blobs:
+        return 0, 0.0, 0
+    ys = np.array([cent[k][1] for k in blobs])
+    xs = np.array([cent[k][0] for k in blobs])
+    best, span = 0, 0.0
+    for y in ys:
+        line = np.abs(ys - y) <= max(4, 0.08 * mask.shape[0])
+        if line.sum() > best:
+            best, span = int(line.sum()), float((xs[line].max() - xs[line].min()) / W)
+    area = int(sum(stats[k, cv2.CC_STAT_AREA] for k in blobs))
+    return best, span, area
+
+
 def analyse(frames, ignore=None):
-    """frames: list of BGR images. ignore: optional (x0, y0, x1, y1) fractions to mask out."""
+    """frames: list of BGR images. ignore: optional (x0, y0, x1, y1) fractions to mask out.
+
+    Two independent signals, scanned across the WHOLE frame in overlapping horizontal bands:
+      A) edges that stay put in almost every frame (outlines of text/logos), and
+      B) pixels whose brightness barely changes while the picture around them changes a lot
+         (the body of a solid or semi-transparent overlay).
+    A band is flagged when either signal forms a text/logo-like group and clearly stands out
+    from the rest of the frame (so a locked-off camera doesn't trigger it).
+    """
     if len(frames) < 6:
         return False, {"reason": "too few frames"}
     h0, w0 = frames[0].shape[:2]
@@ -53,46 +79,44 @@ def analyse(frames, ignore=None):
     for f in frames:
         g = cv2.cvtColor(cv2.resize(f, (W, H), interpolation=cv2.INTER_AREA), cv2.COLOR_BGR2GRAY)
         grays.append(g)
-        edges.append(cv2.Canny(g, 60, 160) > 0)
+        edges.append(cv2.Canny(g, 25, 80) > 0)
+    stack = np.stack(grays).astype(np.float32)
+    std = np.std(stack, axis=0)
+    motion = float(std.mean())
     persist = np.mean(edges, axis=0)
-    static = (persist >= PERSIST).astype(np.uint8)
+    sig_a = (persist >= PERSIST).astype(np.uint8)
+    # B: locally still pixels inside a moving neighbourhood
+    around = cv2.blur(std, (41, 41))
+    sig_b = ((std < 0.55 * around) & (around > 12)).astype(np.uint8)
+    sig_b = cv2.morphologyEx(sig_b, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2)))
     if ignore:
         x0, y0, x1, y1 = ignore
-        static[int(y0 * H):int(y1 * H), int(x0 * W):int(x1 * W)] = 0
-    # How much does the picture change? A watermark only means something over a changing picture.
-    motion = float(np.mean(np.std(np.stack(grays).astype(np.float32), axis=0)))
-    mid = static[int(0.25 * H):int(0.72 * H), :]
-    mid_frac = float(mid.mean())
+        for m in (sig_a, sig_b):
+            m[int(y0 * H):int(y1 * H), int(x0 * W):int(x1 * W)] = 0
 
-    best = {"band_frac": 0.0, "blobs": 0, "row_span": 0.0}
-    found = False
-    for a, b in BANDS:
-        band = static[int(a * H):int(b * H), :]
-        frac = float(band.mean())
-        # text and logos = several small edge clusters lined up in a row
-        closed = cv2.morphologyEx(band, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3)))
-        n, lab, stats, cent = cv2.connectedComponentsWithStats(closed)
-        blobs = [k for k in range(1, n) if 6 <= stats[k, cv2.CC_STAT_AREA] <= 0.02 * band.size
-                 and stats[k, cv2.CC_STAT_HEIGHT] <= 0.5 * band.shape[0]]
-        row_span = 0.0
-        if blobs:
-            ys = np.array([cent[k][1] for k in blobs])
-            xs = np.array([cent[k][0] for k in blobs])
-            # largest group of blobs sharing roughly one text line
-            best_line = 0
-            for y in ys:
-                line = np.abs(ys - y) <= max(4, 0.06 * band.shape[0])
-                if line.sum() > best_line:
-                    best_line, span = line.sum(), (xs[line].max() - xs[line].min()) / W
-                    row_span = span
-            nb = best_line
-        else:
-            nb = 0
-        hit = frac >= 0.0015 and nb >= 2 and row_span >= 0.03 and frac >= 2.5 * mid_frac and motion >= 4
-        if frac > best["band_frac"]:
-            best = {"band_frac": round(frac, 4), "blobs": int(nb), "row_span": round(float(row_span), 3)}
-        found = found or hit
-    return found, {**best, "mid_frac": round(mid_frac, 4), "motion": round(motion, 1)}
+    bands = [(a / 10, min(1.0, a / 10 + 0.2)) for a in range(0, 9)]
+    fracs_a = [float(sig_a[int(a * H):int(b * H)].mean()) for a, b in bands]
+    fracs_b = [float(sig_b[int(a * H):int(b * H)].mean()) for a, b in bands]
+    base_a, base_b = float(np.median(fracs_a)), float(np.median(fracs_b))
+    found, best = False, {}
+    for (a, b), fa, fb in zip(bands, fracs_a, fracs_b):
+        if motion < 4:
+            break  # an almost frozen clip: can't tell overlay from scene
+        na, span_a, _ = _text_line(sig_a[int(a * H):int(b * H)], W)
+        nb, span_b, area_b = _text_line(sig_b[int(a * H):int(b * H)], W)
+        # relative test: this band stands out from the rest of the frame
+        hit_a = fa >= 0.001 and na >= 2 and span_a >= 0.025 and fa >= 2.5 * base_a
+        hit_b = fb >= 0.0012 and nb >= 2 and span_b >= 0.025 and fb >= 2.5 * base_b and area_b >= 20
+        # absolute test: a clear line of fixed text/logo, whatever the rest of the frame does
+        hit_a = hit_a or (fa >= 0.003 and na >= 3 and span_a >= 0.06)
+        hit_b = hit_b or (fb >= 0.004 and nb >= 3 and span_b >= 0.06 and area_b >= 40)
+        score = max(fa / (base_a + 1e-4), fb / (base_b + 1e-4))
+        if hit_a or hit_b:
+            found = True
+        if not best or score > best["score"]:
+            best = {"band": f"{a:.1f}-{b:.1f}", "score": round(score, 1), "edges": (round(fa, 4), na, round(span_a, 3)),
+                    "still": (round(fb, 4), nb, round(span_b, 3)), "hit": bool(hit_a or hit_b)}
+    return found, {**best, "motion": round(motion, 1)}
 
 
 def has_watermark(path):
