@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q playwright==1.47.0 && python -m playwright install --with-deps chromium >/dev/null
       - run: python3 probe/probe.py
       - name: Save
         run: |

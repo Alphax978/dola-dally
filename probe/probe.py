@@ -1,49 +1,34 @@
-import json, re, urllib.request
-from playwright.sync_api import sync_playwright
+import json, re, urllib.request, gzip
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
-G = "https://youmind.com/seedance-2-5-prompts/explore"
-with urllib.request.urlopen(urllib.request.Request(G, headers={"User-Agent": UA}), timeout=60) as r:
-    open("probe/explore.html", "w").write(r.read().decode("utf-8", "replace"))
-out = {"requests": [], "bodies": []}
-with sync_playwright() as p:
-    b = p.chromium.launch()
-    pg = b.new_page(user_agent=UA, viewport={"width": 1440, "height": 1000})
-    pg.on("request", lambda r: out["requests"].append([r.method, r.resource_type, r.url[:300], (r.post_data or "")[:800]])
-          if r.resource_type in ("xhr", "fetch") and "youmind.com" in r.url else None)
-    def resp(r):
-        try:
-            if r.request.resource_type in ("xhr", "fetch") and "youmind.com" in r.url and r.status == 200:
-                t = r.text()
-                if len(t) > 500:
-                    out["bodies"].append([r.url[:300], len(t), t[:4000]])
-        except Exception:
-            pass
-    pg.on("response", resp)
-    pg.goto(G, wait_until="networkidle", timeout=90000)
+def get(u):
     try:
-        pg.get_by_text("Reject advertising cookies").click(timeout=3000)
-    except Exception:
-        pass
-    n0 = len(out["requests"])
-    counts = []
-    for i in range(15):
-        cards = pg.locator("a[href*='/video-prompts/']")
-        c = cards.count(); counts.append(c)
-        if c:
-            cards.nth(c - 1).scroll_into_view_if_needed()
-        pg.keyboard.press("End"); pg.mouse.wheel(0, 8000)
-        for t in ("Load more", "Show more", "More"):
-            try:
-                pg.get_by_text(t, exact=True).first.click(timeout=500)
-            except Exception:
-                pass
-        pg.wait_for_timeout(2500)
-    out["counts"] = counts
-    out["requests_after_load"] = out["requests"][n0:]
-    out["final_links"] = sorted(set(re.findall(r'/video-prompts/[a-z0-9-]+', pg.content())))
-    out["scrollables"] = pg.evaluate("""() => [...document.querySelectorAll('*')].filter(e => {const s=getComputedStyle(e);
-        return (s.overflowY=='auto'||s.overflowY=='scroll') && e.scrollHeight>e.clientHeight+50}).map(e => e.tagName+'.'+(e.className||'').toString().slice(0,80)+' '+e.scrollHeight)""")
-    pg.screenshot(path="probe/after_scroll.png", full_page=False)
-    b.close()
-json.dump(out, open("probe/result3.json", "w"), indent=1)
-print(out["counts"], len(out["final_links"]), len(out["requests_after_load"]))
+        req = urllib.request.Request(u, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            b = r.read()
+            if b[:2] == b"\x1f\x8b": b = gzip.decompress(b)
+            return r.status, r.geturl(), b.decode("utf-8", "replace")
+    except Exception as e:
+        return str(e)[:120], u, ""
+out = {}
+s, u, robots = get("https://youmind.com/robots.txt"); out["robots"] = robots[:3000]
+maps = re.findall(r"(?i)sitemap:\s*(\S+)", robots) or ["https://youmind.com/sitemap.xml"]
+seen, vids, queue = set(), set(), list(maps)
+while queue and len(seen) < 60:
+    m = queue.pop(0)
+    if m in seen: continue
+    seen.add(m)
+    s, u, x = get(m)
+    locs = re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", x)
+    v = [l for l in locs if "/video-prompts/" in l]
+    vids |= set(v)
+    out.setdefault("maps", []).append([m, s, len(locs), len(v)])
+    queue += [l for l in locs if l.endswith(".xml") or "sitemap" in l.split("/")[-1]]
+out["video_urls"] = len(vids)
+out["video_sample"] = sorted(vids)[:5]
+# by-id lookup
+for test in ["https://youmind.com/video-prompts/x-12641", "https://youmind.com/video-prompts/12641"]:
+    s, u, h = get(test)
+    out["id " + test] = [s, u, re.search(r"<title>(.*?)</title>", h).group(1)[:80] if "<title>" in h else ""]
+json.dump(out, open("probe/result4.json", "w"), indent=1)
+json.dump(sorted(vids), open("probe/sitemap_videos.json", "w"))
+print(json.dumps({k: v for k, v in out.items() if k != "robots"}, indent=1)[:3000])
