@@ -76,17 +76,18 @@ def cut(text, limit, measure=len):
 def texts(hook, credit, prompt, prompt_short):
     """Title + descriptions for each platform."""
     hook = clean_hook(hook)
+    credit = f"\n\n{credit}" if credit else ""  # empty: no credit line (credits are added by hand in comments)
     title = cut(re.sub(r"[<>]", "", hook) or "AI video of the day", 90)
     nb = lambda s: len(s.encode("utf-8"))
     # YouTube: description max 5000 bytes, no angle brackets
-    yt_head = f"{hook}\n\n{credit}\n\nPrompt to recreate it:\n"
+    yt_head = f"{hook}{credit}\n\nPrompt to recreate it:\n"
     yt_tail = f"\n\n{HASHTAGS} #Shorts"
     yt_prompt = cut(prompt, 4900 - nb(yt_head) - nb(yt_tail), nb)
     youtube = re.sub(r"[<>]", "", yt_head + yt_prompt + yt_tail)
     # Facebook: long text is fine
-    facebook = f"{hook}\n\n{credit}\n\nPrompt to recreate it ⤵️\n{prompt}\n\n{HASHTAGS}"
+    facebook = f"{hook}{credit}\n\nPrompt to recreate it ⤵️\n{prompt}\n\n{HASHTAGS}"
     # Instagram: max 2200 characters, 30 hashtags
-    ig_head = f"{hook}\n\n{credit}\n\nPrompt ⤵️\n"
+    ig_head = f"{hook}{credit}\n\nPrompt ⤵️\n"
     ig_tail = f"\n\n{HASHTAGS}"
     room = 2200 - len(ig_head) - len(ig_tail)
     body = prompt if len(prompt) <= room else cut(prompt_short or prompt, room)
@@ -211,7 +212,7 @@ def instagram(video, t, video_url=None):
 
 # ---------- all together ----------
 
-def save_tiktok_caption(caption, key):
+def save_tiktok_caption(caption, key, credit=""):
     """Drafts can't carry a caption: keep the last few on the site's copy page (docs/tiktok.html)."""
     p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs", "tiktok", "captions.json")
     os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -220,15 +221,15 @@ def save_tiktok_caption(caption, key):
     except Exception:
         items = []
     items = [i for i in items if i.get("key") != key]
-    items.insert(0, {"key": key or time.strftime("%Y-%m-%d %H:%M"), "caption": caption})
+    items.insert(0, {"key": key or time.strftime("%Y-%m-%d %H:%M"), "caption": caption, "credit": credit})
     json.dump(items[:6], open(p, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
 
 
 def tiktok_post(video, t):
     import tiktok
-    caption = t["instagram"]  # same caption as Instagram (hook, credit, prompt, hashtags; max 2,200)
+    caption = t["instagram"]  # same caption as Instagram (hook, prompt, hashtags; max 2,200)
     if tiktok.mode() == "draft":
-        save_tiktok_caption(caption, t.get("key"))
+        save_tiktok_caption(caption, t.get("key"), t.get("credit", ""))
     return tiktok.post(video, caption)
 
 

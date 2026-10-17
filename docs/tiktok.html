@@ -11,10 +11,16 @@ h1{font-size:22px;margin:0 0 4px} p.sub{color:var(--mute);margin:0 0 18px;font-s
 button{width:100%;margin-top:12px;padding:16px;font:700 17px system-ui;border:0;border-radius:12px;background:var(--btn);color:var(--btnink)}
 button.done{background:#1f9d55;color:#fff}
 </style></head><body>
-<h1>TikTok captions</h1>
-<p class="sub">Newest first. Tap Copy, then paste in your TikTok draft.</p>
+<h1>Captions &amp; credits</h1>
+<p class="sub">Newest first. Copy the caption into your TikTok draft; copy the credit into a comment on each platform.</p>
 <div id="list">Loading…</div>
 <script>
+function btn(name,text){var b=document.createElement("button");b.textContent=name;
+  b.onclick=function(){
+    var done=function(){b.textContent="Copied ✓";b.className="done";setTimeout(function(){b.textContent=name;b.className=""},2500)};
+    function fallback(){var a=document.createElement("textarea");a.value=text;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove();done();}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback)}else fallback();
+  };return b;}
 function label(k){var m=/^(\d{4}-\d{2}-\d{2})-(\d)$/.exec(k||"");return m?m[1]+" · video "+m[2]+(m[2]=="1"?" (4:30 PM)":" (9:30 PM)"):k;}
 fetch("tiktok/captions.json?t="+Date.now()).then(function(r){return r.json()}).then(function(items){
   var L=document.getElementById("list");L.innerHTML="";
@@ -23,13 +29,9 @@ fetch("tiktok/captions.json?t="+Date.now()).then(function(r){return r.json()}).t
     var c=document.createElement("div");c.className="c";
     var k=document.createElement("div");k.className="k";k.textContent=(i==0?"LATEST · ":"")+label(it.key);
     var t=document.createElement("div");t.className="t";t.textContent=it.caption;
-    var b=document.createElement("button");b.textContent="Copy caption";
-    b.onclick=function(){
-      var done=function(){b.textContent="Copied ✓";b.className="done";setTimeout(function(){b.textContent="Copy caption";b.className=""},2500)};
-      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(it.caption).then(done,fallback)}else fallback();
-      function fallback(){var a=document.createElement("textarea");a.value=it.caption;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove();done();}
-    };
-    c.append(k,t,b);L.appendChild(c);
+    c.append(k,t,btn("Copy caption",it.caption));
+    if(it.credit){var cr=document.createElement("div");cr.className="t";cr.style.marginTop="14px";cr.textContent=it.credit;c.append(cr,btn("Copy credit",it.credit));}
+    L.appendChild(c);
   });
 }).catch(function(){document.getElementById("list").textContent="Couldn't load captions. Pull down to refresh.";});
 </script></body></html>

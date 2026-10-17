@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-post_to_x.py: posts the day's original YouMind video to X, credited to its creator,
+post_to_x.py: posts the day's original YouMind video to X (credit to the creator is added by hand in a comment),
 with our replica prompt as a reply. Runs on GitHub Actions (see .github/workflows/post_x.yml).
 
   python3 post_to_x.py --slot 1              post video 1 of today (if not posted yet)
@@ -13,7 +13,7 @@ in posted.json so nothing is posted twice.
 
 Secrets (GitHub repo -> Settings -> Secrets and variables -> Actions):
   X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET   (OAuth 1.0a, from developer.x.com)
-Each video gets exactly two posts: the video (hook, credit, "Prompt: ⤵️") and one reply with the
+Each video gets exactly two posts: the video (hook, "Prompt: ⤵️") and one reply with the
 full prompt. Without X Premium a long reply is refused, so it falls back to a short prompt.
 Right after X, the same video goes to YouTube, the Facebook Page and Instagram (cross_post.py).
 Running --slot N for a video already on X only fills in platforms that are missing or failed.
@@ -67,8 +67,6 @@ def x_len(text):
 
 
 def main_text(job):
-    handle = creator_handle(job["meta"])
-    credit = f"Original by @{handle}" if handle else "Original from the YouMind Seedance 2.5 gallery"
     tail = f"\n\nPrompt: ⤵️"
     caption = re.sub(r"https?://\S+", "", job.get("caption", "")).strip()  # links cost extra on X
     while caption and x_len(caption + tail) > 280:
@@ -234,7 +232,7 @@ def dispatch_next_run():
 
 def cross_texts(job):
     from cross_post import texts
-    return texts(job.get("caption", ""), job["meta"].get("x_post") or "",
+    return texts(job.get("caption", ""), "",  # no credit in captions: credits are added by hand in comments
                  public_prompt(job["prompt"]), public_prompt(job.get("prompt_short") or job["prompt"]))
 
 
@@ -257,6 +255,10 @@ def cross_post(key, job, video, entry):
             tall = video
         texts = cross_texts(job)
         texts["key"] = key
+        h = creator_handle(job["meta"])  # for the credit comments you post by hand
+        texts["credit"] = (f"🎬 Original by @{h} on X: {job['meta'].get('x_post')}" if h
+                           else "🎬 Original from the YouMind Seedance 2.5 gallery")
+        log(f"[{key}] Credit for your comments: {texts['credit']}")
         entry["other"] = post_all(tall, texts, entry.get("other"), job["meta"].get("video_url"),
                                   log=lambda m: log(f"[{key}] {m}"))
     except Exception as e:
