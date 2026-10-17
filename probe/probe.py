@@ -1,58 +1,36 @@
-import json, re, urllib.request
-from playwright.sync_api import sync_playwright
+import json, re, urllib.request, concurrent.futures as cf
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
-G = "https://youmind.com/seedance-2-5-prompts/explore"
-out = {}
 def get(u):
     try:
         with urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": UA}), timeout=60) as r:
-            return r.status, r.read().decode("utf-8", "replace")
+            return r.read().decode("utf-8", "replace")
     except Exception as e:
-        return str(e), ""
+        return "ERR " + str(e)
 links = lambda s: sorted(set(re.findall(r'/video-prompts/[a-z0-9-]+', s)))
-st, html = get(G)
-out["static_count"] = len(links(html))
-out["static_len"] = len(html)
-# page-number guesses
-for q in ["?page=2", "?p=2", "/2", "?offset=24", "?cursor=2"]:
-    s, h = get(G + q)
-    out[f"guess {q}"] = [s, len(links(h)), len(set(links(h)) - set(links(html)))]
-# anything in the html that looks like an api or next-page hint
-out["html_hints"] = sorted(set(re.findall(r'(?:"|\')(/api/[^"\']{0,120}|https://[a-z0-9.-]*youmind[^"\']{0,120}(?:api|graphql|search|list|page)[^"\']{0,80})(?:"|\')', html)))[:80]
-out["next_data_keys"] = []
-m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.S)
-if m:
-    d = json.loads(m.group(1)); out["next_data_keys"] = list(d.get("props", {}).get("pageProps", {}).keys())[:50]
-    out["buildId"] = d.get("buildId")
-reqs = []
-with sync_playwright() as p:
-    b = p.chromium.launch()
-    pg = b.new_page(user_agent=UA, viewport={"width": 1366, "height": 900})
-    def on_req(r):
-        if r.resource_type in ("xhr", "fetch"):
-            reqs.append({"url": r.url[:400], "method": r.method, "post": (r.post_data or "")[:600]})
-    pg.on("request", on_req)
-    resp_bodies = []
-    def on_resp(r):
-        try:
-            if r.request.resource_type in ("xhr", "fetch") and "json" in (r.headers.get("content-type") or ""):
-                t = r.text()
-                if "video-prompts" in t or "slug" in t:
-                    resp_bodies.append({"url": r.url[:400], "body": t[:3000]})
-        except Exception:
-            pass
-    pg.on("response", on_resp)
-    pg.goto(G, wait_until="networkidle", timeout=90000)
-    counts = []
-    for i in range(12):
-        pg.mouse.wheel(0, 6000); pg.wait_for_timeout(1800)
-        counts.append(len(links(pg.content())))
-    out["scroll_counts"] = counts
-    out["after_scroll_links"] = links(pg.content())
-    # buttons that load more
-    out["buttons"] = [t.strip() for t in pg.locator("button").all_inner_texts() if t.strip()][:60]
-    b.close()
-out["xhr"] = reqs[:120]
-out["json_with_videos"] = resp_bodies[:8]
-json.dump(out, open("probe/result.json", "w"), indent=1)
-print(json.dumps({k: v for k, v in out.items() if k not in ("xhr", "json_with_videos", "after_scroll_links")}, indent=1)[:3000])
+cats = "product-v food-drink-v crowd-group text-logo-v vehicle-v animal-pet cityscape-urban abstract-vfx-v architecture-interior nature-landscape sports-action person-character stop-motion chinese-ink 2d-animation 3d-cartoon documentary surreal-dreamlike vintage-retro anime cyberpunk-scifi fantasy-magical cinematic-realistic game-cinematic channel-intro explainer-tutorial ugc-talking-head brand-commercial music-video short-film social-lifestyle cinematic-showcase".split()
+pages = ["https://youmind.com/seedance-2-5-prompts", "https://youmind.com/seedance-2-5-prompts/explore",
+         "https://youmind.com/seedance-2-0-prompts", "https://youmind.com/seedance-2-0-prompts/explore",
+         "https://youmind.com/prompts/video"] + [f"https://youmind.com/prompts/video/{c}" for c in cats]
+pages += [p + q for p in pages[:5] for q in ("?page=2", "?page=3")]
+out = {}
+with cf.ThreadPoolExecutor(8) as ex:
+    res = dict(zip(pages, ex.map(get, pages)))
+allv = set()
+for p, h in res.items():
+    l = links(h); allv |= set(l)
+    out[p] = {"n": len(l), "err": h[:80] if h.startswith("ERR") else "", "sample": l[:3],
+              "pager": sorted(set(re.findall(r'href="([^"]*(?:page|cursor|offset)=[^"]*)"', h)))[:5],
+              "mentions_2_5": h.count("Seedance 2.5"), "mentions_2_0": h.count("Seedance 2.0")}
+out["TOTAL_UNIQUE"] = len(allv)
+# which model is each video? check a few video pages
+sample = sorted(allv)[:0]
+ids = sorted(int(re.search(r'-(\d+)$', v).group(1)) for v in allv if re.search(r'-(\d+)$', v))
+out["id_range"] = [ids[0], ids[-1], len(ids)] if ids else []
+vp = sorted(allv, key=lambda v: int(re.search(r'-(\d+)$', v).group(1)) if re.search(r'-(\d+)$', v) else 0)
+picks = vp[:3] + vp[len(vp)//2:len(vp)//2+3] + vp[-3:]
+for v in picks:
+    h = get("https://youmind.com" + v)
+    m = re.findall(r'Seedance ?\d\.\d|Kling[^"<]{0,10}|Veo ?\d|Sora ?\d|Hailuo|Wan ?\d\.\d', h)
+    out["model " + v] = sorted(set(m))[:8]
+json.dump(out, open("probe/result2.json", "w"), indent=1)
+print(json.dumps({k: (v["n"] if isinstance(v, dict) else v) for k, v in out.items()}, indent=0)[:4000])
