@@ -13,6 +13,10 @@ on:
         description: "Dry run (prepare everything, post nothing)"
         type: boolean
         default: true
+      slot:
+        description: "Post this video now (1 or 2); leave empty to post on schedule"
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -42,4 +46,11 @@ jobs:
           pip install -q requests requests-oauthlib opencv-python-headless numpy
 
       - name: Post today's videos at 16:30 and 21:30 Nepal time
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.slot == '' }}
         run: python3 post_to_x.py --auto $DRY
+
+      - name: Post one video now
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.slot != '' }}
+        env:
+          SLOT: ${{ inputs.slot }}
+        run: python3 post_to_x.py --slot "$SLOT" $DRY
