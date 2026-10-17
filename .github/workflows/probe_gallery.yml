@@ -1,0 +1,20 @@
+name: Probe gallery
+on:
+  push:
+    paths: [probe/request.txt]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Look at how the gallery loads more videos
+        run: |
+          pip install -q playwright==1.47.0 && python -m playwright install --with-deps chromium >/dev/null
+          python3 probe/probe.py
+      - name: Save
+        run: |
+          git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"
+          git add probe && git commit -q -m "Gallery probe results [skip ci]" && git pull -q --rebase && git push -q
