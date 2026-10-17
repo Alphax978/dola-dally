@@ -1,0 +1,26 @@
+name: 9:16 preview
+on:
+  push:
+    paths: [previews/request.txt]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render crop-fill and black-bar versions
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          DIR=$(head -1 previews/request.txt)
+          URL=$(python3 -c "import json;print(json.load(open('$DIR/meta.json'))['video_url'])")
+          curl -sSL -A "Mozilla/5.0" -o /tmp/in.mp4 "$URL"
+          O="-c:v libx264 -preset medium -crf 23 -r 30 -c:a aac -b:a 128k -movflags +faststart"
+          ffmpeg -v error -y -i /tmp/in.mp4 -vf "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,setsar=1" $O previews/crop_fill.mp4
+          ffmpeg -v error -y -i /tmp/in.mp4 -vf "scale=720:1280:force_original_aspect_ratio=decrease,pad=720:1280:(ow-iw)/2:(oh-ih)/2:black,setsar=1" $O previews/black_bars.mp4
+          ls -la previews
+      - name: Save
+        run: |
+          git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"
+          git add previews/*.mp4 && git commit -q -m "9:16 preview videos [skip ci]" && git pull -q --rebase && git push -q
