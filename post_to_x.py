@@ -67,7 +67,7 @@ def x_len(text):
 def main_text(job):
     handle = creator_handle(job["meta"])
     credit = f"Original by @{handle}" if handle else "Original from the YouMind Seedance 2.5 gallery"
-    tail = f"\n\n🎬 {credit}\n\nPrompt: ⤵️"
+    tail = f"\n\nPrompt: ⤵️"
     caption = re.sub(r"https?://\S+", "", job.get("caption", "")).strip()  # links cost extra on X
     while caption and x_len(caption + tail) > 280:
         caption = caption[: max(0, len(caption) - 10)].rsplit(" ", 1)[0].rstrip(" ,.;:-") + "…"
