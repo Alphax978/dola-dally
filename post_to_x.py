@@ -13,8 +13,8 @@ in posted.json so nothing is posted twice.
 
 Secrets (GitHub repo -> Settings -> Secrets and variables -> Actions):
   X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET   (OAuth 1.0a, from developer.x.com)
-Optional repository variable:
-  X_LONG_POSTS = true   if the account has X Premium (one long reply instead of a thread)
+Each video gets exactly two posts: the video (hook, credit, "Prompt: ⤵️") and one reply with the
+full prompt. Without X Premium a long reply is refused, so it falls back to a short prompt.
 """
 import argparse
 import datetime as dt
@@ -32,7 +32,6 @@ TZ = dt.timezone(dt.timedelta(hours=5, minutes=45))  # Nepal
 API = "https://api.x.com/2"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 CHUNK = 4 * 1024 * 1024
-MAX_THREAD = 6  # replies, when the account has no X Premium
 
 
 def log(msg):
@@ -68,37 +67,29 @@ def x_len(text):
 def main_text(job):
     handle = creator_handle(job["meta"])
     credit = f"Original by @{handle}" if handle else "Original from the YouMind Seedance 2.5 gallery"
-    tail = f"\n\n🎬 {credit}\nMy prompt to recreate it 👇"
+    tail = f"\n\n🎬 {credit}\n\nPrompt: ⤵️"
     caption = re.sub(r"https?://\S+", "", job.get("caption", "")).strip()  # links cost extra on X
     while caption and x_len(caption + tail) > 280:
         caption = caption[: max(0, len(caption) - 10)].rsplit(" ", 1)[0].rstrip(" ,.;:-") + "…"
     return (caption + tail).strip()
 
 
-def split_thread(text, limit=270, max_parts=MAX_THREAD):
-    """Split on paragraph/sentence boundaries into numbered posts."""
-    words = re.split(r"(\s+)", text.strip())
-    parts, cur = [], ""
-    for w in words:
-        if x_len(cur + w) > limit - 8:  # room for " (n/N)"
-            parts.append(cur.strip())
-            cur = w.lstrip()
-        else:
-            cur += w
-    if cur.strip():
-        parts.append(cur.strip())
-    if len(parts) > max_parts:
-        parts = parts[:max_parts]
-        parts[-1] = parts[-1][: limit - 12].rsplit(" ", 1)[0] + " …"
-    n = len(parts)
-    return [f"{p} ({i}/{n})" if n > 1 else p for i, p in enumerate(parts, 1)]
+def public_prompt(text):
+    """The prompt as people should see it: without our Dola-only first line."""
+    lines = text.strip().splitlines()
+    if lines and lines[0].strip().lower().startswith("use seedance"):
+        lines = lines[1:]
+    text = "\n".join(lines).strip()
+    return re.sub(r"^(VIDEO PROMPT)\s*—\s*(?:SINGLE|FULL 30s|PART \d of \d)\s*—", r"\1 —", text)
 
 
-def replies(job, long_posts):
-    if long_posts:
-        return ["Prompt (Seedance 2.5):\n\n" + job["prompt"].strip()[:24000]]  # Premium limit is 25,000
-    short = job.get("prompt_short") or job["prompt"]
-    return split_thread("Prompt (Seedance 2.5): " + short.strip())
+def reply_texts(job):
+    """One reply: the full prompt (needs X Premium for long posts), and a short fallback."""
+    full = public_prompt(job["prompt"])[:24000]  # long-post limit is 25,000
+    short = public_prompt(job.get("prompt_short") or job["prompt"])
+    while x_len(short) > 280:
+        short = short[: len(short) - 10].rsplit(" ", 1)[0] + "…"
+    return full, short
 
 
 # ---------- video ----------
@@ -227,11 +218,10 @@ def main():
         if key in load_posted():
             return
 
-    long_posts = os.environ.get("X_LONG_POSTS", "").lower() in ("1", "true", "yes")
     text = main_text(job)
-    thread = replies(job, long_posts)
+    full, short = reply_texts(job)
     log(f"Main post ({x_len(text)} chars):\n{text}")
-    log(f"{len(thread)} prompt repl{'y' if len(thread) == 1 else 'ies'}; first: {thread[0][:120]}...")
+    log(f"Reply: full prompt {x_len(full)} chars (short fallback {x_len(short)} chars):\n{full[:300]}...")
 
     with tempfile.TemporaryDirectory() as tmp:
         video = get_video(job["meta"], tmp)
@@ -243,12 +233,16 @@ def main():
         media_id = upload_video(s, video)
     first = post(s, text, media_id=media_id)
     log(f"Posted: https://x.com/i/status/{first}")
-    last = first
-    for r in thread:
-        last = post(s, r, reply_to=last)
-        time.sleep(2)
-    save_posted(key, {"post_id": first, "slug": job["slug"], "posted_at": dt.datetime.now(TZ).isoformat()})
-    log(f"Done: {len(thread)} prompt repl{'y' if len(thread) == 1 else 'ies'} added.")
+    time.sleep(2)
+    r = s.post(f"{API}/tweets", json={"text": full, "reply": {"in_reply_to_tweet_id": first}})
+    if r.status_code >= 300 and x_len(full) > 280:
+        # Long posts need X Premium; fall back to the short prompt in the same single reply.
+        log(f"Full prompt was refused ({r.status_code}: {r.text[:200]}); posting the short version.")
+        r = s.post(f"{API}/tweets", json={"text": short, "reply": {"in_reply_to_tweet_id": first}})
+    reply_id = check(r, "prompt reply")["data"]["id"]
+    save_posted(key, {"post_id": first, "reply_id": reply_id, "slug": job["slug"],
+                      "posted_at": dt.datetime.now(TZ).isoformat()})
+    log("Done: video post + prompt reply.")
 
 
 if __name__ == "__main__":
