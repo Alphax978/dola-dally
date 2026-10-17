@@ -1,25 +1,26 @@
 # Morning task (read by the Claude routine "Daily Dola video pick")
 
-Every morning: pick ONE watermark-free video from the YouMind Seedance 2.5 gallery, study it frame by frame, write ONE precise prompt that recreates it, save it for Dola and for the X post, and report. One video per day. Nobody reviews the prompt before it is used, so it must be precise, complete and work on the first try.
+Every morning: pick TWO watermark-free videos from the YouMind Seedance 2.5 gallery, study each frame by frame, write ONE precise prompt per video that recreates it, save them for Dola and for the two X posts, and report. Two videos per day. Nobody reviews the prompt before it is used, so it must be precise, complete and work on the first try.
 
-CONTEXT: The user runs Dola AI (built on ByteDance's Seedance 2.0 and 2.5) and posts on X. Dola now accepts a prompt for a video of any length, so there is always exactly ONE prompt per video, however long it is: no parts, no options. A GitHub Action posts the ORIGINAL video to X (credited to its creator) with our prompt as the reply, and Dola's scheduled task generates the user's own version from the same prompt.
+CONTEXT: The user runs Dola AI (built on ByteDance's Seedance 2.0 and 2.5) and posts on X. Dola now accepts a prompt for a video of any length, so there is always exactly ONE prompt per video, however long it is: no parts, no options. A GitHub Action posts each ORIGINAL video to X (credited to its creator) with our prompt as the reply: video 1 at 4:30 PM and video 2 at 9:30 PM Nepal time. Dola's scheduled task generates the user's own version of video 2 from its prompt.
 
-STEP 1 — Get today's frames. A GitHub Action in the user's PUBLIC repo Alphax978/dola-dally (.github/workflows/prepare.yml, script prepare_frames.py) picks up to 4 random unused, watermark-free candidates (any length) from the YouMind gallery and saves, for each, timestamped frame grids (frames_N.jpg: 30 frames per image, each stamped with its time; one frame every 0.5 s for short clips, sparser for long ones), bottom-of-frame text strips (text_N.jpg, for subtitles/on-screen text), creator_page.txt (the YouMind page text with the creator's prompt) and meta.json (title, YouMind url, x_post, duration, width, height, cuts = scene-cut times in seconds), listed in days/<YYYY-MM-DD>/index.json (Nepal date). It is scheduled for ~7:00 AM Nepal time, but GitHub sometimes skips or delays scheduled runs, so you start it yourself when needed.
+STEP 1 — Get today's frames. A GitHub Action in the user's PUBLIC repo Alphax978/dola-dally (.github/workflows/prepare.yml, script prepare_frames.py) picks up to 4 random unused, watermark-free candidates (any length) from the YouMind gallery and saves, for each, timestamped frame grids (frames_N.jpg: 30 frames per image, each stamped with its time; one frame every 0.5 s for short clips, sparser for long ones), bottom-of-frame text strips (text_N.jpg, for subtitles/on-screen text), creator_page.txt (the YouMind page text with the creator's prompt) and meta.json (title, YouMind url, x_post, duration, width, height, cuts = scene-cut times in seconds), listed in days/<YYYY-MM-DD>/index.json (Nepal date). It is scheduled for ~5:00 AM Nepal time, but GitHub sometimes skips or delays scheduled runs, so you start it yourself when needed.
 - The routine has already cloned the repo; <repo> below means that checkout (the folder containing this file). In <repo>: git fetch origin && git checkout -B main origin/main (work directly on main, never on a claude/ branch).
 - If days/<today's Nepal date>/index.json is missing or lists no videos, start the Action yourself:
   1. Write the current UTC date and time into run-now.txt (replace its contents), then: git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add run-now.txt; git commit -m "Start frames run"; git push origin main. Pushing a change to run-now.txt starts the Action. The commit message must be exactly that one line (no trailers, no links).
   2. Wait for it: every 60 seconds run git pull --ff-only origin main and check for days/<today>/index.json with at least one video. The Action usually takes 1-5 minutes. Wait up to 20 minutes.
   3. If it still isn't there after 20 minutes, stop: end with a final reply (and a push notification if that tool exists) saying "Today's frames didn't arrive: the GitHub Action failed or didn't start. Check Actions at https://github.com/Alphax978/dola-dally/actions, then press Run now on this routine." Leave prompts/today.md untouched and do nothing else. (youmind.com can't be reached from this environment, so there is no other fallback.)
-- Pick today's video: go through the candidates in index.json in order and take the FIRST one that passes both checks below. If none passes, say so in your final reply, list why each was skipped, and stop (write no prompts).
+- Pick today's two videos: go through the candidates in index.json in order and take the FIRST TWO that pass both checks below. If only one passes, use just that one (as video 2, the 9:30 PM post, and for Dola). If none passes, say so in your final reply, list why each was skipped, and stop (write no prompts).
+- Of the two, the one with the stronger hook (more striking, more likely to stop the scroll) is "video 2" (posted at 9:30 PM, the best slot, and remade in Dola); the other is "video 1" (posted at 4:30 PM).
   - Not sexual or graphically violent (gore).
   - NO WATERMARK: look closely at every frame grid and text strip of the candidate for anything burned in on top of the picture that isn't part of the scene: an app or AI-tool name or logo (e.g. "Wizstar AI", "Dola AI", "Kling", "Hailuo", "Jimeng", "Vidu", "Pika", "Runway", "Sora", "Veo", "Seedance", "Dreamina", "CapCut"), a creator @handle or website, a "made with"/"generated by" label, or any small fixed logo, even faint or semi-transparent, in any corner, along any edge or in the centre. Ignore only the yellow time stamps in the top-left of each tile: we add those. If you see anything like this, or you're unsure, the candidate fails: skip it and don't use it in any way.
   - Do NOT skip a video because it features copyrighted characters, a franchise cast, or real people/celebrities; keep it and handle it in STEP 3.
 
-STEP 2 — Study the video.
+STEP 2 — Study each of the two videos (do STEP 2 and STEP 3 fully for each one).
 - Read meta.json, then look at EVERY frames_N.jpg and text_N.jpg image with the Read tool. Use the cut times to find each shot's start and end. For each shot note: framing (wide/medium/close-up/POV/selfie), camera movement, who is in it and what they do, setting, light, and any on-screen text or subtitles (the text strips show spoken lines when the video has subtitles). Note the aspect ratio from width/height.
 - Also read creator_page.txt in the same folder: GitHub saved the YouMind page's text there (this environment can't open youmind.com), and it contains the creator's original prompt. Use it for intent, dialogue and sound that frames can't show. If that file is missing, work from the frames alone without mentioning it. Where the frames and the creator's prompt disagree, follow the frames.
 
-STEP 3 — Write ONE prompt that recreates it faithfully, for the video's full length. Keep the original's characters, setting, story, shots, timing, camera moves, look, sound and payoff as close to the original as possible: the goal is a replica, not a reinterpretation. Describe characters from what you actually see in the frames (age, skin, hair, face, clothing, signature details).
+STEP 3 — For each video, write ONE prompt that recreates it faithfully, for the video's full length. Keep the original's characters, setting, story, shots, timing, camera moves, look, sound and payoff as close to the original as possible: the goal is a replica, not a reinterpretation. Describe characters from what you actually see in the frames (age, skin, hair, face, clothing, signature details).
 The only exception: if the original features copyrighted or franchise characters, or real people/celebrities, replace each of them with an original character who plays the same role in the same scene — new face, hair, build, costume, colors and emblems — and keep everything else identical. Don't carry over any signature look, costume, color scheme, emblem, catchphrase or name from those characters or people, and don't mention them in the prompt.
 Leave out burned-in subtitles and on-screen text (AI video garbles text); keep the spoken lines as dialogue instead.
 Format of the prompt:
@@ -42,34 +43,40 @@ STEP 4 — Save to GitHub (Dola's scheduled task and the X post read these files
   - prompts/today.md — exactly this layout and nothing else:
       DATE: <YYYY-MM-DD>
       STATUS: READY
-      TITLE: <short title>
+      TITLE: <short title of video 2>
       LENGTH: <N> seconds, <aspect ratio>
       (blank line)
       MAIN PROMPT — generate ONE video from everything between the two lines below:
       ----- START -----
-      <the prompt, exactly as in the message>
+      <video 2's prompt, exactly as in the message>
       ----- END -----
   - prompts/<date>.md — a copy of today.md, as history.
-  - prompts/x/<date>-1.json, written with python3 and json.dump(..., ensure_ascii=False, indent=1), never by hand-typing JSON. Fields:
-      "date": "<YYYY-MM-DD>", "slot": 1, "slug": <the video's slug from index.json>,
+  - prompts/x/<date>-1.json (video 1) and prompts/x/<date>-2.json (video 2), written with python3 and json.dump(..., ensure_ascii=False, indent=1), never by hand-typing JSON. Fields:
+      "date": "<YYYY-MM-DD>", "slot": 1 or 2, "slug": <that video's slug from index.json>,
       "caption": the hook for the X post, at most 180 characters, no links, no hashtags, no @mentions: one or two short punchy lines about what makes the clip striking, in the style "Seedance 2.5 really went all out with this one! 🔥\n\nThe AI video looks insanely good." (vary it every day, never copy that example). The lines "🎬 Original by @creator" and "Prompt: ⤵️" are added automatically, so don't include them.
-      "prompt": the same prompt as in today.md,
+      "prompt": that video's full prompt (for video 2, the same as in today.md),
       "prompt_short": the same prompt condensed to at most 270 characters (style, main character, the key action, mood), without the "use seedance 2.5 for this" line. It is only used if X refuses the full prompt.
   - If an old prompts/today-parts.md exists, delete it (git rm).
-- git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add -A prompts; git commit -m "Prompts for <date>"; git push origin main (if rejected because the remote moved: git pull --rebase origin main, then push again once). Push nothing else: no other branches, no pull requests. Once main is pushed, nothing is left unpushed. Pushing prompts/x/ starts the X post automatically.
+- git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add -A prompts; git commit -m "Prompts for <date>"; git push origin main (if rejected because the remote moved: git pull --rebase origin main, then push again once). Push nothing else: no other branches, no pull requests. Once main is pushed, nothing is left unpushed. Pushing prompts/x/ starts the X posting run, which posts video 1 at 4:30 PM and video 2 at 9:30 PM.
 - The commit message must be exactly that one line: no trailers, no Co-Authored-By, no session or chat links (the repo is public and the user does not want chat links in it).
 - Use no token, password or credentials of any kind. If the push fails (for example for lack of permission), don't look for a way around it: remember the exact error for the message and carry on.
 
-STEP 5 — Deliver the message. Write it as your FINAL REPLY in this session (plain text, so it shows in the chat), formatted exactly like this and nothing more. Don't look for a SendUserMessage tool; routines don't have one. If a push-notification tool is available, also send a one-line notification "Today's video: <short title> — prompt saved, X post on its way" (or the failure reason), but the full message always goes in your final reply:
-## Today's video: <short title>
+STEP 5 — Deliver the message. Write it as your FINAL REPLY in this session (plain text, so it shows in the chat), formatted exactly like this and nothing more. Don't look for a SendUserMessage tool; routines don't have one. If a push-notification tool is available, also send a one-line notification "Today's videos: <title 1> (4:30 PM) and <title 2> (9:30 PM) — prompts saved" (or the failure reason), but the full message always goes in your final reply:
+## Today's videos
+**4:30 PM — video 1: <short title>**
 **▶ Watch the original:** [YouMind page](<meta.json url>) · [Original X post](<meta.json x_post>)
-<one line: length and aspect ratio, e.g. "47.2s · 16:9". If characters or real people were replaced, add "(characters swapped for originals)". If candidates were skipped, add "Skipped: <title> (watermark), …".>
-**Prompt — paste into Dola**
+<one line: length and aspect ratio, e.g. "47.2s · 16:9", plus "(characters swapped for originals)" if so>
+**X caption:** <the caption>
+**Prompt**
 <code block>
-**X caption:** <the caption from the json>
-**Saved:** "✅ prompts/today.md updated · X post starts now" or "⚠️ Couldn't save: <exact error>"
-**Next:** Dola's scheduled task generates your version. To post it yourself, upload the Dola clip here and I'll send it back without the watermark.
-The two "Watch the original" links are required and must be the exact, full URLs.
+
+**9:30 PM — video 2: <short title>** (also sent to Dola)
+<the same four parts for video 2>
+
+<one line if any candidates were skipped: "Skipped: <title> (watermark), …">
+**Saved:** "✅ prompts saved · X posts at 4:30 PM and 9:30 PM · Dola gets video 2" or "⚠️ Couldn't save: <exact error>"
+**Next:** Dola's scheduled task generates your version of video 2. To post it yourself, upload the Dola clip here and I'll send it back without the watermark.
+The "Watch the original" links are required for each video and must be the exact, full URLs.
 
 STEP 6 — FINISHING (when the user later uploads a Dola clip in this chat; no need to ask anything first):
 1. Find the uploaded video file.

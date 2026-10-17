@@ -3,10 +3,10 @@ name: Post to X
 on:
   push:
     paths:
-      - prompts/x/**          # the morning routine saved today's post: post it now
-  schedule:                   # backups, in case the run above didn't happen (GitHub sometimes skips these too)
-    - cron: "45 3 * * *"      # 09:30 Nepal
-    - cron: "15 8 * * *"      # 14:00 Nepal
+      - prompts/x/**          # the morning routine saved today's posts: start the day's posting run
+  schedule:                   # backups, in case a run didn't start (GitHub sometimes skips these)
+    - cron: "0 11 * * *"      # 16:45 Nepal
+    - cron: "0 16 * * *"      # 21:45 Nepal
   workflow_dispatch:
     inputs:
       dry_run:
@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: write
+  actions: write              # lets a waiting run hand over to a new one
 
 concurrency:
   group: post-x
@@ -24,13 +25,14 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 330
     env:
       X_API_KEY: ${{ secrets.X_API_KEY }}
       X_API_SECRET: ${{ secrets.X_API_SECRET }}
       X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
       X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
-      DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '--dry-run' || '' }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      DRY: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run == true || inputs.dry_run == 'true') && '--dry-run' || '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -39,14 +41,5 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           pip install -q requests requests-oauthlib opencv-python-headless numpy
 
-      - name: Post today's video
-        run: python3 post_to_x.py --slot 1 $DRY
-
-      - name: Save
-        if: always()
-        run: |
-          git config user.name "dola-daily bot"
-          git config user.email "dola-daily@users.noreply.github.com"
-          git add posted.json 2>/dev/null || true
-          git diff --cached --quiet || (git commit -m "Posted to X" && git pull --rebase && git push)
-
+      - name: Post today's videos at 16:30 and 21:30 Nepal time
+        run: python3 post_to_x.py --auto $DRY

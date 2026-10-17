@@ -183,72 +183,140 @@ def save_posted(key, info):
     json.dump(dict(list(d.items())[-200:]), open(posted_path(), "w"), indent=1)
 
 
-def wait_until(hhmm):
-    h, m = map(int, hhmm.split(":"))
-    now = dt.datetime.now(TZ)
-    target = now.replace(hour=h, minute=m, second=0, microsecond=0)
-    if target > now:
-        secs = (target - now).total_seconds()
-        if secs > 5.5 * 3600:  # GitHub jobs stop at 6 hours
-            log(f"{hhmm} is too far away to wait for here; the evening schedule will post it.")
-            sys.exit(0)
-        log(f"Waiting until {hhmm} Nepal time ({secs / 60:.0f} min)...")
-        time.sleep(secs)
+SLOTS = {1: "16:30", 2: "21:30"}  # Nepal time: Europe's afternoon, then US late morning
+MAX_WAIT = 5 * 3600                # GitHub stops a job at 6 hours, so wait at most 5 per run
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--slot", type=int, choices=[1, 2], required=True)
-    ap.add_argument("--wait-until", help="HH:MM Nepal time to wait for before posting")
-    ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--day", default=None, help="YYYY-MM-DD (default: today in Nepal)")
-    a = ap.parse_args()
-
-    day = a.day or today()
-    key = f"{day}-{a.slot}"
-    if key in load_posted():
-        log(f"Video {a.slot} for {day} is already posted; nothing to do.")
+def commit_posted(msg="Posted to X"):
+    """Save posted.json to the repo right away, so nothing can be posted twice."""
+    if not os.environ.get("GITHUB_ACTIONS"):
         return
-    job = load_job(day, a.slot)
-    if not job:
-        log(f"No prompts/x/{key}.json yet; nothing to post.")
+    run = lambda *c: subprocess.run(["git", *c], cwd=ROOT, capture_output=True, text=True)
+    run("config", "user.name", "dola-daily bot")
+    run("config", "user.email", "dola-daily@users.noreply.github.com")
+    run("add", "posted.json")
+    if run("diff", "--cached", "--quiet").returncode == 0:
         return
-    if a.wait_until and not a.dry_run:
-        wait_until(a.wait_until)
-        if key in load_posted():
+    run("commit", "-m", msg)
+    for _ in range(3):
+        run("pull", "--rebase", "-q")
+        if run("push", "-q").returncode == 0:
             return
+        time.sleep(5)
+    log("Warning: couldn't push posted.json")
 
+
+def dispatch_next_run():
+    """Start a fresh run of this workflow to keep waiting (allowed with the built-in GITHUB_TOKEN)."""
+    import requests
+    repo, token = os.environ.get("GITHUB_REPOSITORY"), os.environ.get("GITHUB_TOKEN")
+    if not repo or not token:
+        log("Can't hand over to a new run (not on GitHub); the backup schedule will post it.")
+        return
+    r = requests.post(f"https://api.github.com/repos/{repo}/actions/workflows/post_x.yml/dispatches",
+                      headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
+                      json={"ref": "main", "inputs": {"dry_run": "false"}}, timeout=30)
+    log(f"Handed over to a new run ({r.status_code}).")
+
+
+def post_slot(day, slot, dry_run=False):
+    """Post one video + its prompt reply. Returns 'posted', 'done-before', 'no-job', 'watermark' or 'dry'."""
+    key = f"{day}-{slot}"
+    if key in load_posted():
+        return "done-before"
+    job = load_job(day, slot)
+    if not job:
+        return "no-job"
     text = main_text(job)
     full, short = reply_texts(job)
-    log(f"Main post ({x_len(text)} chars):\n{text}")
-    log(f"Reply: full prompt {x_len(full)} chars (short fallback {x_len(short)} chars):\n{full[:300]}...")
+    log(f"[{key}] Main post ({x_len(text)} chars):\n{text}")
+    log(f"[{key}] Reply: full prompt {x_len(full)} chars (short fallback {x_len(short)} chars):\n{full[:300]}...")
 
     with tempfile.TemporaryDirectory() as tmp:
         video = get_video(job["meta"], tmp)
         from wm_detect import has_watermark  # last check: never post a watermarked video
         wm, info = has_watermark(os.path.join(tmp, "original.mp4"))
         if wm:
-            save_posted(key, {"skipped": "watermark", "slug": job["slug"], "details": str(info)})
-            log(f"NOT POSTED: the video has a watermark ({info}). Skipping {key}.")
-            sys.exit(1)
-        log(f"Video ready: {os.path.getsize(video) // 1024} KB")
-        if a.dry_run:
-            log("Dry run: not posting.")
-            return
+            log(f"[{key}] NOT POSTED: the video has a watermark ({info}).")
+            if not dry_run:
+                save_posted(key, {"skipped": "watermark", "slug": job["slug"], "details": str(info)})
+                commit_posted("Skipped a watermarked video")
+            return "watermark"
+        log(f"[{key}] Video ready: {os.path.getsize(video) // 1024} KB")
+        if dry_run:
+            log(f"[{key}] Dry run: not posting.")
+            return "dry"
         s = session()
         media_id = upload_video(s, video)
     first = post(s, text, media_id=media_id)
-    log(f"Posted: https://x.com/i/status/{first}")
+    # record right away: even if the reply fails, the video must never be posted twice
+    save_posted(key, {"post_id": first, "slug": job["slug"], "posted_at": dt.datetime.now(TZ).isoformat()})
+    commit_posted()
+    log(f"[{key}] Posted: https://x.com/i/status/{first}")
     time.sleep(2)
     r = s.post(f"{API}/tweets", json={"text": full, "reply": {"in_reply_to_tweet_id": first}})
     if r.status_code >= 300 and x_len(full) > 280:
         # Long posts need X Premium; fall back to the short prompt in the same single reply.
-        log(f"Full prompt was refused ({r.status_code}: {r.text[:200]}); posting the short version.")
+        log(f"[{key}] Full prompt was refused ({r.status_code}: {r.text[:200]}); posting the short version.")
         r = s.post(f"{API}/tweets", json={"text": short, "reply": {"in_reply_to_tweet_id": first}})
     reply_id = check(r, "prompt reply")["data"]["id"]
     save_posted(key, {"post_id": first, "reply_id": reply_id, "slug": job["slug"],
                       "posted_at": dt.datetime.now(TZ).isoformat()})
-    log("Done: video post + prompt reply.")
+    commit_posted()
+    log(f"[{key}] Done: video post + prompt reply.")
+    return "posted"
+
+
+def due_time(day, slot):
+    h, m = map(int, SLOTS[slot].split(":"))
+    return dt.datetime.fromisoformat(day).replace(hour=h, minute=m, tzinfo=TZ)
+
+
+def auto(dry_run=False):
+    """Post today's videos at their times, waiting (and handing over to new runs) as needed."""
+    day = today()
+    if dry_run:
+        for slot in SLOTS:
+            log(f"[{day}-{slot}] {post_slot(day, slot, dry_run=True)}")
+        return
+    started = time.time()
+    while True:
+        posted = load_posted()
+        pending = [s for s in SLOTS if f"{day}-{s}" not in posted and load_job(day, s)]
+        if not pending:
+            log("Nothing left to post today.")
+            return
+        slot = pending[0]
+        wait = (due_time(day, slot) - dt.datetime.now(TZ)).total_seconds()
+        if wait <= 0:
+            log(f"[{day}-{slot}] {post_slot(day, slot)}")
+            continue
+        budget = MAX_WAIT - (time.time() - started)
+        if wait > budget:
+            log(f"Next post (video {slot}) is at {SLOTS[slot]}; waiting {budget / 3600:.1f} h, then a new run takes over.")
+            time.sleep(max(0, budget))
+            dispatch_next_run()
+            return
+        log(f"Waiting until {SLOTS[slot]} Nepal time for video {slot} ({wait / 60:.0f} min)...")
+        time.sleep(wait)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--auto", action="store_true", help="post today's videos at their set times")
+    ap.add_argument("--slot", type=int, choices=sorted(SLOTS), help="post this video now")
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--day", default=None, help="YYYY-MM-DD (default: today in Nepal)")
+    a = ap.parse_args()
+    if a.auto:
+        auto(a.dry_run)
+    elif a.slot:
+        result = post_slot(a.day or today(), a.slot, a.dry_run)
+        log(result)
+        if result == "watermark":
+            sys.exit(1)
+    else:
+        ap.error("use --auto or --slot N")
 
 
 if __name__ == "__main__":
