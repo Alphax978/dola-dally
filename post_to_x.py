@@ -231,8 +231,8 @@ def dispatch_next_run():
 
 
 def cross_texts(job):
-    from cross_post import credit_line, texts
-    return texts(job.get("caption", ""), credit_line(creator_handle(job["meta"]), job["meta"].get("x_post")),
+    from cross_post import texts
+    return texts(job.get("caption", ""), job["meta"].get("x_post")),
                  public_prompt(job["prompt"]), public_prompt(job.get("prompt_short") or job["prompt"]))
 
 
