@@ -14,6 +14,7 @@ secrets are missing is simply skipped.
 import json
 import os
 import re
+import subprocess
 import time
 
 import requests
@@ -88,6 +89,33 @@ def texts(hook, credit, prompt, prompt_short):
     body = prompt if len(prompt) <= room else cut(prompt_short or prompt, room)
     instagram = ig_head + body + ig_tail
     return {"title": title, "youtube": youtube, "facebook": facebook, "instagram": instagram}
+
+
+# ---------- 9:16 version for Shorts / Reels ----------
+
+def size(path):
+    o = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+                        "stream=width,height:stream_side_data=rotation", "-of", "json", path],
+                       capture_output=True, text=True).stdout
+    st = json.loads(o)["streams"][0]
+    w, h = st["width"], st["height"]
+    rot = next((abs(int(d.get("rotation", 0))) for d in st.get("side_data_list", []) if "rotation" in d), 0)
+    return (h, w) if rot in (90, 270) else (w, h)
+
+
+def vertical(video, workdir):
+    """A 9:16 copy for YouTube/Facebook/Instagram (zoom 100: the whole video, black bars above and below,
+    nothing cropped). Videos that are already 9:16 are returned unchanged."""
+    w, h = size(video)
+    if h / w >= 1.7:  # already 9:16 (1.78), allow small differences
+        return video
+    out = os.path.join(workdir, "vertical.mp4")
+    vf = ("scale=1080:1920:force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,"
+          "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black,setsar=1,format=yuv420p")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", video, "-vf", vf, "-map", "0:v", "-map", "0:a?",
+                    "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-r", "30",
+                    "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", out], check=True)
+    return out
 
 
 # ---------- YouTube ----------
