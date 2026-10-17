@@ -119,8 +119,11 @@ def youtube(video, t):
                          headers={"Authorization": f"Bearer {token}", "Content-Type": "video/mp4"}, timeout=900)
     data = ok(r, "YouTube upload")
     vid = data["id"]
+    channel = (data.get("snippet") or {}).get("channelTitle")
     privacy = (data.get("status") or {}).get("privacyStatus")
     note = "" if privacy in (None, "public") else f" (YouTube set it to {privacy}: the API project may need YouTube's audit)"
+    if channel:
+        note = f" on {channel}" + note
     return {"id": vid, "url": f"https://youtube.com/shorts/{vid}", "note": note}
 
 
@@ -207,10 +210,13 @@ def check_accounts(log=print):
     for name in names:
         try:
             if name == "youtube":
-                r = requests.get("https://www.googleapis.com/youtube/v3/channels", params={"part": "snippet", "mine": "true"},
-                                 headers={"Authorization": f"Bearer {yt_token()}"}, timeout=30)
-                items = ok(r, "YouTube channel").get("items") or []
-                who = items[0]["snippet"]["title"] if items else "(signed in, but no channel found on this account)"
+                # the key may only upload (youtube.upload scope), so it can't read the channel name
+                info = ok(requests.get("https://oauth2.googleapis.com/tokeninfo",
+                                       params={"access_token": yt_token()}, timeout=30), "YouTube key")
+                scopes = info.get("scope", "")
+                if "youtube.upload" not in scopes and "auth/youtube " not in scopes + " ":
+                    raise PostError(f"signed in, but this key can't upload videos (scopes: {scopes})")
+                who = "your channel (upload permission confirmed)"
             elif name == "facebook":
                 who = ok(requests.get(f"{GRAPH}/{env('FB_PAGE_ID')}", params={"fields": "name",
                          "access_token": env("FB_PAGE_TOKEN")}, timeout=30), "Facebook Page")["name"]
