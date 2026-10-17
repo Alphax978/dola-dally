@@ -177,6 +177,7 @@ def instagram(video, t, video_url=None):
 
 # ---------- all together ----------
 
+NICE = {"youtube": "YouTube", "facebook": "Facebook", "instagram": "Instagram"}
 POSTERS = {"youtube": youtube, "facebook": facebook, "instagram": instagram}
 
 
@@ -189,10 +190,10 @@ def post_all(video, t, done=None, video_url=None, log=print):
         try:
             res = instagram(video, t, video_url) if name == "instagram" else POSTERS[name](video, t)
             done[name] = res
-            log(f"{name.capitalize()}: posted {res.get('url', '')}{res.get('note', '')}")
+            log(f"{NICE[name]}: posted {res.get('url', '')}{res.get('note', '')}")
         except Exception as e:  # keep going with the next platform
             done[name] = {"error": str(e)[:500], "at": time.strftime("%Y-%m-%d %H:%M")}
-            log(f"{name.capitalize()}: FAILED: {str(e)[:500]}")
+            log(f"{NICE[name]}: FAILED: {str(e)[:500]}")
     return done
 
 
@@ -202,7 +203,7 @@ def check_accounts(log=print):
     names = enabled()
     for name in ("youtube", "facebook", "instagram"):
         if name not in names:
-            log(f"{name.capitalize()}: skipped (secrets not added)")
+            log(f"{NICE[name]}: skipped (secrets not added)")
     for name in names:
         try:
             if name == "youtube":
@@ -216,10 +217,10 @@ def check_accounts(log=print):
             else:
                 who = "@" + ok(requests.get(f"{GRAPH}/{env('IG_USER_ID')}", params={"fields": "username",
                                "access_token": env("FB_PAGE_TOKEN")}, timeout=30), "Instagram account")["username"]
-            log(f"{name.capitalize()}: keys OK, posting as {who}")
+            log(f"{NICE[name]}: keys OK, posting as {who}")
         except Exception as e:
             good = False
-            log(f"{name.capitalize()}: keys NOT working: {str(e)[:400]}")
+            log(f"{NICE[name]}: keys NOT working: {str(e)[:400]}")
     return good
 
 
