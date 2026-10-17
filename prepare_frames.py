@@ -29,7 +29,7 @@ from wm_detect import has_watermark
 GALLERY = "https://youmind.com/seedance-2-5-prompts/explore"
 HOW_MANY = 4          # candidates; the routine double-checks them and uses the first 2 clean ones
 KEEP_DAYS = 7         # delete older days to keep the repo small
-MAX_SECONDS = 140     # X's video limit (2:20) for normal accounts; Dola's 30 s limit is handled by the routine
+MAX_SECONDS = 3600    # any length is fine; this only guards against hour-long files
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 TZ = dt.timezone(dt.timedelta(hours=5, minutes=45))  # Nepal
 
@@ -150,13 +150,14 @@ def frame_grids(path, out_dir, dur, w, h):
     tile_w = 400
     stamp = "drawtext=text='%{pts\\:hms}':x=6:y=6:fontsize=22:fontcolor=yellow:box=1:boxcolor=black@0.65"
     per_img = 30
-    n = int(dur * 2) + 1
+    step = 0.5 if dur <= 60 else 1 if dur <= 150 else 2 if dur <= 300 else 4  # seconds between frames
+    n = int(dur / step) + 1
     files = []
     for k in range((n + per_img - 1) // per_img):
-        start = k * per_img / 2
+        start = k * per_img * step
         f = os.path.join(out_dir, f"frames_{k + 1}.jpg")
         run(["ffmpeg", "-v", "error", "-y", "-ss", f"{start}", "-i", path, "-vf",
-             f"fps=2,setpts=PTS+{start}/TB,scale={tile_w}:-2,{stamp},tile=6x5", "-frames:v", "1",
+             f"fps={1 / step},setpts=PTS+{start}/TB,scale={tile_w}:-2,{stamp},tile=6x5", "-frames:v", "1",
              "-q:v", "4", f])
         if os.path.exists(f):
             files.append(os.path.basename(f))
@@ -167,13 +168,14 @@ def text_strips(path, out_dir, dur, w, h):
     """Bottom 22% of the frame, every 1s, large enough to read subtitles and on-screen text."""
     stamp = "drawtext=text='%{pts\\:hms}':x=6:y=6:fontsize=20:fontcolor=yellow:box=1:boxcolor=black@0.65"
     per_img = 16
-    n = int(dur) + 1
+    step = 1 if dur <= 60 else 2 if dur <= 180 else 4  # seconds between strips
+    n = int(dur / step) + 1
     files = []
     for k in range((n + per_img - 1) // per_img):
-        start = k * per_img
+        start = k * per_img * step
         f = os.path.join(out_dir, f"text_{k + 1}.jpg")
         run(["ffmpeg", "-v", "error", "-y", "-ss", f"{start}", "-i", path, "-vf",
-             f"fps=1,setpts=PTS+{start}/TB,crop=iw:ih*0.22:0:ih*0.78,scale=800:-2,{stamp},tile=2x8",
+             f"fps={1 / step},setpts=PTS+{start}/TB,crop=iw:ih*0.22:0:ih*0.78,scale=800:-2,{stamp},tile=2x8",
              "-frames:v", "1", "-q:v", "4", f])
         if os.path.exists(f):
             files.append(os.path.basename(f))
@@ -219,7 +221,7 @@ def main():
             if dur > MAX_SECONDS:
                 os.remove(vid)
                 os.rmdir(out_dir)
-                used.append(url)  # too long to post on X; never pick it again
+                used.append(url)  # absurdly long; never pick it again
                 print(f"  skip (too long, {dur:.0f}s): {d['title']}")
                 continue
             wm, wm_info = has_watermark(vid)

@@ -3,11 +3,10 @@ name: Post to X
 on:
   push:
     paths:
-      - prompts/x/**          # the morning routine saved today's posts: post video 1 now, video 2 at 13:30
-  schedule:                   # backups, in case a run above didn't happen (GitHub sometimes skips these too)
-    - cron: "45 3 * * *"      # 09:30 Nepal: video 1 if still not posted
-    - cron: "15 8 * * *"      # 14:00 Nepal: video 2 if still not posted
-    - cron: "45 13 * * *"     # 19:30 Nepal: last try for video 2
+      - prompts/x/**          # the morning routine saved today's post: post it now
+  schedule:                   # backups, in case the run above didn't happen (GitHub sometimes skips these too)
+    - cron: "45 3 * * *"      # 09:30 Nepal
+    - cron: "15 8 * * *"      # 14:00 Nepal
   workflow_dispatch:
     inputs:
       dry_run:
@@ -25,7 +24,7 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 30
     env:
       X_API_KEY: ${{ secrets.X_API_KEY }}
       X_API_SECRET: ${{ secrets.X_API_SECRET }}
@@ -40,7 +39,7 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           pip install -q requests requests-oauthlib opencv-python-headless numpy
 
-      - name: Post video 1
+      - name: Post today's video
         run: python3 post_to_x.py --slot 1 $DRY
 
       - name: Save
@@ -51,16 +50,3 @@ jobs:
           git add posted.json 2>/dev/null || true
           git diff --cached --quiet || (git commit -m "Posted to X" && git pull --rebase && git push)
 
-      - name: Post video 2 (at 13:30 Nepal time)
-        run: |
-          git pull -q --rebase || true
-          if [ -n "$DRY" ]; then python3 post_to_x.py --slot 2 $DRY; \
-          elif [ "$(TZ=Asia/Kathmandu date +%H%M)" -lt 1330 ] && [ "${{ github.event_name }}" = "schedule" ]; then \
-            echo "Backup run before 13:30: leaving video 2 for later."; \
-          else python3 post_to_x.py --slot 2 --wait-until 13:30; fi
-
-      - name: Save again
-        if: always()
-        run: |
-          git add posted.json 2>/dev/null || true
-          git diff --cached --quiet || (git commit -m "Posted to X" && git pull --rebase && git push)
