@@ -232,7 +232,7 @@ def dispatch_next_run():
 
 def cross_texts(job):
     from cross_post import texts
-    return texts(job.get("caption", ""), job["meta"].get("x_post")),
+    return texts(job.get("caption", ""), job["meta"].get("x_post") or "",
                  public_prompt(job["prompt"]), public_prompt(job.get("prompt_short") or job["prompt"]))
 
 
@@ -244,9 +244,16 @@ def needs_cross(entry):
 
 def cross_post(key, job, video, entry):
     """Post the same video to YouTube, Facebook and Instagram; never stops the X flow."""
-    from cross_post import post_all
+    from cross_post import post_all, vertical
     try:
-        entry["other"] = post_all(video, cross_texts(job), entry.get("other"), job["meta"].get("video_url"),
+        try:
+            tall = vertical(video, job.get("caption", ""), os.path.dirname(video))  # 9:16 unless it already is
+            log(f"[{key}] " + ("Made a 9:16 version for YouTube/Facebook/Instagram" if tall != video
+                               else "Already 9:16: posting it as is"))
+        except Exception as e:  # never lose the post over the reframe
+            log(f"[{key}] Couldn't make the 9:16 version ({e}); posting the original shape")
+            tall = video
+        entry["other"] = post_all(tall, cross_texts(job), entry.get("other"), job["meta"].get("video_url"),
                                   log=lambda m: log(f"[{key}] {m}"))
     except Exception as e:
         log(f"[{key}] Cross-posting failed: {e}")
