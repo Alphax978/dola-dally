@@ -17,8 +17,9 @@ jobs:
           URL=$(python3 -c "import json;print(json.load(open('$DIR/meta.json'))['video_url'])")
           curl -sSL -A "Mozilla/5.0" -o /tmp/in.mp4 "$URL"
           O="-c:v libx264 -preset medium -crf 23 -r 30 -c:a aac -b:a 128k -movflags +faststart"
-          ffmpeg -v error -y -i /tmp/in.mp4 -vf "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,setsar=1" $O previews/crop_fill.mp4
-          ffmpeg -v error -y -i /tmp/in.mp4 -vf "scale=720:1280:force_original_aspect_ratio=decrease,pad=720:1280:(ow-iw)/2:(oh-ih)/2:black,setsar=1" $O previews/black_bars.mp4
+          for Z in 140 180; do   # video zoomed to Z% of full width, sides trimmed, smaller black bars
+            ffmpeg -v error -y -i /tmp/in.mp4 -vf "scale=720*$Z/100:-2,crop=720:ih,pad=720:1280:0:(oh-ih)/2:black,setsar=1" $O previews/black_bars_zoom$Z.mp4
+          done
           ls -la previews
       - name: Save
         run: |
