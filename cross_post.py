@@ -211,13 +211,24 @@ def instagram(video, t, video_url=None):
 
 # ---------- all together ----------
 
+def save_tiktok_caption(caption, key):
+    """Drafts can't carry a caption: keep the last few on the site's copy page (docs/tiktok.html)."""
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs", "tiktok", "captions.json")
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    try:
+        items = json.load(open(p, encoding="utf-8"))
+    except Exception:
+        items = []
+    items = [i for i in items if i.get("key") != key]
+    items.insert(0, {"key": key or time.strftime("%Y-%m-%d %H:%M"), "caption": caption})
+    json.dump(items[:6], open(p, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+
+
 def tiktok_post(video, t):
     import tiktok
     caption = t["instagram"]  # same caption as Instagram (hook, credit, prompt, hashtags; max 2,200)
-    if tiktok.mode() == "draft":  # drafts can't carry a caption, so keep it where it's easy to copy
-        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prompts", "tiktok_caption.txt")
-        os.makedirs(os.path.dirname(p), exist_ok=True)
-        open(p, "w", encoding="utf-8").write(caption + "\n")
+    if tiktok.mode() == "draft":
+        save_tiktok_caption(caption, t.get("key"))
     return tiktok.post(video, caption)
 
 

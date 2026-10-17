@@ -160,7 +160,7 @@ def post(video, caption):
     if mode() == "direct":
         note = "" if privacy == "PUBLIC_TO_EVERYONE" else f" (posted as {privacy}: TikTok keeps it private until the app is audited)"
     else:
-        note = " (in your TikTok inbox: open TikTok, tap the notification and Post; caption is in prompts/tiktok_caption.txt)"
+        note = " (in your TikTok inbox: open TikTok, tap the notification and Post; copy the caption at https://alphax978.github.io/dola-dally/tiktok.html)"
     return {"id": publish_id, "url": "", "status": status, "note": note}
 
 

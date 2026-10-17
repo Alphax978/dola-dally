@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TikTok Captions</title>
+<style>
+:root{--bg:#fff;--ink:#111;--mute:#666;--card:#f4f4f6;--btn:#111;--btnink:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#0b0b0d;--ink:#eee;--mute:#999;--card:#1a1a1e;--btn:#fff;--btnink:#111}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,sans-serif;padding:20px 16px 40px}
+h1{font-size:22px;margin:0 0 4px} p.sub{color:var(--mute);margin:0 0 18px;font-size:14px}
+.c{background:var(--card);border-radius:14px;padding:14px;margin-bottom:14px}
+.k{font-weight:700;font-size:13px;color:var(--mute);margin-bottom:6px}
+.t{white-space:pre-wrap;overflow-wrap:anywhere;max-height:9.5em;overflow:hidden;font-size:14px}
+button{width:100%;margin-top:12px;padding:16px;font:700 17px system-ui;border:0;border-radius:12px;background:var(--btn);color:var(--btnink)}
+button.done{background:#1f9d55;color:#fff}
+</style></head><body>
+<h1>TikTok captions</h1>
+<p class="sub">Newest first. Tap Copy, then paste in your TikTok draft.</p>
+<div id="list">Loading…</div>
+<script>
+function label(k){var m=/^(\d{4}-\d{2}-\d{2})-(\d)$/.exec(k||"");return m?m[1]+" · video "+m[2]+(m[2]=="1"?" (4:30 PM)":" (9:30 PM)"):k;}
+fetch("tiktok/captions.json?t="+Date.now()).then(function(r){return r.json()}).then(function(items){
+  var L=document.getElementById("list");L.innerHTML="";
+  if(!items.length){L.textContent="No captions yet. They appear here when a video is sent to your TikTok inbox.";return;}
+  items.forEach(function(it,i){
+    var c=document.createElement("div");c.className="c";
+    var k=document.createElement("div");k.className="k";k.textContent=(i==0?"LATEST · ":"")+label(it.key);
+    var t=document.createElement("div");t.className="t";t.textContent=it.caption;
+    var b=document.createElement("button");b.textContent="Copy caption";
+    b.onclick=function(){
+      var done=function(){b.textContent="Copied ✓";b.className="done";setTimeout(function(){b.textContent="Copy caption";b.className=""},2500)};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(it.caption).then(done,fallback)}else fallback();
+      function fallback(){var a=document.createElement("textarea");a.value=it.caption;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove();done();}
+    };
+    c.append(k,t,b);L.appendChild(c);
+  });
+}).catch(function(){document.getElementById("list").textContent="Couldn't load captions. Pull down to refresh.";});
+</script></body></html>

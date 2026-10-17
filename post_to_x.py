@@ -206,8 +206,8 @@ def commit_posted(msg="Posted to X"):
     run("config", "user.name", "dola-daily bot")
     run("config", "user.email", "dola-daily@users.noreply.github.com")
     run("add", "posted.json", "used.json")
-    if os.path.exists(os.path.join(ROOT, "prompts", "tiktok_caption.txt")):
-        run("add", "prompts/tiktok_caption.txt")
+    if os.path.exists(os.path.join(ROOT, "docs", "tiktok", "captions.json")):
+        run("add", "docs/tiktok/captions.json")
     if run("diff", "--cached", "--quiet").returncode == 0:
         return
     run("commit", "-m", msg)
@@ -255,7 +255,9 @@ def cross_post(key, job, video, entry):
         except Exception as e:  # never lose the post over the reframe
             log(f"[{key}] Couldn't make the 9:16 version ({e}); posting the original shape")
             tall = video
-        entry["other"] = post_all(tall, cross_texts(job), entry.get("other"), job["meta"].get("video_url"),
+        texts = cross_texts(job)
+        texts["key"] = key
+        entry["other"] = post_all(tall, texts, entry.get("other"), job["meta"].get("video_url"),
                                   log=lambda m: log(f"[{key}] {m}"))
     except Exception as e:
         log(f"[{key}] Cross-posting failed: {e}")
