@@ -24,6 +24,8 @@ import sys
 import urllib.parse
 import urllib.request
 
+from wm_detect import has_watermark
+
 GALLERY = "https://youmind.com/seedance-2-5-prompts/explore"
 HOW_MANY = 2          # one for today plus one backup in case the first has to be skipped
 KEEP_DAYS = 7         # delete older days to keep the repo small
@@ -219,6 +221,13 @@ def main():
                 os.rmdir(out_dir)
                 used.append(url)  # too long for 2 Dola parts; never pick it again
                 print(f"  skip (too long, {dur:.0f}s): {d['title']}")
+                continue
+            wm, wm_info = has_watermark(vid)
+            if wm:
+                os.remove(vid)
+                os.rmdir(out_dir)
+                used.append(url)  # has a burned-in watermark; never pick it
+                print(f"  skip (watermark {wm_info}): {d['title']}")
                 continue
             d.update(duration=round(dur, 2), width=w, height=h, cuts=cut_times(vid),
                      frame_grids=frame_grids(vid, out_dir, dur, w, h),

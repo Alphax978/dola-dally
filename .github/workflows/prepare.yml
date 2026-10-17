@@ -23,7 +23,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install ffmpeg
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
+          pip install -q opencv-python-headless numpy
 
       - name: Download videos and make frame grids
         run: python3 prepare_frames.py
