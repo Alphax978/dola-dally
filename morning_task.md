@@ -16,7 +16,7 @@ STEP 1 — Get today's frames. A GitHub Action in the user's PUBLIC repo Alphax9
   1. Write the current UTC date and time into run-now.txt (replace its contents), then: git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add run-now.txt; git commit -m "Start frames run"; git push origin main. Pushing a change to run-now.txt starts the Action. The commit message must be exactly that one line (no trailers, no links).
   2. Wait for it: every 60 seconds run git pull --ff-only origin main and check for days/<today>/index.json with at least one video. The Action usually takes 1-3 minutes. Wait up to 20 minutes.
   3. If it still isn't there after 20 minutes, stop: end with a final reply (and a push notification if that tool exists) saying "Today's frames didn't arrive: the GitHub Action failed or didn't start. Check Actions at https://github.com/Alphax978/dola-dally/actions, then press Run now on this routine." Leave prompts/today.md untouched and do nothing else. (youmind.com can't be reached from this environment, so there is no other fallback.)
-- Read days/<today's Nepal date>/index.json. Take the FIRST video in it (they are already in random order). Re-roll to the second one only if the first is sexual or graphically violent (gore). Do NOT skip a video because it features copyrighted characters, a franchise cast, or real people/celebrities; keep it and handle it in STEP 3.
+- Read days/<today's Nepal date>/index.json. Take the FIRST video in it (they are already in random order). Re-roll to the second one only if the first is sexual or graphically violent (gore). This is "video 1" (for Dola and the morning X post). If index.json lists a second video (and you didn't re-roll to it), that is "video 2" (for the afternoon X post); if you re-rolled, there is no video 2 today. Do NOT skip a video because it features copyrighted characters, a franchise cast, or real people/celebrities; keep it and handle it in STEP 3.
 
 STEP 2 — Study the video.
 - Read meta.json, then look at EVERY frames_N.jpg and text_N.jpg image with the Read tool. Use the cut times to find each shot's start and end. For each shot note: framing (wide/medium/close-up/POV/selfie), camera movement, who is in it and what they do, setting, light, and any on-screen text or subtitles (the text strips show spoken lines when the video has subtitles). Note the aspect ratio from width/height.
@@ -54,6 +54,12 @@ STEP 4 — Save the prompts to GitHub for Dola's scheduled task (it reads them f
       ----- END -----
   - prompts/today-parts.md — only for videos longer than 15 s: same DATE/STATUS/TITLE lines, then "PART 1 (generate as its own video):" with ----- START -----/----- END ----- around Part 1, then the same for PART 2.  For videos of 15 s or less, write "No parts today (single prompt)." instead.
   - prompts/<date>.md — a copy of today.md, as history.
+  - X posts (a GitHub Action posts each ORIGINAL video to X, credited to its creator, with our prompt as a reply): for video 1, and for video 2 if there is one, write prompts/x/<date>-1.json and prompts/x/<date>-2.json using python3 and json.dump(..., ensure_ascii=False, indent=1), never by hand-typing JSON. Fields:
+      "date": "<YYYY-MM-DD>", "slot": 1 or 2, "slug": <the video's slug from index.json>,
+      "caption": a hook line for the X post, at most 180 characters, no links, no hashtags, no @mentions, written about the clip (e.g. what makes it striking). The credit line "Original by @creator" and "My prompt to recreate it 👇" are added automatically, so don't include them.
+      "prompt": the complete prompt for that video (for video 1 the FULL 30s or SINGLE prompt from today.md; for video 2 write one complete replica prompt with the same STEP 2-3 care, full length, single prompt, no parts),
+      "prompt_short": the same prompt condensed to at most 1000 characters that still recreates the clip (style, characters, the key shots in order with rough timings, sound), without the "use seedance 2.5 for this" line.
+    For video 2, study its frames, text strips and creator_page.txt the same way as STEP 2 before writing.
 - git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add prompts; git commit -m "Prompts for <date>"; git push origin main (if rejected because the remote moved: git pull --rebase origin main, then push again once). Push nothing else: no other branches, no pull requests. Once main is pushed, nothing is left unpushed.
 - The commit message must be exactly that one line: no trailers, no Co-Authored-By, no session or chat links (the repo is public and the user does not want chat links in it).
 - Use no token, password or credentials of any kind. If the push fails (for example for lack of permission), don't look for a way around it: remember the exact error for the message and carry on.
@@ -75,6 +81,7 @@ For a longer video:
 <code block>
 **X post:** <caption under 280 characters, at most 2 hashtags, mentioning Dola AI>
 **Saved for Dola:** "✅ prompts/today.md updated" or "⚠️ Couldn't save for Dola: <exact error>"
+**X posts:** "✅ video 1 posts after this message, video 2 (<video 2 title>) at 1:30 PM" (or "✅ video 1 only today" / the error)
 **Next:** Upload the finished clip(s) from Dola here (Part 1 first if you used Option B) and I'll send back the video ready to post, with the watermark removed (and the parts joined).
 The two "Watch the original" links are required and must be the exact, full URLs.
 
