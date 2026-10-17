@@ -15,6 +15,8 @@ Secrets (GitHub repo -> Settings -> Secrets and variables -> Actions):
   X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET   (OAuth 1.0a, from developer.x.com)
 Each video gets exactly two posts: the video (hook, credit, "Prompt: ⤵️") and one reply with the
 full prompt. Without X Premium a long reply is refused, so it falls back to a short prompt.
+Right after X, the same video goes to YouTube, the Facebook Page and Instagram (cross_post.py).
+Running --slot N for a video already on X only fills in platforms that are missing or failed.
 """
 import argparse
 import datetime as dt
@@ -228,21 +230,54 @@ def dispatch_next_run():
     log(f"Handed over to a new run ({r.status_code}).")
 
 
-def post_slot(day, slot, dry_run=False):
-    """Post one video + its prompt reply. Returns 'posted', 'done-before', 'no-job', 'watermark' or 'dry'."""
+def cross_texts(job):
+    from cross_post import credit_line, texts
+    return texts(job.get("caption", ""), credit_line(creator_handle(job["meta"]), job["meta"].get("x_post")),
+                 public_prompt(job["prompt"]), public_prompt(job.get("prompt_short") or job["prompt"]))
+
+
+def needs_cross(entry):
+    from cross_post import enabled
+    other = entry.get("other") or {}
+    return [n for n in enabled() if not (isinstance(other.get(n), dict) and other[n].get("id"))]
+
+
+def cross_post(key, job, video, entry):
+    """Post the same video to YouTube, Facebook and Instagram; never stops the X flow."""
+    from cross_post import post_all
+    try:
+        entry["other"] = post_all(video, cross_texts(job), entry.get("other"), job["meta"].get("video_url"),
+                                  log=lambda m: log(f"[{key}] {m}"))
+    except Exception as e:
+        log(f"[{key}] Cross-posting failed: {e}")
+        return
+    save_posted(key, entry)
+    commit_posted("Posted to YouTube/Facebook/Instagram")
+
+
+def post_slot(day, slot, dry_run=False, retry_cross=False):
+    """Post one video + its prompt reply on X, then on YouTube/Facebook/Instagram.
+    Returns 'posted', 'done-before', 'no-job', 'watermark' or 'dry'."""
     key = f"{day}-{slot}"
-    if key in load_posted():
+    entry = load_posted().get(key)
+    if entry and not (retry_cross and entry.get("post_id") and needs_cross(entry)):
         return "done-before"
     job = load_job(day, slot)
     if not job:
         return "no-job"
-    text = main_text(job)
-    full, short = reply_texts(job)
-    log(f"[{key}] Main post ({x_len(text)} chars):\n{text}")
-    log(f"[{key}] Reply: full prompt {x_len(full)} chars (short fallback {x_len(short)} chars):\n{full[:300]}...")
 
     with tempfile.TemporaryDirectory() as tmp:
         video = get_video(job["meta"], tmp)
+        if entry:  # already on X: only fill in the platforms that are missing or failed
+            log(f"[{key}] Already on X; posting to: {', '.join(needs_cross(entry))}")
+            if not dry_run:
+                cross_post(key, job, video, entry)
+            return "done-before"
+
+        text = main_text(job)
+        full, short = reply_texts(job)
+        log(f"[{key}] Main post ({x_len(text)} chars):\n{text}")
+        log(f"[{key}] Reply: full prompt {x_len(full)} chars (short fallback {x_len(short)} chars):\n{full[:300]}...")
         from wm_detect import has_watermark  # last check: never post a watermarked video
         wm, info = has_watermark(os.path.join(tmp, "original.mp4"))
         if wm:
@@ -254,27 +289,34 @@ def post_slot(day, slot, dry_run=False):
             return "watermark"
         log(f"[{key}] Video ready: {os.path.getsize(video) // 1024} KB")
         if dry_run:
+            t = cross_texts(job)
+            log(f"[{key}] YouTube title: {t['title']}")
+            log(f"[{key}] Instagram caption ({len(t['instagram'])} chars):\n{t['instagram'][:600]}...")
             log(f"[{key}] Dry run: not posting.")
             return "dry"
         s = session()
         media_id = upload_video(s, video)
-    first = post(s, text, media_id=media_id)
-    # record right away: even if the reply fails, the video must never be posted twice
-    save_posted(key, {"post_id": first, "slug": job["slug"], "posted_at": dt.datetime.now(TZ).isoformat()})
-    mark_used(job["meta"].get("url"))
-    commit_posted()
-    log(f"[{key}] Posted: https://x.com/i/status/{first}")
-    time.sleep(2)
-    r = s.post(f"{API}/tweets", json={"text": full, "reply": {"in_reply_to_tweet_id": first}})
-    if r.status_code >= 300 and x_len(full) > 280:
-        # Long posts need X Premium; fall back to the short prompt in the same single reply.
-        log(f"[{key}] Full prompt was refused ({r.status_code}: {r.text[:200]}); posting the short version.")
-        r = s.post(f"{API}/tweets", json={"text": short, "reply": {"in_reply_to_tweet_id": first}})
-    reply_id = check(r, "prompt reply")["data"]["id"]
-    save_posted(key, {"post_id": first, "reply_id": reply_id, "slug": job["slug"],
-                      "posted_at": dt.datetime.now(TZ).isoformat()})
-    commit_posted()
-    log(f"[{key}] Done: video post + prompt reply.")
+        first = post(s, text, media_id=media_id)
+        # record right away: even if the reply fails, the video must never be posted twice
+        entry = {"post_id": first, "slug": job["slug"], "posted_at": dt.datetime.now(TZ).isoformat()}
+        save_posted(key, entry)
+        mark_used(job["meta"].get("url"))
+        commit_posted()
+        log(f"[{key}] Posted: https://x.com/i/status/{first}")
+        time.sleep(2)
+        r = s.post(f"{API}/tweets", json={"text": full, "reply": {"in_reply_to_tweet_id": first}})
+        if r.status_code >= 300 and x_len(full) > 280:
+            # Long posts need X Premium; fall back to the short prompt in the same single reply.
+            log(f"[{key}] Full prompt was refused ({r.status_code}: {r.text[:200]}); posting the short version.")
+            r = s.post(f"{API}/tweets", json={"text": short, "reply": {"in_reply_to_tweet_id": first}})
+        if r.status_code < 300:
+            entry["reply_id"] = r.json()["data"]["id"]
+            save_posted(key, entry)
+            commit_posted()
+            log(f"[{key}] Done on X: video post + prompt reply.")
+        else:
+            log(f"[{key}] X prompt reply failed: {r.status_code} {r.text[:300]}")
+        cross_post(key, job, video, entry)
     return "posted"
 
 
@@ -287,6 +329,8 @@ def auto(dry_run=False):
     """Post today's videos at their times, waiting (and handing over to new runs) as needed."""
     day = today()
     if dry_run:
+        from cross_post import check_accounts
+        check_accounts(log=log)
         for slot in SLOTS:
             log(f"[{day}-{slot}] {post_slot(day, slot, dry_run=True)}")
         return
@@ -322,7 +366,7 @@ def main():
     if a.auto:
         auto(a.dry_run)
     elif a.slot:
-        result = post_slot(a.day or today(), a.slot, a.dry_run)
+        result = post_slot(a.day or today(), a.slot, a.dry_run, retry_cross=True)
         log(result)
         if result == "watermark":
             sys.exit(1)

@@ -14,7 +14,7 @@ on:
         type: boolean
         default: true
       slot:
-        description: "Post this video now (1 or 2); leave empty to post on schedule"
+        description: "Post this video now (1 or 2); if it's already on X, only posts it where it's missing (YouTube/Facebook/Instagram). Leave empty to post on schedule"
         type: string
         default: ""
 
@@ -35,6 +35,12 @@ jobs:
       X_API_SECRET: ${{ secrets.X_API_SECRET }}
       X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
       X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+      YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+      YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+      YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+      FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+      FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+      IG_USER_ID: ${{ secrets.IG_USER_ID }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       DRY: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run == true || inputs.dry_run == 'true') && '--dry-run' || '' }}
     steps:
