@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: pip install -q opencv-python-headless numpy
       - run: PYTHONPATH=. python3 probe/probe.py
       - name: Save
         run: |
