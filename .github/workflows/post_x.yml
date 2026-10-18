@@ -1,13 +1,11 @@
 name: Post to X
 
 on:
-  schedule:                   # GitHub often starts these late and sometimes skips one, hence the backups.
-    - cron: "45 10 * * *"     # 16:30 Nepal: video 1
-    - cron: "0 11 * * *"      # 16:45 Nepal: backup
-    - cron: "30 11 * * *"     # 17:15 Nepal: backup
-    - cron: "45 15 * * *"     # 21:30 Nepal: video 2
-    - cron: "0 16 * * *"      # 21:45 Nepal: backup
-    - cron: "30 16 * * *"     # 22:15 Nepal: backup
+  schedule:                   # GitHub often starts these late or skips them, so try every 15 minutes
+    - cron: "45 10 * * *"             # 16:30 Nepal: video 1 ...
+    - cron: "0,15,30,45 11-12 * * *"  # ... retries until 18:30
+    - cron: "45 15 * * *"             # 21:30 Nepal: video 2 ...
+    - cron: "0,15,30,45 16-17 * * *"  # ... retries until 23:30
   workflow_dispatch:
     inputs:
       dry_run:
