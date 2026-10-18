@@ -107,19 +107,57 @@ def size(path):
     return (h, w) if rot in (90, 270) else (w, h)
 
 
-def vertical(video, workdir):
-    """A 9:16 copy for YouTube/Facebook/Instagram (zoom 100: the whole video, black bars above and below,
-    nothing cropped). Videos that are already 9:16 are returned unchanged."""
-    w, h = size(video)
-    if h / w >= 1.7:  # already 9:16 (1.78), allow small differences
-        return video
-    out = os.path.join(workdir, "vertical.mp4")
-    vf = ("scale=1080:1920:force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,"
-          "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black,setsar=1,format=yuv420p")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", video, "-vf", vf, "-map", "0:v", "-map", "0:a?",
-                    "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-r", "30",
-                    "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", out], check=True)
+# One high-quality H.264 encode, shared by X and the 9:16 version.
+QUALITY = ["-c:v", "libx264", "-preset", "slow", "-crf", "18", "-maxrate", "10M", "-bufsize", "20M",
+           "-profile:v", "high", "-pix_fmt", "yuv420p", "-fpsmax", "60", "-movflags", "+faststart"]
+
+
+def probe(path):
+    """(width, height, video codec, pixel format, audio codec or None)."""
+    o = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,codec_name,pix_fmt",
+                        "-of", "json", path], capture_output=True, text=True).stdout
+    st = json.loads(o).get("streams", [])
+    v = next((x for x in st if x.get("codec_type") == "video"), {})
+    a = next((x for x in st if x.get("codec_type") == "audio"), None)
+    w, h = size(path)
+    return w, h, v.get("codec_name"), v.get("pix_fmt"), (a or {}).get("codec_name")
+
+
+def encode(src, out, vf):
+    """Encode once with QUALITY; keeps the audio (AAC 128k), adds a silent track if there is none."""
+    has_audio = probe(src)[4] is not None
+    cmd = ["ffmpeg", "-v", "error", "-y", "-i", src]
+    if not has_audio:  # some players and platforms choke on video without an audio track
+        cmd += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-shortest"]
+    cmd += ["-map", "0:v:0", "-map", "0:a:0" if has_audio else "1:a:0", "-vf", vf, *QUALITY,
+            "-c:a", "aac", "-b:a", "128k", "-ar", "48000", out]
+    subprocess.run(cmd, check=True)
     return out
+
+
+def vertical(original, workdir):
+    """The 9:16 version for YouTube/Facebook/Instagram/TikTok, made straight from the ORIGINAL file.
+
+    Already 9:16: sent untouched when it's a normal H.264 file of at most 1080x1920 (only repackaged,
+    no quality loss); otherwise re-encoded once to 1080x1920.
+    Any other shape: the whole video, black bars above and below (zoom 100, nothing cropped), one encode.
+    """
+    w, h, vcodec, pix, acodec = probe(original)
+    out = os.path.join(workdir, "vertical.mp4")
+    fit = "scale=1080:1920:force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,setsar=1"
+    if h / w >= 1.7:  # already 9:16 (1.78), allow small differences
+        if vcodec == "h264" and pix == "yuv420p" and w <= 1080 and h <= 1920:
+            if acodec in ("aac", None):
+                cmd = ["ffmpeg", "-v", "error", "-y", "-i", original]
+                if acodec is None:  # add a silent track; the picture is copied, not re-encoded
+                    cmd += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-shortest",
+                            "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "128k"]
+                else:
+                    cmd += ["-map", "0:v:0", "-map", "0:a:0", "-c", "copy"]
+                subprocess.run(cmd + ["-movflags", "+faststart", out], check=True)
+                return out
+        return encode(original, out, fit + ",format=yuv420p")
+    return encode(original, out, fit + ",pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black,format=yuv420p")
 
 
 # ---------- YouTube ----------

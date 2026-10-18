@@ -94,23 +94,20 @@ def reply_texts(job):
 
 # ---------- video ----------
 
+# fit inside 1920x1080 (landscape) or 1080x1920 (portrait/square), never upscale, even sizes
+X_VF = ("scale='min(iw,if(gte(iw,ih),1920,1080))':'min(ih,if(gte(iw,ih),1080,1920))'"
+        ":force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,setsar=1,format=yuv420p")
+
+
 def get_video(meta, workdir):
     raw = os.path.join(workdir, "original.mp4")
     req = urllib.request.Request(meta["video_url"], headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=300) as r, open(raw, "wb") as f:
         f.write(r.read())
     out = os.path.join(workdir, "post.mp4")
-    # X-safe: H.264 + AAC, at most 1280 px on the long side, even dimensions, faststart.
-    vf = "scale='if(gt(iw,ih),min(1280,iw),-2)':'if(gt(iw,ih),-2,min(1280,ih))',setsar=1,format=yuv420p"
-    has_audio = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries",
-                                "stream=index", "-of", "csv=p=0", raw], capture_output=True, text=True).stdout.strip()
-    cmd = ["ffmpeg", "-v", "error", "-y", "-i", raw]
-    if not has_audio:  # X plays silent clips fine, but some players choke on no audio track
-        cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-shortest"]
-    cmd += ["-vf", vf, "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-r", "30",
-            "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", out]
-    subprocess.run(cmd, check=True)
-    return out
+    # X: original shape, full resolution up to 1920x1080 (or 1080x1920), one high-quality encode.
+    from cross_post import encode
+    return encode(raw, out, X_VF)
 
 
 # ---------- X API (OAuth 1.0a user context) ----------
@@ -234,9 +231,12 @@ def cross_post(key, job, video, entry):
     from cross_post import post_all, vertical
     try:
         try:
-            tall = vertical(video, os.path.dirname(video))  # 9:16 with black bars, unless it already is 9:16
-            log(f"[{key}] " + ("Made a 9:16 version (black bars) for YouTube/Facebook/Instagram" if tall != video
-                               else "Already 9:16: posting it as is"))
+            original = os.path.join(os.path.dirname(video), "original.mp4")  # make it from the source, not the X copy
+            tall = vertical(original if os.path.exists(original) else video, os.path.dirname(video))
+            from cross_post import size as _size
+            ow, oh = _size(original if os.path.exists(original) else video)
+            log(f"[{key}] " + ("Already 9:16: sending the original as is" if oh / ow >= 1.7
+                               else f"Made a 9:16 version (black bars) from the {ow}x{oh} original"))
         except Exception as e:  # never lose the post over the reframe
             log(f"[{key}] Couldn't make the 9:16 version ({e}); posting the original shape")
             tall = video

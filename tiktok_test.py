@@ -23,7 +23,8 @@ if not job:  # no prompts today yet: use the newest saved one
     job = p.load_job(day, slot)
 print(f"Testing with {day} video {slot}: {job['meta']['title']}")
 with tempfile.TemporaryDirectory() as tmp:
-    video = cross_post.vertical(p.get_video(job["meta"], tmp), tmp)
+    p.get_video(job["meta"], tmp)
+    video = cross_post.vertical(os.path.join(tmp, "original.mp4"), tmp)
     t = p.cross_texts(job)
     t["key"] = f"test-{day}-{slot}-{os.environ['TIKTOK_MODE']}"
     if tiktok.mode() == "buffer":
