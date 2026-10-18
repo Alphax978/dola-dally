@@ -43,7 +43,7 @@ jobs:
       IG_USER_ID: ${{ secrets.IG_USER_ID }}
       TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
       TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
-      TIKTOK_MODE: ${{ vars.TIKTOK_MODE }}
+      TIKTOK_MODE: ${{ vars.TIKTOK_MODE || secrets.TIKTOK_MODE }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       DRY: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run == true || inputs.dry_run == 'true') && '--dry-run' || '' }}
     steps:
