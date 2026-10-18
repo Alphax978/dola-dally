@@ -12,4 +12,6 @@ dola-daily is a personal automation that posts AI videos to the owner's own soci
 
 **Removing access:** you can revoke access at any time at https://myaccount.google.com/permissions (Google/YouTube) or in your Meta, X and TikTok app settings.
 
+**Data deletion:** dola-daily stores no personal data from anyone. To remove its access to your accounts, revoke it in Facebook (Settings → Business integrations), Instagram (Settings → Apps and websites), Google (https://myaccount.google.com/permissions) or TikTok (Settings → Security → Apps). To request deletion of anything else, open an issue at https://github.com/Alphax978/dola-dally/issues and it will be removed within 30 days.
+
 **Contact:** open an issue at https://github.com/Alphax978/dola-dally/issues
