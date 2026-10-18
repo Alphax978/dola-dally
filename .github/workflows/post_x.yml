@@ -1,11 +1,10 @@
 name: Post to X
 
 on:
-  schedule:                   # GitHub often starts these late or skips them, so try every 15 minutes
-    - cron: "45 10 * * *"             # 16:30 Nepal: video 1 ...
-    - cron: "0,15,30,45 11-12 * * *"  # ... retries until 18:30
-    - cron: "45 15 * * *"             # 21:30 Nepal: video 2 ...
-    - cron: "0,15,30,45 16-17 * * *"  # ... retries until 23:30
+  schedule:  # backup only: cron-job.org starts the posts at exactly 4:30 and 9:30 Nepal time.
+             # These retry every 15 min afterwards in case that call fails; a run stops at once if the video is already posted.
+    - cron: "0,15,30,45 11-12 * * *"  # 16:45 to 18:30 Nepal (video 1)
+    - cron: "0,15,30,45 16-17 * * *"  # 21:45 to 23:30 Nepal (video 2)
   workflow_dispatch:
     inputs:
       dry_run:
