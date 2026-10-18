@@ -1,0 +1,40 @@
+{
+  "url": "https://youmind.com/video-prompts/zombie-outbreak-train-cinematic-10179",
+  "slug": "zombie-outbreak-train-cinematic-10179",
+  "title": "Zombie Apocalypse Train Outbreak",
+  "video_url": "https://cms-assets.youmind.com/media/1788249774965_rm5aa9_Zombie-Apocalypse-Train-Outbreak.mp4",
+  "x_post": "https://x.com/doctorwasif/status/2094285140247896553",
+  "duration": 30.14,
+  "width": 1920,
+  "height": 1080,
+  "cuts": [
+    2.04,
+    3.79,
+    5.46,
+    6.21,
+    6.92,
+    8.12,
+    9.08,
+    10.54,
+    11.88,
+    13.83,
+    14.79,
+    15.67,
+    16.54,
+    17.75,
+    19.12,
+    20.54,
+    23.46,
+    25.04,
+    26.92,
+    28.17
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "url": "https://youmind.com/video-prompts/whimsical-fantasy-candy-animation-8031",
+  "slug": "whimsical-fantasy-candy-animation-8031",
+  "title": "Whimsical Fantasy Candy Workshop Animation",
+  "video_url": "https://cms-assets.youmind.com/media/1785309025164_xq4p5f_Whimsical-Fantasy-Candy-Workshop-Animation.mp4",
+  "x_post": "https://x.com/Caden_Flux/status/2082060465077981481",
+  "duration": 15.12,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    0.04,
+    2.29,
+    2.42,
+    2.54,
+    7.67,
+    8.08,
+    8.12,
+    9.92
+  ],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ]
+}
