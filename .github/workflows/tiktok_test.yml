@@ -7,6 +7,11 @@ on:
         description: "Which of today's videos (1 or 2)"
         default: "1"
         type: string
+      mode:
+        description: "buffer = through Zapier + Buffer (public); direct = TikTok API (private until audited)"
+        default: buffer
+        type: choice
+        options: [buffer, direct]
 permissions:
   contents: write
 jobs:
@@ -17,11 +22,17 @@ jobs:
       TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
       TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
       SLOT: ${{ inputs.slot }}
+      MODE: ${{ inputs.mode }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Install tools
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           pip install -q requests requests-oauthlib opencv-python-headless numpy cryptography
-      - name: Post to TikTok (direct)
-        run: python3 tiktok_test.py "$SLOT"
+      - name: Send to TikTok
+        run: python3 tiktok_test.py "$SLOT" "$MODE"
+      - name: Save the feed
+        run: |
+          git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"
+          git add docs/tiktok tiktok_token.enc 2>/dev/null; git commit -q -m "TikTok test [skip ci]" && git pull -q --rebase && git push -q || echo "nothing to save"

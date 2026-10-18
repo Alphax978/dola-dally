@@ -37,7 +37,7 @@ def enabled():
     if env("IG_USER_ID") and env("FB_PAGE_TOKEN"):
         out.append("instagram")
     import tiktok
-    if tiktok.configured():
+    if tiktok.mode() == "buffer" or tiktok.configured():
         out.append("tiktok")
     return out
 
@@ -228,8 +228,10 @@ def save_tiktok_caption(caption, key, credit=""):
 def tiktok_post(video, t):
     import tiktok
     caption = t["instagram"]  # same caption as Instagram (hook, prompt, hashtags; max 2,200)
-    if tiktok.mode() == "draft":
-        save_tiktok_caption(caption, t.get("key"), t.get("credit", ""))
+    save_tiktok_caption(caption, t.get("key"), t.get("credit", ""))  # caption + credit on the copy page
+    if tiktok.mode() == "buffer":
+        import buffer_feed
+        return buffer_feed.publish(video, caption, t.get("key") or time.strftime("%Y-%m-%d-%H%M"), t["title"])
     return tiktok.post(video, caption)
 
 
@@ -275,7 +277,10 @@ def check_accounts(log=print):
                          "access_token": env("FB_PAGE_TOKEN")}, timeout=30), "Facebook Page")["name"]
             elif name == "tiktok":
                 import tiktok
-                who = f"{tiktok.who(tiktok.access_token())} (mode: {tiktok.mode()})"
+                if tiktok.mode() == "buffer":
+                    who = "Buffer (via https://alphax978.github.io/dola-dally/tiktok/feed.xml) (mode: buffer)"
+                else:
+                    who = f"{tiktok.who(tiktok.access_token())} (mode: {tiktok.mode()})"
             else:
                 who = "@" + ok(requests.get(f"{GRAPH}/{env('IG_USER_ID')}", params={"fields": "username",
                                "access_token": env("FB_PAGE_TOKEN")}, timeout=30), "Instagram account")["username"]

@@ -7,6 +7,7 @@ The sign-in (refresh token) is kept in tiktok_token.enc, encrypted with a key ma
 TIKTOK_CLIENT_SECRET, so it's safe in the public repo and survives TikTok's token rotation.
 
 Modes (repo variable TIKTOK_MODE):
+  buffer           public and automatic through Buffer (see buffer_feed.py)
   draft  (default) video goes to your TikTok inbox; you tap Post in the app (public right away)
   direct           posts straight to your profile; private until TikTok audits the app
 
@@ -41,7 +42,8 @@ def configured():
 
 
 def mode():
-    return "direct" if env("TIKTOK_MODE").lower() == "direct" else "draft"
+    m = env("TIKTOK_MODE").lower()
+    return m if m in ("direct", "buffer") else "draft"
 
 
 # ---------- token storage ----------

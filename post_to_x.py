@@ -203,8 +203,9 @@ def commit_posted(msg="Posted to X"):
     run("config", "user.name", "dola-daily bot")
     run("config", "user.email", "dola-daily@users.noreply.github.com")
     run("add", "posted.json", "used.json")
-    if os.path.exists(os.path.join(ROOT, "docs", "tiktok", "captions.json")):
-        run("add", "docs/tiktok/captions.json")
+    for f in ("docs/tiktok/captions.json", "docs/tiktok/feed.xml"):
+        if os.path.exists(os.path.join(ROOT, f)):
+            run("add", f)
     if run("diff", "--cached", "--quiet").returncode == 0:
         return
     run("commit", "-m", msg)
