@@ -57,7 +57,7 @@ STEP 4 — Save to GitHub (Dola's scheduled task and the X post read these files
       "prompt": that video's full prompt (for video 2, the same as in today.md),
       "prompt_short": the same prompt condensed to at most 270 characters (style, main character, the key action, mood), without the "use seedance 2.5 for this" line. It is only used if X refuses the full prompt.
   - If an old prompts/today-parts.md exists, delete it (git rm).
-- git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add -A prompts used.json; git commit -m "Prompts for <date>"; git push origin main (if rejected because the remote moved: git pull --rebase origin main, then push again once). Push nothing else: no other branches, no pull requests. Once main is pushed, nothing is left unpushed. Pushing prompts/x/ starts the X posting run, which posts video 1 at 4:30 PM and video 2 at 9:30 PM.
+- git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add -A prompts used.json; git commit -m "Prompts for <date>"; git push origin main (if rejected because the remote moved: git pull --rebase origin main, then push again once). Push nothing else: no other branches, no pull requests. Once main is pushed, nothing is left unpushed. GitHub's schedule then posts video 1 at 4:30 PM and video 2 at 9:30 PM Nepal time.
 - The commit message must be exactly that one line: no trailers, no Co-Authored-By, no session or chat links (the repo is public and the user does not want chat links in it).
 - Use no token, password or credentials of any kind. If the push fails (for example for lack of permission), don't look for a way around it: remember the exact error for the message and carry on.
 

@@ -1,12 +1,13 @@
 name: Post to X
 
 on:
-  push:
-    paths:
-      - prompts/x/**          # the morning routine saved today's posts: start the day's posting run
-  schedule:                   # backups, in case a run didn't start (GitHub sometimes skips these)
-    - cron: "0 11 * * *"      # 16:45 Nepal
-    - cron: "0 16 * * *"      # 21:45 Nepal
+  schedule:                   # GitHub often starts these late and sometimes skips one, hence the backups.
+    - cron: "45 10 * * *"     # 16:30 Nepal: video 1
+    - cron: "0 11 * * *"      # 16:45 Nepal: backup
+    - cron: "30 11 * * *"     # 17:15 Nepal: backup
+    - cron: "45 15 * * *"     # 21:30 Nepal: video 2
+    - cron: "0 16 * * *"      # 21:45 Nepal: backup
+    - cron: "30 16 * * *"     # 22:15 Nepal: backup
   workflow_dispatch:
     inputs:
       dry_run:
@@ -20,7 +21,6 @@ on:
 
 permissions:
   contents: write
-  actions: write              # lets a waiting run hand over to a new one
 
 concurrency:
   group: post-x
@@ -29,7 +29,7 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 330
+    timeout-minutes: 60
     env:
       X_API_KEY: ${{ secrets.X_API_KEY }}
       X_API_SECRET: ${{ secrets.X_API_SECRET }}

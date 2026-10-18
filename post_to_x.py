@@ -184,7 +184,6 @@ def save_posted(key, info):
 
 
 SLOTS = {1: "16:30", 2: "21:30"}  # Nepal time: Europe's afternoon, then US late morning
-MAX_WAIT = 5 * 3600                # GitHub stops a job at 6 hours, so wait at most 5 per run
 
 
 def mark_used(url):
@@ -215,19 +214,6 @@ def commit_posted(msg="Posted to X"):
             return
         time.sleep(5)
     log("Warning: couldn't push posted.json")
-
-
-def dispatch_next_run():
-    """Start a fresh run of this workflow to keep waiting (allowed with the built-in GITHUB_TOKEN)."""
-    import requests
-    repo, token = os.environ.get("GITHUB_REPOSITORY"), os.environ.get("GITHUB_TOKEN")
-    if not repo or not token:
-        log("Can't hand over to a new run (not on GitHub); the backup schedule will post it.")
-        return
-    r = requests.post(f"https://api.github.com/repos/{repo}/actions/workflows/post_x.yml/dispatches",
-                      headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
-                      json={"ref": "main", "inputs": {"dry_run": "false"}}, timeout=30)
-    log(f"Handed over to a new run ({r.status_code}).")
 
 
 def cross_texts(job):
@@ -339,7 +325,11 @@ def due_time(day, slot):
 
 
 def auto(dry_run=False):
-    """Post today's videos at their times, waiting (and handing over to new runs) as needed."""
+    """Post every video of today whose time has come and isn't posted yet, then stop.
+
+    GitHub's schedule starts this at 16:30 and 21:30 Nepal time (often a bit late), with backups after.
+    A run that starts up to 10 minutes early waits for the exact time.
+    """
     day = today()
     if dry_run:
         from cross_post import check_accounts
@@ -347,26 +337,22 @@ def auto(dry_run=False):
         for slot in SLOTS:
             log(f"[{day}-{slot}] {post_slot(day, slot, dry_run=True)}")
         return
-    started = time.time()
-    while True:
-        posted = load_posted()
-        pending = [s for s in SLOTS if f"{day}-{s}" not in posted and load_job(day, s)]
-        if not pending:
-            log("Nothing left to post today.")
-            return
-        slot = pending[0]
-        wait = (due_time(day, slot) - dt.datetime.now(TZ)).total_seconds()
-        if wait <= 0:
-            log(f"[{day}-{slot}] {post_slot(day, slot)}")
+    posted = load_posted()
+    for slot in SLOTS:
+        if f"{day}-{slot}" in posted:
             continue
-        budget = MAX_WAIT - (time.time() - started)
-        if wait > budget:
-            log(f"Next post (video {slot}) is at {SLOTS[slot]}; waiting {budget / 3600:.1f} h, then a new run takes over.")
-            time.sleep(max(0, budget))
-            dispatch_next_run()
-            return
-        log(f"Waiting until {SLOTS[slot]} Nepal time for video {slot} ({wait / 60:.0f} min)...")
-        time.sleep(wait)
+        if not load_job(day, slot):
+            log(f"[{day}-{slot}] no prompts saved for this video yet")
+            continue
+        wait = (due_time(day, slot) - dt.datetime.now(TZ)).total_seconds()
+        if wait > 600:
+            log(f"[{day}-{slot}] not due until {SLOTS[slot]} Nepal time")
+            continue
+        if wait > 0:
+            log(f"[{day}-{slot}] waiting {wait / 60:.0f} min for {SLOTS[slot]}")
+            time.sleep(wait)
+        log(f"[{day}-{slot}] {post_slot(day, slot)}")
+    log("Done.")
 
 
 def main():
