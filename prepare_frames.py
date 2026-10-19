@@ -2,7 +2,7 @@
 """
 prepare_frames.py: runs on GitHub Actions every morning.
 
-Picks random videos from YouMind and ReelCine (rotating by day), downloads them, and saves
+Picks random videos from YouMind, ReelCine and Domer (rotating by day), downloads them, and saves
 timestamped frame grids so Claude can study each video shot by shot without a browser.
 
 Output (committed to the repo):
@@ -204,6 +204,44 @@ def reelcine_details(url):
     }
 
 
+# ---------- Domer (automated access permitted by Domer support, Oct 2026) ----------
+
+DOMER = "https://domer.io"
+
+
+def domer_items():
+    """Video prompt pages (domer.io/prompts/seedance-N) from Domer's public sitemap."""
+    xml = get(DOMER + "/sitemap-prompt-0.xml")
+    return sorted(set(re.findall(r"<loc>\s*(https://domer\.io/prompts/seedance-\d+)\s*</loc>", xml)))
+
+
+def domer_details(url):
+    page = get(url)
+    num = url.rstrip("/").rsplit("-", 1)[-1]
+    title = re.search(r"<title>(.*?)</title>", page, re.S)
+    title = html.unescape(title.group(1)).split(" | ")[0].strip() if title else ""
+    media = re.findall(r'https://storage\.brightvectorlabs\.com/prompts/[^"\'\s<>\\]+?\.mp4', page)
+    own = [m for m in media if m.rsplit("/", 1)[-1] == f"{num}.mp4"]  # the page's own clip (others are related prompts)
+    x = (re.search(r'"sourceUrl\\?"\s*:\s*\\?"(https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+)', page)
+         or re.search(r'(https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+)', page))
+    text = page_text(page, limit=60000)
+    model = re.search(r"\bModel\s+((?:Seedance|Kling|Veo|Wan|MiniMax|Grok Imagine|Sora|Hailuo|Vidu)[\w .]{0,8}?)\s+Categor", text)
+    prompt = re.search(r"Copy Use this Prompt\s+(.*?)\s+How to Use This Prompt", text, re.S)
+    if prompt:  # put the creator's prompt first so it's easy to find
+        text = "CREATOR'S PROMPT:\n" + prompt.group(1).strip() + "\n\n" + text
+    name = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:50] or "video"
+    return {
+        "url": url,
+        "source": "domer",
+        "slug": f"domer-{num}-{name}",
+        "title": title,
+        "video_url": own[0] if own else None,
+        "x_post": x.group(1) if x else None,
+        "model": model.group(1).strip() if model else None,
+        "page_text": text[:60000],
+    }
+
+
 def run(cmd):
     return subprocess.run(cmd, capture_output=True, text=True)
 
@@ -258,7 +296,7 @@ def text_strips(path, out_dir, dur, w, h):
     return files
 
 
-SOURCES = ["youmind", "reelcine"]  # rotated by day: each day one source goes first, the other fills any gap
+SOURCES = ["youmind", "reelcine", "domer"]  # rotated by day: each day one source goes first, the others fill any gap
 
 
 def candidates(today, used):
@@ -287,6 +325,18 @@ def candidates(today, used):
                     continue
                 time.sleep(1)  # be gentle with their server
                 yield u, reelcine_details
+        elif src == "domer":
+            try:
+                items = domer_items()
+            except Exception as e:
+                print(f"  couldn't read Domer's sitemap: {e}")
+                continue
+            fresh = [u for u in items if u not in used]
+            print(f"Domer: {len(items)} videos, {len(fresh)} unused")
+            random.shuffle(fresh)
+            for u in fresh[:40]:  # at most 40 page visits a day; only a few are needed
+                time.sleep(1)  # be gentle with their server
+                yield u, domer_details
 
 
 def main():

@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 probe/probe.py
+      - run: pip install -q opencv-python-headless numpy && python3 probe/probe.py
       - name: Save
         run: |
           git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"

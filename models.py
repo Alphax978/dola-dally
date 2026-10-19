@@ -1,4 +1,4 @@
-"""models.py: which AI video model made a clip, read from its source page (YouMind or ReelCine)."""
+"""models.py: which AI video model made a clip, read from its source page (YouMind, ReelCine or Domer)."""
 import os
 import re
 
