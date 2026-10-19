@@ -1,0 +1,208 @@
+{
+ "https://domer.io/explore/seedance-2-5": {
+  "status": 200,
+  "len": 1105883,
+  "mp4_count": 56,
+  "mp4_sample": [
+   "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-before.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-after.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-before.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-after.mp4"
+  ],
+  "x_count": 0,
+  "entry_links": [
+   "/prompts/media/image",
+   "/prompts/media/video",
+   "/prompts/models/gptimage",
+   "/prompts/models/nanobanana",
+   "/prompts/models/seedance-2",
+   "/prompts/categories/photography",
+   "/prompts/categories/product-and-brand",
+   "/prompts/categories/poster-design",
+   "/prompts/categories/illustration-and-3d",
+   "/prompts/categories/food-and-drink",
+   "/prompts/categories/ui-and-graphic",
+   "/prompts/models/seedance-2-5",
+   "/prompts/models/minimax-h3",
+   "/prompts/models/nano-banana-pro",
+   "/prompts/models/grok-imagine",
+   "/explore/seedance-2-5",
+   "/explore/seedance-2-0",
+   "/explore/gpt-image-2",
+   "/explore/visual-effects",
+   "/explore/camera-control",
+   "/explore/viral-trends",
+   "/explore/effects-by-tags",
+   "/explore/ugc-ad-templates",
+   "/explore/commercial",
+   "/explore/nano-banana-pro",
+   "/explore/minimax-h3",
+   "/explore/grok-imagine"
+  ],
+  "page_params": [],
+  "api": [],
+  "totals": [
+   "\"total\\\":\\\"$$59.99 for 12 months"
+  ],
+  "head": ""
+ },
+ "https://domer.io/explore/seedance-2-5?page=2": {
+  "status": 200,
+  "len": 1105922,
+  "mp4_count": 56,
+  "mp4_sample": [
+   "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-before.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-after.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-before.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-after.mp4"
+  ],
+  "x_count": 0,
+  "entry_links": [
+   "/prompts/media/image",
+   "/prompts/media/video",
+   "/prompts/models/gptimage",
+   "/prompts/models/nanobanana",
+   "/prompts/models/seedance-2",
+   "/prompts/categories/photography",
+   "/prompts/categories/product-and-brand",
+   "/prompts/categories/poster-design",
+   "/prompts/categories/illustration-and-3d",
+   "/prompts/categories/food-and-drink",
+   "/prompts/categories/ui-and-graphic",
+   "/prompts/models/seedance-2-5",
+   "/prompts/models/minimax-h3",
+   "/prompts/models/nano-banana-pro",
+   "/prompts/models/grok-imagine",
+   "/explore/seedance-2-5",
+   "/explore/seedance-2-0",
+   "/explore/gpt-image-2",
+   "/explore/visual-effects",
+   "/explore/camera-control",
+   "/explore/viral-trends",
+   "/explore/effects-by-tags",
+   "/explore/ugc-ad-templates",
+   "/explore/commercial",
+   "/explore/nano-banana-pro",
+   "/explore/minimax-h3",
+   "/explore/grok-imagine"
+  ],
+  "page_params": [
+   "?page=2"
+  ],
+  "api": [],
+  "totals": [
+   "\"total\\\":\\\"$$59.99 for 12 months"
+  ],
+  "head": ""
+ },
+ "https://domer.io/prompts/models/seedance-2-5": {
+  "status": 200,
+  "len": 1179954,
+  "mp4_count": 56,
+  "mp4_sample": [
+   "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-before.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-after.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-before.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-after.mp4"
+  ],
+  "x_count": 0,
+  "entry_links": [
+   "/prompts/media/image",
+   "/prompts/media/video",
+   "/prompts/models/gptimage",
+   "/prompts/models/nanobanana",
+   "/prompts/models/seedance-2",
+   "/prompts/models/seedance-2-5",
+   "/prompts/models/minimax-h3",
+   "/prompts/models/nano-banana-pro",
+   "/prompts/models/grok-imagine",
+   "/prompts/categories/photography",
+   "/prompts/categories/illustration-and-3d",
+   "/prompts/categories/product-and-brand",
+   "/prompts/categories/food-and-drink",
+   "/prompts/categories/poster-design",
+   "/prompts/categories/ui-and-graphic",
+   "/prompts/categories/general",
+   "/explore/seedance-2-5",
+   "/explore/seedance-2-0",
+   "/explore/gpt-image-2",
+   "/explore/visual-effects",
+   "/explore/camera-control",
+   "/explore/viral-trends",
+   "/explore/effects-by-tags",
+   "/explore/ugc-ad-templates",
+   "/explore/commercial",
+   "/explore/nano-banana-pro",
+   "/explore/minimax-h3",
+   "/explore/grok-imagine"
+  ],
+  "page_params": [],
+  "api": [],
+  "totals": [
+   "\"total\\\":\\\"$$59.99 for 12 months"
+  ],
+  "head": ""
+ },
+ "https://domer.io/prompts/models/seedance-2-5?page=2": {
+  "status": 200,
+  "len": 1179954,
+  "mp4_count": 56,
+  "mp4_sample": [
+   "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-before.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-after.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-before.mp4",
+   "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-after.mp4"
+  ],
+  "x_count": 0,
+  "entry_links": [
+   "/prompts/media/image",
+   "/prompts/media/video",
+   "/prompts/models/gptimage",
+   "/prompts/models/nanobanana",
+   "/prompts/models/seedance-2",
+   "/prompts/models/seedance-2-5",
+   "/prompts/models/minimax-h3",
+   "/prompts/models/nano-banana-pro",
+   "/prompts/models/grok-imagine",
+   "/prompts/categories/photography",
+   "/prompts/categories/illustration-and-3d",
+   "/prompts/categories/product-and-brand",
+   "/prompts/categories/food-and-drink",
+   "/prompts/categories/poster-design",
+   "/prompts/categories/ui-and-graphic",
+   "/prompts/categories/general",
+   "/explore/seedance-2-5",
+   "/explore/seedance-2-0",
+   "/explore/gpt-image-2",
+   "/explore/visual-effects",
+   "/explore/camera-control",
+   "/explore/viral-trends",
+   "/explore/effects-by-tags",
+   "/explore/ugc-ad-templates",
+   "/explore/commercial",
+   "/explore/nano-banana-pro",
+   "/explore/minimax-h3",
+   "/explore/grok-imagine"
+  ],
+  "page_params": [
+   "?page=2"
+  ],
+  "api": [],
+  "totals": [
+   "\"total\\\":\\\"$$59.99 for 12 months"
+  ],
+  "head": ""
+ },
+ "https://domer.io/robots.txt": {
+  "status": 200,
+  "len": 159,
+  "mp4_count": 0,
+  "mp4_sample": [],
+  "x_count": 0,
+  "entry_links": [],
+  "page_params": [],
+  "api": [],
+  "totals": [],
+  "head": "User-Agent: *\nAllow: /\nDisallow: /*?*q=\nDisallow: /settings/*\nDisallow: /activity/*\nDisallow: /admin/*\nDisallow: /api/*\n\nSitemap: https://domer.io/sitemap.xml\n"
+ }
+}
