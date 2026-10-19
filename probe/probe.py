@@ -1,4 +1,4 @@
-import json, re, urllib.request, collections
+import json, re, urllib.request, collections, random
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 def get(u):
     try:
@@ -7,24 +7,18 @@ def get(u):
     except Exception as e:
         return str(e)[:150], ""
 out = {}
-s, idx = get("https://domer.io/sitemap.xml"); out["index"] = idx[:1500]
-maps = re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", idx)
-out["maps"] = maps
-for m in maps:
-    if "prompt" in m:
-        s, x = get(m)
-        locs = re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", x)
-        out.setdefault("prompt_maps", {})[m] = {"status": s, "count": len(locs), "sample": locs[:8],
-                                                "patterns": collections.Counter(re.sub(r"[^/]+$", "*", l) for l in locs).most_common(8)}
-# open one seedance-2-5 style entry
-samples = []
-for m, v in out.get("prompt_maps", {}).items():
-    samples += v["sample"]
-for u in samples[:4]:
+s, x = get("https://domer.io/sitemap-prompt-0.xml")
+locs = re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", x)
+en = [l for l in locs if re.match(r"https://domer\.io/prompts/[^/]+$", l)]
+out["en_entries"] = len(en); out["en_sample"] = en[:15]
+out["langs"] = collections.Counter((re.match(r"https://domer\.io/([a-z]{2})/", l) or [None, "en"])[1] for l in locs).most_common()
+random.seed(1)
+for u in random.sample(en, min(8, len(en))):
     s, h = get(u)
-    out.setdefault("entries", []).append({"url": u, "status": s, "len": len(h),
+    mp4 = [m for m in dict.fromkeys(re.findall(r'https?://[^"\s\\]+\.mp4', h)) if "/prompts/" in m][:2]
+    out.setdefault("entries", []).append({"url": u, "status": s,
         "title": (re.search(r"<title>(.*?)</title>", h, re.S) or [None, ""])[1][:120],
-        "mp4": list(dict.fromkeys(re.findall(r'https?://[^"\s\\]+\.mp4', h)))[:3],
-        "x": list(dict.fromkeys(re.findall(r'https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+', h)))[:3],
-        "model_mentions": list(dict.fromkeys(re.findall(r"Seedance\s*\d\.\d|Nano Banana[\w .]*|GPT Image \d", h)))[:5]})
-json.dump(out, open("probe/domer2.json", "w"), indent=1)
+        "mp4": mp4, "img": [m for m in dict.fromkeys(re.findall(r'https?://storage\.brightvectorlabs\.com/prompts/[^"\s\\]+\.(?:jpg|jpeg|png|webp)', h))][:1],
+        "x": list(dict.fromkeys(re.findall(r'https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+', h)))[:2],
+        "models": list(dict.fromkeys(re.findall(r"Seedance\s*\d(?:\.\d)?|Nano Banana[ \w.]{0,6}|GPT Image \d(?:\.\d)?|Grok Imagine|MiniMax H\d", h)))[:5]})
+json.dump(out, open("probe/domer3.json", "w"), indent=1)
