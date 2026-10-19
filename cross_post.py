@@ -62,7 +62,9 @@ def credit_line(handle, x_post):
 
 
 def clean_hook(caption):
-    return re.sub(r"\s+", " ", re.sub(r"https?://\S+", "", caption or "")).strip()
+    """Caption lines (hook, model line) kept as separate paragraphs; no links."""
+    lines = [re.sub(r"[ \t]+", " ", l).strip() for l in re.sub(r"https?://\S+", "", caption or "").splitlines()]
+    return "\n\n".join(l for l in lines if l)
 
 
 def cut(text, limit, measure=len):
@@ -77,7 +79,7 @@ def texts(hook, credit, prompt, prompt_short):
     """Title + descriptions for each platform."""
     hook = clean_hook(hook)
     credit = f"\n\n{credit}" if credit else ""  # empty: no credit line (credits are added by hand in comments)
-    title = cut(re.sub(r"[<>]", "", hook) or "AI video of the day", 90)
+    title = cut(re.sub(r"[<>]", "", hook.split("\n")[0]) or "AI video of the day", 90)  # first line only
     nb = lambda s: len(s.encode("utf-8"))
     # YouTube: description max 5000 bytes, no angle brackets
     yt_head = f"{hook}{credit}\n\nPrompt to recreate it:\n"

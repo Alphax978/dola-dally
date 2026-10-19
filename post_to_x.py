@@ -58,8 +58,20 @@ def load_job(day, slot):
     return job
 
 
-def model_line(job):
-    return f"🎥 Made with {job['model']}" if job.get("model") else ""
+def caption_lines(job):
+    """The 2 caption lines: the hook, then a line that names the model (when the source names it).
+    The routine writes line 2 with the model in it; if it's missing, it's added here so it's always there."""
+    text = re.sub(r"https?://\S+", "", job.get("caption", ""))  # links cost extra on X
+    lines = [re.sub(r"[ \t]+", " ", l).strip() for l in text.splitlines() if l.strip()]
+    if len(lines) > 2:
+        lines = [lines[0], " ".join(lines[1:])]
+    model = job.get("model")
+    if model and model.lower() not in " ".join(lines).lower():
+        if len(lines) < 2:
+            lines.append(f"Made with {model} 🎥")
+        else:
+            lines[1] = lines[1].rstrip() + f" 🎥 {model}"
+    return lines
 
 
 def creator_handle(meta):
@@ -73,8 +85,9 @@ def x_len(text):
 
 
 def main_text(job):
-    tail = (f"\n\n{model_line(job)}" if job.get("model") else "") + "\n\nPrompt: ⤵️"
-    caption = re.sub(r"https?://\S+", "", job.get("caption", "")).strip()  # links cost extra on X
+    """3 lines: hook / line naming the model / Prompt: ⤵️"""
+    tail = "\n\nPrompt: ⤵️"
+    caption = "\n\n".join(caption_lines(job))
     while caption and x_len(caption + tail) > 280:
         caption = caption[: max(0, len(caption) - 10)].rsplit(" ", 1)[0].rstrip(" ,.;:-") + "…"
     return (caption + tail).strip()
@@ -224,7 +237,7 @@ def commit_posted(msg="Posted to X"):
 
 def cross_texts(job):
     from cross_post import texts
-    return texts(job.get("caption", ""), model_line(job),  # model line; no credit (credits go in comments by hand)
+    return texts("\n".join(caption_lines(job)), "",  # hook + model line; no credit (credits go in comments by hand)
                  public_prompt(job["prompt"]), public_prompt(job.get("prompt_short") or job["prompt"]))
 
 
