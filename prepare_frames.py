@@ -200,7 +200,7 @@ def reelcine_details(url):
         "title": title,
         "video_url": mp4.group(0) if mp4 else None,
         "x_post": x.group(0) if x else None,
-        "page_text": page_text(page),
+        "page_text": page_text(page, limit=60000),  # their pages carry long menus; keep enough to include the prompt
     }
 
 
