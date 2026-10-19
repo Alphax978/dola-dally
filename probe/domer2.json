@@ -1,0 +1,155 @@
+{
+ "index": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <sitemap>\n    <loc>https://domer.io/sitemap/core.xml</loc>\n    <lastmod>2026-10-19T14:07:14.517Z</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>https://domer.io/sitemap-blog-0.xml</loc>\n    <lastmod>2026-10-19T14:07:14.517Z</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>https://domer.io/sitemap-blog-1.xml</loc>\n    <lastmod>2026-10-19T14:07:14.517Z</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>https://domer.io/sitemap-blog-2.xml</loc>\n    <lastmod>2026-10-19T14:07:14.517Z</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>https://domer.io/sitemap/pseo/0.xml</loc>\n    <lastmod>2026-10-19T14:07:14.517Z</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>https://domer.io/sitemap-prompt-0.xml</loc>\n    <lastmod>2026-10-19T14:07:14.517Z</lastmod>\n  </sitemap>\n</sitemapindex>",
+ "maps": [
+  "https://domer.io/sitemap/core.xml",
+  "https://domer.io/sitemap-blog-0.xml",
+  "https://domer.io/sitemap-blog-1.xml",
+  "https://domer.io/sitemap-blog-2.xml",
+  "https://domer.io/sitemap/pseo/0.xml",
+  "https://domer.io/sitemap-prompt-0.xml"
+ ],
+ "prompt_maps": {
+  "https://domer.io/sitemap-prompt-0.xml": {
+   "status": 200,
+   "count": 7000,
+   "sample": [
+    "https://domer.io/prompts",
+    "https://domer.io/es/prompts",
+    "https://domer.io/de/prompts",
+    "https://domer.io/fr/prompts",
+    "https://domer.io/it/prompts",
+    "https://domer.io/pl/prompts",
+    "https://domer.io/ja/prompts",
+    "https://domer.io/pt/prompts"
+   ],
+   "patterns": [
+    [
+     "https://domer.io/prompts/*",
+     6847
+    ],
+    [
+     "https://domer.io/prompts/models/*",
+     7
+    ],
+    [
+     "https://domer.io/es/prompts/models/*",
+     7
+    ],
+    [
+     "https://domer.io/de/prompts/models/*",
+     7
+    ],
+    [
+     "https://domer.io/fr/prompts/models/*",
+     7
+    ],
+    [
+     "https://domer.io/it/prompts/models/*",
+     7
+    ],
+    [
+     "https://domer.io/pl/prompts/models/*",
+     7
+    ],
+    [
+     "https://domer.io/ja/prompts/models/*",
+     7
+    ]
+   ]
+  }
+ },
+ "entries": [
+  {
+   "url": "https://domer.io/prompts",
+   "status": 200,
+   "len": 1568687,
+   "title": "Discover AI Prompts \u2014 Image &amp; Video Generation | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-before.mp4",
+    "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-after.mp4",
+    "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-before.mp4"
+   ],
+   "x": [
+    "https://x.com/AmirMushich/status/2008976966255337666",
+    "https://x.com/TechieBySA/status/2043047413770809708",
+    "https://x.com/TechieBySA/status/2017928823497453789"
+   ],
+   "model_mentions": [
+    "GPT Image 2",
+    "Nano Banana",
+    "Seedance 2.0",
+    "Nano Banana 2",
+    "Nano Banana This prompt"
+   ]
+  },
+  {
+   "url": "https://domer.io/es/prompts",
+   "status": 200,
+   "len": 1635436,
+   "title": "Descubre Prompts de IA \u2014 Generaci\u00f3n de Im\u00e1genes y Video | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-before.mp4",
+    "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-after.mp4",
+    "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-before.mp4"
+   ],
+   "x": [
+    "https://x.com/AmirMushich/status/2008976966255337666",
+    "https://x.com/TechieBySA/status/2043047413770809708",
+    "https://x.com/TechieBySA/status/2017928823497453789"
+   ],
+   "model_mentions": [
+    "GPT Image 2",
+    "Nano Banana y Seedance 2.0.",
+    "Nano Banana 2 y Seedance 2.0. Cada prompt est\u00e1 etiquetado con su modelo correspondiente para facilitar el filtrado.",
+    "Nano Banana 2",
+    "Nano Banana This prompt"
+   ]
+  },
+  {
+   "url": "https://domer.io/de/prompts",
+   "status": 200,
+   "len": 1614295,
+   "title": "KI-Prompts entdecken \u2014 Bild- &amp; Videoerstellung | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-before.mp4",
+    "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-after.mp4",
+    "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-before.mp4"
+   ],
+   "x": [
+    "https://x.com/AmirMushich/status/2008976966255337666",
+    "https://x.com/TechieBySA/status/2043047413770809708",
+    "https://x.com/TechieBySA/status/2017928823497453789"
+   ],
+   "model_mentions": [
+    "GPT Image 2",
+    "Nano Banana und Seedance 2.0.",
+    "Nano Banana 2 und Seedance 2.0. Jeder Prompt ist mit dem entsprechenden Modell verschlagwortet",
+    "Nano Banana 2",
+    "Nano Banana This prompt"
+   ]
+  },
+  {
+   "url": "https://domer.io/fr/prompts",
+   "status": 200,
+   "len": 1645095,
+   "title": "D\u00e9couvrir les Prompts IA \u2014 G\u00e9n\u00e9ration d&#x27;Images et de Vid\u00e9os | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-before.mp4",
+    "https://storage.brightvectorlabs.com/cover/background-remover/Talking-Heads-after.mp4",
+    "https://storage.brightvectorlabs.com/cover/background-remover/E-commerce-Ads-before.mp4"
+   ],
+   "x": [
+    "https://x.com/AmirMushich/status/2008976966255337666",
+    "https://x.com/TechieBySA/status/2043047413770809708",
+    "https://x.com/TechieBySA/status/2017928823497453789"
+   ],
+   "model_mentions": [
+    "GPT Image 2",
+    "Nano Banana et Seedance 2.0.",
+    "Nano Banana 2 et Seedance 2.0. Chaque prompt est associ\u00e9 \u00e0 son mod\u00e8le correspondant pour un filtrage facile.",
+    "Nano Banana 2",
+    "Nano Banana This prompt"
+   ]
+  }
+ ]
+}
