@@ -1,0 +1,27 @@
+{
+  "url": "https://reelcine.org/video-prompt/4261",
+  "source": "reelcine",
+  "slug": "reelcine-4261-abstract-painter-transformation-sequence",
+  "title": "Abstract Painter Transformation Sequence",
+  "video_url": "https://assets-prompts.reelcine.org/prompts/video/meigen/seedance-2.0/2026748738354450919/video-0.mp4",
+  "x_post": "https://x.com/HBCoop_/status/2026748738354450919",
+  "duration": 15.12,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    1.07,
+    2.4,
+    4.8,
+    11.13,
+    11.3,
+    11.47,
+    13.17
+  ],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ],
+  "model": "Seedance 2.0"
+}
