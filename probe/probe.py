@@ -1,6 +1,8 @@
 import json, re, urllib.request, collections, sys
-sys.path.insert(0, ".")
-from prepare_frames import page_text
+import html as H
+def page_text(h, n):
+    b = re.sub(r"<(script|style|noscript)[^>]*>.*?</\1>", " ", h, flags=re.S | re.I)
+    return re.sub(r"\s+", " ", H.unescape(re.sub(r"<[^>]+>", " ", b)))[:n]
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 def get(u):
     with urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": UA}), timeout=90) as r:
