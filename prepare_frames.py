@@ -407,7 +407,7 @@ def main():
 
     json.dump({"date": today, "videos": prepared}, open(os.path.join(day_dir, "index.json"), "w"),
               indent=2, ensure_ascii=False)
-    json.dump(used[-5000:], open(used_path, "w"), indent=1)
+    json.dump(used[-50000:], open(used_path, "w"), indent=1)
 
     # tidy up old days
     days = os.path.join(root, "days")

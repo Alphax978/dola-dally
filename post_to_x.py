@@ -210,7 +210,7 @@ def mark_used(url, x_post=None):
     for u in (url, x_post):
         if u and u not in used:
             used.append(u)
-    json.dump(used[-5000:], open(p, "w"), indent=1)
+    json.dump(used[-50000:], open(p, "w"), indent=1)
 
 
 def commit_posted(msg="Posted to X"):
