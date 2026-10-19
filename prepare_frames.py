@@ -343,6 +343,8 @@ def main():
                      frame_grids=frame_grids(vid, out_dir, dur, w, h),
                      text_strips=text_strips(vid, out_dir, dur, w, h))
             os.remove(vid)  # keep only the images in the repo
+            import models
+            d["model"] = models.detect(d, d["page_text"])
             with open(os.path.join(out_dir, "creator_page.txt"), "w", encoding="utf-8") as f:
                 f.write(d.pop("page_text"))
             json.dump(d, open(os.path.join(out_dir, "meta.json"), "w"), indent=2, ensure_ascii=False)

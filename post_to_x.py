@@ -51,9 +51,15 @@ def load_job(day, slot):
     if not os.path.exists(path):
         return None
     job = json.load(open(path, encoding="utf-8"))
-    meta_path = os.path.join(ROOT, "days", day, job["slug"], "meta.json")
-    job["meta"] = json.load(open(meta_path, encoding="utf-8"))
+    folder = os.path.join(ROOT, "days", day, job["slug"])
+    job["meta"] = json.load(open(os.path.join(folder, "meta.json"), encoding="utf-8"))
+    import models
+    job["model"] = models.detect_in_dir(job["meta"], folder)  # e.g. "Seedance 2.5", or None if unknown
     return job
+
+
+def model_line(job):
+    return f"🎥 Made with {job['model']}" if job.get("model") else ""
 
 
 def creator_handle(meta):
@@ -67,7 +73,7 @@ def x_len(text):
 
 
 def main_text(job):
-    tail = f"\n\nPrompt: ⤵️"
+    tail = (f"\n\n{model_line(job)}" if job.get("model") else "") + "\n\nPrompt: ⤵️"
     caption = re.sub(r"https?://\S+", "", job.get("caption", "")).strip()  # links cost extra on X
     while caption and x_len(caption + tail) > 280:
         caption = caption[: max(0, len(caption) - 10)].rsplit(" ", 1)[0].rstrip(" ,.;:-") + "…"
@@ -218,7 +224,7 @@ def commit_posted(msg="Posted to X"):
 
 def cross_texts(job):
     from cross_post import texts
-    return texts(job.get("caption", ""), "",  # no credit in captions: credits are added by hand in comments
+    return texts(job.get("caption", ""), model_line(job),  # model line; no credit (credits go in comments by hand)
                  public_prompt(job["prompt"]), public_prompt(job.get("prompt_short") or job["prompt"]))
 
 
