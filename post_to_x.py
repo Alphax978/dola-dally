@@ -183,13 +183,15 @@ def save_posted(key, info):
 SLOTS = {1: "16:30", 2: "21:30"}  # Nepal time: Europe's afternoon, then US late morning
 
 
-def mark_used(url):
-    """Add a posted video to used.json so it's never picked again."""
+def mark_used(url, x_post=None):
+    """Add a posted video (its page link and its original X post) to used.json so it's never picked again,
+    from any source."""
     p = os.path.join(ROOT, "used.json")
     used = json.load(open(p)) if os.path.exists(p) else []
-    if url and url not in used:
-        used.append(url)
-        json.dump(used[-2000:], open(p, "w"), indent=1)
+    for u in (url, x_post):
+        if u and u not in used:
+            used.append(u)
+    json.dump(used[-5000:], open(p, "w"), indent=1)
 
 
 def commit_posted(msg="Posted to X"):
@@ -284,7 +286,7 @@ def post_slot(day, slot, dry_run=False, retry_cross=False):
             log(f"[{key}] NOT POSTED: the video has a watermark ({info}).")
             if not dry_run:
                 save_posted(key, {"skipped": "watermark", "slug": job["slug"], "details": str(info)})
-                mark_used(job["meta"].get("url"))
+                mark_used(job["meta"].get("url"), job["meta"].get("x_post"))
                 commit_posted("Skipped a watermarked video")
             return "watermark"
         log(f"[{key}] Video ready: {os.path.getsize(video) // 1024} KB")
@@ -300,7 +302,7 @@ def post_slot(day, slot, dry_run=False, retry_cross=False):
         # record right away: even if the reply fails, the video must never be posted twice
         entry = {"post_id": first, "slug": job["slug"], "posted_at": dt.datetime.now(TZ).isoformat()}
         save_posted(key, entry)
-        mark_used(job["meta"].get("url"))
+        mark_used(job["meta"].get("url"), job["meta"].get("x_post"))
         commit_posted()
         log(f"[{key}] Posted: https://x.com/i/status/{first}")
         time.sleep(2)

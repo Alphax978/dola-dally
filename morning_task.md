@@ -1,6 +1,6 @@
 # Morning task (read by the Claude routine "Daily Dola video pick")
 
-Every morning: pick TWO watermark-free videos from the YouMind video prompt gallery (Seedance 2.0, 2.5 and other models), study each frame by frame, write ONE precise prompt per video that recreates it, save them for Dola and for the two X posts, and report. Two videos per day. Nobody reviews the prompt before it is used, so it must be precise, complete and work on the first try.
+Every morning: pick TWO watermark-free videos from the video prompt galleries of YouMind and ReelCine (Seedance 2.0, 2.5 and other models), study each frame by frame, write ONE precise prompt per video that recreates it, save them for Dola and for the two X posts, and report. Two videos per day. Nobody reviews the prompt before it is used, so it must be precise, complete and work on the first try.
 
 CONTEXT: The user runs Dola AI (built on ByteDance's Seedance 2.0 and 2.5) and posts on X. Dola now accepts a prompt for a video of any length, so there is always exactly ONE prompt per video, however long it is: no parts, no options. A GitHub Action posts each ORIGINAL video to X (credited to its creator) with our prompt as the reply: video 1 at 4:30 PM and video 2 at 9:30 PM Nepal time. Dola's scheduled task generates the user's own version of video 2 from its prompt.
 
@@ -18,7 +18,7 @@ STEP 1 — Get today's frames. A GitHub Action in the user's PUBLIC repo Alphax9
 
 STEP 2 — Study each of the two videos (do STEP 2 and STEP 3 fully for each one).
 - Read meta.json, then look at EVERY frames_N.jpg and text_N.jpg image with the Read tool. Use the cut times to find each shot's start and end. For each shot note: framing (wide/medium/close-up/POV/selfie), camera movement, who is in it and what they do, setting, light, and any on-screen text or subtitles (the text strips show spoken lines when the video has subtitles). Note the aspect ratio from width/height.
-- Also read creator_page.txt in the same folder: GitHub saved the YouMind page's text there (this environment can't open youmind.com), and it contains the creator's original prompt. Use it for intent, dialogue and sound that frames can't show. If that file is missing, work from the frames alone without mentioning it. Where the frames and the creator's prompt disagree, follow the frames.
+- Also read creator_page.txt in the same folder: GitHub saved the source page's text there (YouMind or ReelCine; this environment can't open those sites), and it contains the creator's original prompt. Use it for intent, dialogue and sound that frames can't show. If that file is missing, work from the frames alone without mentioning it. Where the frames and the creator's prompt disagree, follow the frames.
 
 STEP 3 — For each video, write ONE prompt that recreates it faithfully, for the video's full length. Keep the original's characters, setting, story, shots, timing, camera moves, look, sound and payoff as close to the original as possible: the goal is a replica, not a reinterpretation. Describe characters from what you actually see in the frames (age, skin, hair, face, clothing, signature details).
 The only exception: if the original features copyrighted or franchise characters, or real people/celebrities, replace each of them with an original character who plays the same role in the same scene — new face, hair, build, costume, colors and emblems — and keep everything else identical. Don't carry over any signature look, costume, color scheme, emblem, catchphrase or name from those characters or people, and don't mention them in the prompt.
@@ -64,7 +64,7 @@ STEP 4 — Save to GitHub (Dola's scheduled task and the X post read these files
 STEP 5 — Deliver the message. Write it as your FINAL REPLY in this session (plain text, so it shows in the chat), formatted exactly like this and nothing more. Don't look for a SendUserMessage tool; routines don't have one. If a push-notification tool is available, also send a one-line notification "Today's videos: <title 1> (4:30 PM) and <title 2> (9:30 PM) — prompts saved" (or the failure reason), but the full message always goes in your final reply:
 ## Today's videos
 **4:30 PM — video 1: <short title>**
-**▶ Watch the original:** [YouMind page](<meta.json url>) · [Original X post](<meta.json x_post>)
+**▶ Watch the original:** [Source page](<meta.json url>) · [Original X post](<meta.json x_post>)
 <one line: length and aspect ratio, e.g. "47.2s · 16:9", plus "(characters swapped for originals)" if so>
 **X caption:** <the caption>
 **Prompt**

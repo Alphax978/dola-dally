@@ -2,7 +2,7 @@
 """
 prepare_frames.py: runs on GitHub Actions every morning.
 
-Picks random videos from YouMind's video prompt gallery (all listing pages), downloads them, and saves
+Picks random videos from YouMind and ReelCine (rotating by day), downloads them, and saves
 timestamped frame grids so Claude can study each video shot by shot without a browser.
 
 Output (committed to the repo):
@@ -21,6 +21,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import urllib.parse
 import urllib.request
 
@@ -157,9 +158,47 @@ def item_details(url):
     x = re.search(r'https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+', page)
     return {
         "url": url,
+        "source": "youmind",
         "slug": url.rstrip("/").rsplit("/", 1)[-1],
         "title": title,
         "video_url": best if score > 0 else None,
+        "x_post": x.group(0) if x else None,
+        "page_text": page_text(page),
+    }
+
+
+# ---------- ReelCine (automated access authorized by ReelCine support, Oct 2026) ----------
+
+REELCINE = "https://reelcine.org"
+REELCINE_LISTINGS = [REELCINE + "/seedance-2-0-prompts", REELCINE + "/seedance-2-5-prompts"]
+
+
+def reelcine_max_id():
+    """Highest entry number linked from ReelCine's listing pages (entries are /video-prompt/1 ... /N)."""
+    best = 0
+    for u in REELCINE_LISTINGS:
+        try:
+            ids = [int(i) for i in re.findall(r"/video-prompt/(\d+)", get(u))]
+            best = max([best] + ids)
+        except Exception as e:
+            print(f"  couldn't read {u}: {e}")
+    return best
+
+
+def reelcine_details(url):
+    page = get(url)
+    title = re.search(r"<title>(.*?)</title>", page, re.S)
+    title = html.unescape(title.group(1)).split(" | ")[0].strip() if title else ""
+    mp4 = re.search(r'https://assets-prompts\.reelcine\.org/[^"\'\s<>]+?\.mp4', page)
+    x = re.search(r'https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+', page)
+    num = url.rstrip("/").rsplit("/", 1)[-1]
+    name = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:50] or "video"
+    return {
+        "url": url,
+        "source": "reelcine",
+        "slug": f"reelcine-{num}-{name}",
+        "title": title,
+        "video_url": mp4.group(0) if mp4 else None,
         "x_post": x.group(0) if x else None,
         "page_text": page_text(page),
     }
@@ -219,19 +258,43 @@ def text_strips(path, out_dir, dur, w, h):
     return files
 
 
+SOURCES = ["youmind", "reelcine"]  # rotated by day: each day one source goes first, the other fills any gap
+
+
+def candidates(today, used):
+    """Yield (url, details_function) for today's picks, starting with today's source in the rotation."""
+    k = dt.date.fromisoformat(today).toordinal() % len(SOURCES)
+    order = SOURCES[k:] + SOURCES[:k]
+    print(f"Source order today: {', '.join(order)}")
+    for src in order:
+        if src == "youmind":
+            items = gallery_items()
+            fresh = [u for u in items if u not in used]
+            print(f"YouMind: {len(items)} videos, {len(fresh)} unused")
+            random.shuffle(fresh)
+            for u in fresh:
+                yield u, item_details
+        elif src == "reelcine":
+            top = reelcine_max_id()
+            print(f"ReelCine: entries 1..{top}")
+            if not top:
+                continue
+            nums = list(range(1, top + 1))
+            random.shuffle(nums)
+            for n in nums[:80]:  # at most 80 page visits a day; only a few are needed
+                u = f"{REELCINE}/video-prompt/{n}"
+                if u in used:
+                    continue
+                time.sleep(1)  # be gentle with their server
+                yield u, reelcine_details
+
+
 def main():
     today = dt.datetime.now(TZ).date().isoformat()
     root = os.path.dirname(os.path.abspath(__file__))
     day_dir = os.path.join(root, "days", today)
     used_path = os.path.join(root, "used.json")
     used = json.load(open(used_path)) if os.path.exists(used_path) else []
-
-    items = gallery_items()
-    print(f"Gallery: {len(items)} videos")
-    if not items:
-        sys.exit("Couldn't read the YouMind gallery (no video links found).")
-    fresh = [u for u in items if u not in used] or items
-    random.shuffle(fresh)
 
     index_path = os.path.join(day_dir, "index.json")
     if os.path.exists(index_path) and json.load(open(index_path)).get("videos"):
@@ -241,11 +304,15 @@ def main():
 
     os.makedirs(day_dir, exist_ok=True)
     prepared = []
-    for url in fresh:
+    used_set = set(used)
+    for url, details in candidates(today, used_set):
         if len(prepared) >= HOW_MANY:
             break
         try:
-            d = item_details(url)
+            d = details(url)
+            if d.get("x_post") and d["x_post"] in used_set:  # same video already used via another site
+                print(f"  skip (already used, from another source): {d['title']}")
+                continue
             if not d["video_url"]:
                 print(f"  skip (no video file found): {url}")
                 continue
@@ -259,6 +326,8 @@ def main():
                 os.remove(vid)
                 os.rmdir(out_dir)
                 used.append(url)  # absurdly long; never pick it again
+                if d.get("x_post"):
+                    used.append(d["x_post"])
                 print(f"  skip (too long, {dur:.0f}s): {d['title']}")
                 continue
             wm, wm_info = has_watermark(vid)
@@ -266,6 +335,8 @@ def main():
                 os.remove(vid)
                 os.rmdir(out_dir)
                 used.append(url)  # has a burned-in watermark; never pick it
+                if d.get("x_post"):
+                    used.append(d["x_post"])
                 print(f"  skip (watermark {wm_info}): {d['title']}")
                 continue
             d.update(duration=round(dur, 2), width=w, height=h, cuts=cut_times(vid),
@@ -275,7 +346,7 @@ def main():
             with open(os.path.join(out_dir, "creator_page.txt"), "w", encoding="utf-8") as f:
                 f.write(d.pop("page_text"))
             json.dump(d, open(os.path.join(out_dir, "meta.json"), "w"), indent=2, ensure_ascii=False)
-            prepared.append({"slug": d["slug"], "title": d["title"], "url": url,
+            prepared.append({"slug": d["slug"], "title": d["title"], "url": url, "source": d["source"],
                              "duration": d["duration"], "dir": f"days/{today}/{d['slug']}"})
             # not marked used here: only posted (post_to_x.py) or watermarked videos are
             print(f"  ok: {d['title']} ({d['duration']}s, {len(d['cuts'])} cuts)")
@@ -284,7 +355,7 @@ def main():
 
     json.dump({"date": today, "videos": prepared}, open(os.path.join(day_dir, "index.json"), "w"),
               indent=2, ensure_ascii=False)
-    json.dump(used[-500:], open(used_path, "w"), indent=1)
+    json.dump(used[-5000:], open(used_path, "w"), indent=1)
 
     # tidy up old days
     days = os.path.join(root, "days")
