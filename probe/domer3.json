@@ -1,0 +1,225 @@
+{
+ "en_entries": 6847,
+ "en_sample": [
+  "https://domer.io/prompts/seedance-8020",
+  "https://domer.io/prompts/seedance-8018",
+  "https://domer.io/prompts/seedance-8014",
+  "https://domer.io/prompts/seedance-8010",
+  "https://domer.io/prompts/seedance-8007",
+  "https://domer.io/prompts/seedance-8005",
+  "https://domer.io/prompts/seedance-8004",
+  "https://domer.io/prompts/seedance-8001",
+  "https://domer.io/prompts/seedance-7998",
+  "https://domer.io/prompts/seedance-7995",
+  "https://domer.io/prompts/seedance-7993",
+  "https://domer.io/prompts/seedance-7992",
+  "https://domer.io/prompts/seedance-7990",
+  "https://domer.io/prompts/seedance-7989",
+  "https://domer.io/prompts/seedance-7986"
+ ],
+ "langs": [
+  [
+   "en",
+   6864
+  ],
+  [
+   "es",
+   17
+  ],
+  [
+   "de",
+   17
+  ],
+  [
+   "fr",
+   17
+  ],
+  [
+   "it",
+   17
+  ],
+  [
+   "pl",
+   17
+  ],
+  [
+   "ja",
+   17
+  ],
+  [
+   "pt",
+   17
+  ],
+  [
+   "zh",
+   17
+  ]
+ ],
+ "entries": [
+  {
+   "url": "https://domer.io/prompts/seedance-6613",
+   "status": 200,
+   "title": "Sci-Fi Character and Storyboard Adherence Prompt | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/6613.mp4",
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/7866.mp4"
+   ],
+   "img": [],
+   "x": [
+    "https://x.com/ShamsAmin56/status/2071590443494814140",
+    "https://x.com/Goodmanprotocol/status/2081028788771815678"
+   ],
+   "models": [
+    "Seedance 2.0",
+    "GPT Image 2",
+    "Nano Banana 2",
+    "Seedance 2.5",
+    "MiniMax H3"
+   ]
+  },
+  {
+   "url": "https://domer.io/prompts/bright-2035390729527378146",
+   "status": 200,
+   "title": "[ROOM TYPE] pulled apart in 3D, every surface and object floating at its exact\u2026 | Domer",
+   "mp4": [],
+   "img": [
+    "https://storage.brightvectorlabs.com/prompts/bright/photography/2035390729527378146-0.webp"
+   ],
+   "x": [
+    "https://x.com/AllaAisling/status/2035390729527378146",
+    "https://x.com/nextstepst/status/2026308234420666586"
+   ],
+   "models": [
+    "Nano Banana 2",
+    "GPT Image 2",
+    "Seedance 2.0",
+    "Seedance 2.5",
+    "MiniMax H3"
+   ]
+  },
+  {
+   "url": "https://domer.io/prompts/bright-2010666164129849800",
+   "status": 200,
+   "title": "Create a hyper-realistic underwater close-range portrait captured with a\u2026 | Domer",
+   "mp4": [],
+   "img": [
+    "https://storage.brightvectorlabs.com/prompts/bright/photography/2010666164129849800-0.webp"
+   ],
+   "x": [
+    "https://x.com/Strength04_X/status/2010666164129849800",
+    "https://x.com/nextstepst/status/2026308234420666586"
+   ],
+   "models": [
+    "Nano Banana 2",
+    "GPT Image 2",
+    "Seedance 2.0",
+    "Seedance 2.5",
+    "MiniMax H3"
+   ]
+  },
+  {
+   "url": "https://domer.io/prompts/bright-2016432642951151894",
+   "status": 200,
+   "title": "Bright summer infographic showcasing watermelon juice, icy texture, watermelon\u2026 | Domer",
+   "mp4": [],
+   "img": [
+    "https://storage.brightvectorlabs.com/prompts/bright/poster-design/2016432642951151894-0.webp"
+   ],
+   "x": [
+    "https://x.com/AIwithSynthia/status/2016432642951151894",
+    "https://x.com/AmirMushich/status/2008976966255337666"
+   ],
+   "models": [
+    "Nano Banana 2",
+    "Nano Banana This ",
+    "GPT Image 2",
+    "Seedance 2.0",
+    "Seedance 2.5"
+   ]
+  },
+  {
+   "url": "https://domer.io/prompts/seedance-7388",
+   "status": 200,
+   "title": "Clay-Style Pirate Duck Adventure | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/7388.mp4",
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/7866.mp4"
+   ],
+   "img": [],
+   "x": [
+    "https://x.com/CharaspowerAI/status/2078072313686184334",
+    "https://x.com/Goodmanprotocol/status/2081028788771815678"
+   ],
+   "models": [
+    "Seedance 2",
+    "Seedance 2.0",
+    "GPT Image 2",
+    "Nano Banana 2",
+    "Seedance 2.5"
+   ]
+  },
+  {
+   "url": "https://domer.io/prompts/seedance-5156",
+   "status": 200,
+   "title": "Forest Camping Cup Noodle Anime | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/5156.mp4",
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/7866.mp4"
+   ],
+   "img": [],
+   "x": [
+    "https://x.com/studio_oneroom/status/2057763237790453863",
+    "https://x.com/Goodmanprotocol/status/2081028788771815678"
+   ],
+   "models": [
+    "Seedance 2.0",
+    "GPT Image 2",
+    "Nano Banana 2",
+    "Seedance 2.5",
+    "MiniMax H3"
+   ]
+  },
+  {
+   "url": "https://domer.io/prompts/seedance-6795",
+   "status": 200,
+   "title": "Animated Rocket Launch Storyboard | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/6795.mp4",
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/7866.mp4"
+   ],
+   "img": [],
+   "x": [
+    "https://x.com/Strength04_X/status/2072918989051982161",
+    "https://x.com/Goodmanprotocol/status/2081028788771815678"
+   ],
+   "models": [
+    "Seedance 2.0",
+    "GPT Image 2",
+    "Nano Banana 2",
+    "Seedance 2.5",
+    "MiniMax H3"
+   ]
+  },
+  {
+   "url": "https://domer.io/prompts/seedance-2765",
+   "status": 200,
+   "title": "Detailed JSON Prompt for Dimensional Slash Effect in Seedance 2 | Domer",
+   "mp4": [
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/2765.mp4",
+    "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/7866.mp4"
+   ],
+   "img": [],
+   "x": [
+    "https://x.com/TechTalkNAVI/status/2040740135860617499",
+    "https://x.com/Goodmanprotocol/status/2081028788771815678"
+   ],
+   "models": [
+    "Seedance 2",
+    "Seedance 2.0",
+    "GPT Image 2",
+    "Nano Banana 2",
+    "Seedance 2.5"
+   ]
+  }
+ ]
+}
