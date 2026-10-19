@@ -1,29 +1,48 @@
-DATE: 2026-10-18
+DATE: 2026-10-19
 STATUS: READY
-TITLE: Seoul Coffee Walk
-LENGTH: 15 seconds, 16:9
+TITLE: Tree Guardian vs Demon Horde
+LENGTH: 30 seconds, 16:9
 
 MAIN PROMPT — generate ONE video from everything between the two lines below:
 ----- START -----
 use seedance 2.5 for this
 
-VIDEO PROMPT — 15 seconds, 16:9 landscape. Photorealistic live-action look, natural skin texture with visible pores and fine flyaway hairs, shot on a full-frame cinema camera with a 50mm lens at f/2 (shallow depth of field, creamy background blur), soft muted color grade with cool grey-beige tones and slightly lifted blacks, flat overcast daylight with no hard shadows. Camera feel: gentle handheld with subtle breathing and slow drifts, never shaky. Pacing: calm, quiet slice-of-life vlog, five shots joined by clean hard cuts. No on-screen text, no logos, no subtitles.
+VIDEO PROMPT — 30 seconds, 16:9 landscape. Photoreal dark-fantasy blockbuster look, anamorphic lens, shallow depth of field, moody teal-grey shadows against fiery orange-red lava glow, drifting embers, ash and low smoke in every shot, deep blacks, volumetric haze. Camera feel: fast, dynamic and heavy, low angles, punchy push-ins, with slow-motion on every fire explosion. Pacing: escalating action trailer, about 25 hard cuts, some only a few frames long; quiet tense open, explosive middle, calm final beat. No on-screen text, no logos, no subtitles.
 
-CHARACTER (same woman in every shot): a 22-year-old Korean woman, fair cool-toned skin, soft oval face, large dark-brown eyes with long lashes, natural light makeup with rosy lips, very long dark-brown hair worn loose well past her chest, straight with soft waves at the ends, wispy see-through bangs, a few strands drifting across her face in the breeze. She holds a plain white paper takeaway cup (no lid, no logo) in both hands, sweater sleeves pulled over her knuckles.
-- Shot 1 outfit: oversized chunky olive-khaki (grey-green) knit crewneck sweater.
-- Shots 2-5 outfit: oversized chunky heather-grey knit crewneck sweater with dropped shoulders and long ribbed cuffs, an olive-khaki canvas shoulder bag on a strap over her right shoulder hanging at her right hip, loose dark olive trousers.
+CHARACTERS:
+- THE WOMAN: early-20s, fair skin with a light flush, soft round face, full lips, short thick wavy chestnut-brown hair in a tousled chin-length bob, long flowing emerald-teal green dress with a V-neck and wide loose sleeves, barefoot. Signature: the emerald dress and the messy chestnut bob in every shot.
+- THE GAUNT DEMON: very tall, skeletal, ash-grey leathery skin stretched over ribs, long thin limbs and clawed fingers, skull-like face with sunken black eye sockets, no lips, pointed ears.
+- THE HORNED DEMON: lean muscular ash-grey humanoid with two big curved bull horns, long arms.
+- THE BRUTE: huge hulking hunched grey demon, massive shoulders and arms, short curved horns, glowing red eyes, snarling fangs.
+- THE HORDE: hundreds of small wiry ash-grey demons, hunched and clawed.
+- THE TREE GUARDIAN: a towering humanoid giant (about 8 times human height) made of twisted dark-brown bark and roots, its body split by glowing orange-red lava veins like a molten ribcage down the chest, long root-fingered arms, a skull-like bark face with glowing orange eyes and a glowing mouth, a crown of bare antler-like branches on its head, and a skirt of thick roots that spreads across the ground from its base.
 
-LOCATION: a quiet street in a Seoul neighbourhood on a cold, overcast late-autumn afternoon: two-lane asphalt road with double yellow center lines and white edge lines, grey brick-paved sidewalk, low 3-4 storey red-brick and white-tiled buildings with small shops and cafés at street level (their signs blurred and unreadable), utility poles with overhead wires, bare street trees in square grates, yellow-and-black striped poles, a distant traffic light, almost no people or cars.
+LOCATION: a vast, empty, flat dark arena of cracked slate-grey stone slabs, fog and darkness all around, no buildings or trees.
 
-SHOT 1 (00:00.0-00:02.8) — Café window chat. Inside a small café she sits at a light-wood counter that runs along a big floor-to-ceiling window with warm wooden frames, body angled toward frame left, chatting and smiling at a friend who is off-screen on the left; at the very start only the friend's black sleeve and hand are visible in the bottom-left corner, reaching toward her cup, then withdrawing out of frame. She cradles the white cup on the counter with both hands, laughs softly, then settles into a small shy smile. Behind her through the glass: the street and the shop fronts across the road; small round wooden stools and a low wooden shelf stand by the window. Medium shot at eye level, slow slight push-in.
+SHOT 1 (00:00.0-00:01.8) — Dragged. Floor-level low angle from the front: the woman lies face-down on the cracked stone, arms stretched toward the camera, fingers clawing the floor, while the gaunt demon stands over her (only its grey legs and torso visible at top of frame) gripping her ankle and dragging her backward away from the camera. Camera tracks slowly after her. At 00:01.0 she slams her right palm on the stone and a small white-gold flash bursts under her hand. MUST SHOW: the bright white-gold spark under her palm.
+SHOT 2 (00:01.8-00:02.1) — Floor flash. Very brief low angle on the empty cracked floor, her green dress and leg sliding out of the top-right of frame.
+SHOT 3 (00:02.1-00:03.9) — The root. Side view at floor level: she lies on her side and grips with both hands a jagged white-gold glowing root that shoots straight up out of the crack like frozen lightning; thin dark roots spread out across the stone from its base. MUST SHOW: the vertical glowing white-gold root, held in both fists.
+SHOT 4 (00:03.9-00:05.1) — Close-up. Her face in close-up, eyes closed, jaw set, both hands wrapped around the glowing root in the foreground; at 00:04.5 a blinding orange-white wave of fire floods the whole frame and washes over her face.
+SHOT 5 (00:05.1-00:06.5) — The summoning. Wide, low and from the front: the gaunt demon stands over the woman at frame left; to the right of her a huge dome of fire and roots bursts up from the floor and rises into the TREE GUARDIAN, standing tall, lava veins blazing, its root skirt spreading across the whole floor. MUST SHOW: the giant forming out of the fire dome, the woman tiny at its feet.
+SHOT 6 (00:06.5-00:07.1) — Whip. Medium: three long roots whip from the guardian (frame right) and lash around the gaunt demon at frame left.
+SHOT 7 (00:07.1-00:07.6) — Grab. Close on the guardian's glowing bark torso as a root-arm crushes a grey demon against it.
+SHOT 8 (00:07.6-00:09.1) — Skull face. Close-up profile of the gaunt demon's skull face pressed against the guardian's glowing bark; molten orange cracks crawl across its grey cheek, then its head bursts into lava sparks and debris that fill the frame.
+SHOT 9 (00:09.1-00:11.2) — Horned demon bound. Medium-wide: the horned demon lunges toward the woman (lower right foreground, holding the glowing root); a root lassos its wrist and yanks the arm out; cut to it facing camera with both arms pulled wide by roots around its wrists and waist, a glowing red crack splitting down its chest, then it explodes into a cloud of red embers. MUST SHOW: arms stretched wide by roots, the red crack down the chest.
+SHOT 10 (00:11.2-00:13.1) — Fire breath. Wide: the guardian stands alone in fog on its root skirt; the horde charges at it from the foreground; at 00:12.4 it blasts a massive horizontal stream of fire from its mouth and sweeps it across the horde. MUST SHOW: a thick roaring jet of fire from the guardian's mouth.
+SHOT 11 (00:13.1-00:13.8) — Reverse sweep. Reverse angle: the fire jet sweeps the other way, rolling slow-motion explosions engulfing the horde.
+SHOT 12 (00:13.8-00:14.7) — Swarm. Wide, front: dozens of demons leap through the air in slow motion onto the guardian as it spreads its glowing arms.
+SHOT 13 (00:14.7-00:15.5) — Covered. Push-in on the guardian's chest, demons clinging all over it, catching fire, its eyes and lava ribcage glowing.
+SHOT 14 (00:15.5-00:16.7) — Crush. Close-up of the guardian's huge root hand closing around a demon into a fist; the fist glows white-hot and bursts into flame.
+SHOT 15 (00:16.7-00:17.9) — Power up. Medium, low angle: the guardian roars, arms spread, both hands glowing, then cupping two blazing balls of fire.
+SHOT 16 (00:17.9-00:18.3) — Release. Fire erupts from both of its hands in a huge flash.
+SHOT 17 (00:18.3-00:20.1) — Ring of fire. Top-down aerial over a field packed with tiny demons: a crescent of fire spirals out from the guardian and closes into a perfect blazing ring with a dark centre. MUST SHOW: the full ring of fire seen from directly above.
+SHOT 18 (00:20.1-00:21.1) — Brute charge. Wide side view: the brute charges in from frame left over a line of burning ground and slams into the guardian, grappling it.
+SHOT 19 (00:21.1-00:22.2) — Face-off. Close two-shot: the brute's red-eyed snarling face at left, the guardian's glowing skull-bark face at right, glowing roots coiling around the brute's neck; two very quick cuts tightening.
+SHOT 20 (00:22.2-00:23.5) — Blast. Very wide and dark: the guardian at frame right faces a black mass of demons at frame left, the woman a small glowing point between them; the guardian fires a long fire beam left and the mass explodes in a giant fireball.
+SHOT 21 (00:23.5-00:25.3) — Root sphere. The explosion becomes a web of glowing roots that coils into a giant floating sphere of woven burning roots, filling the frame, then glows white-hot. MUST SHOW: the huge sphere of woven burning roots, centred.
+SHOT 22 (00:25.3-00:27.3) — Last demon. Wide on the cracked floor in front of the blazing sphere: a gaunt demon hangs from a root, drops and lands crouching, then is slammed onto its back, roots pinning it in smoke.
+SHOT 23 (00:27.3-00:27.6) — Fall. Two flash cuts: a dark demon silhouette tumbling backward against the fire.
+SHOT 24 (00:27.6-00:30.0) — Calm. Front, medium-wide, eye level: the woman kneels on the stone, both palms pressed on a glowing white-gold root lying across the floor in front of her; behind her a giant fan of glowing burning roots slowly fades; smoke clears and the light turns cool grey. She lifts her head and looks into the lens, calm and powerful; slow push-in. MUST SHOW: her palms on the glowing horizontal root.
 
-SHOT 2 (00:02.8-00:06.3) — Sip at the curb. Outside, she stands at the edge of the sidewalk, seen in side profile from her right side, facing frame right, framed from the chest up and placed on the left third, the empty road with its double yellow lines and the shop fronts across the street behind her. She raises the cup in both sleeve-covered hands and sips with eyes lowered, then lowers the cup to chest height and gazes calmly down the street to the right. Medium close-up, near-static with gentle handheld drift.
-
-SHOT 3 (00:06.3-00:09.5) — Blowing on the coffee. Front view, medium shot: she stands on the brick sidewalk right next to a dark glass shop front that fills frame left, the street receding into the distance on frame right with yellow dashed lines, low buildings and utility poles. She holds the cup at her chin with both hands, purses her lips and gently blows on the hot drink while looking up toward the camera with wide, slightly surprised eyes; the breeze moves a few strands of hair across her face. Static camera, very slight sway.
-
-SHOT 4 (00:09.5-00:12.8) — Close-up smile. Close-up in three-quarter profile from her right side, facing frame right, the background a soft blur of sidewalk, grey poles and a small red traffic light. She takes a sip, lowers the cup a little, swallows, and breaks into a soft closed-lip contented smile, eyes looking down and off to the right. Focus on her eyes and lashes, very slow push-in.
-
-SHOT 5 (00:12.8-00:15.1) — Walking toward camera. Wider medium-full shot from the front at eye level: she walks slowly along the brick sidewalk toward the camera, the cup held in both hands at her waist, canvas bag at her right hip; glass shop fronts on frame right, the road with yellow center lines and bare trees in square grates on frame left. She glances down shyly, then looks up into the lens with a warm, sweet smile while the camera dollies slowly backward ahead of her. End on her smiling at the camera.
-
-SOUND: no music. Shot 1: soft café ambience, low murmur, her quiet indistinct chatting and a soft giggle (no clear words). Shots 2-5: quiet outdoor street ambience, light wind, a distant car passing, faint footsteps on the paving; a soft sip in shots 2 and 4, a gentle blowing breath in shot 3.
+SOUND: no dialogue. Shots 1-4: no music, scraping body on stone, her strained breathing, a low demon growl, a sharp crack of light at the palm slam, a rising hum. Shot 5 onward: deep epic orchestral score with taiko drums and dark choir, roaring fire, wood creaking and groaning, demon shrieks, heavy bass impacts on every hit and explosion, a huge whoosh for the fire jet and the ring. Shot 24: the music drops away to a low drone, crackling embers and her slow breath.
 ----- END -----
