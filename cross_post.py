@@ -279,14 +279,22 @@ NICE = {"youtube": "YouTube", "facebook": "Facebook", "instagram": "Instagram", 
 POSTERS = {"youtube": youtube, "facebook": facebook, "instagram": instagram, "tiktok": tiktok_post}
 
 
-def post_all(video, t, done=None, video_url=None, log=print):
-    """Post to every platform that has secrets and isn't done yet. One failure doesn't stop the others."""
+def post_all(video, t, done=None, video_url=None, log=print, wide=None):
+    """Post to every platform that has secrets and isn't done yet. One failure doesn't stop the others.
+
+    video: the 9:16 version (YouTube, Instagram, TikTok). wide: the original-shape version for Facebook,
+    which fills the player on PC as well as phones (falls back to `video` if not given)."""
     done = dict(done or {})
     for name in enabled():
         if isinstance(done.get(name), dict) and done[name].get("id"):
             continue
         try:
-            res = instagram(video, t, video_url) if name == "instagram" else POSTERS[name](video, t)
+            if name == "instagram":
+                res = instagram(video, t, video_url)
+            elif name == "facebook":
+                res = facebook(wide or video, t)
+            else:
+                res = POSTERS[name](video, t)
             done[name] = res
             log(f"{NICE[name]}: posted {res.get('url', '')}{res.get('note', '')}")
         except Exception as e:  # keep going with the next platform

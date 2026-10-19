@@ -257,7 +257,8 @@ def cross_post(key, job, video, entry):
             from cross_post import size as _size
             ow, oh = _size(original if os.path.exists(original) else video)
             log(f"[{key}] " + ("Already 9:16: sending the original as is" if oh / ow >= 1.7
-                               else f"Made a 9:16 version (black bars) from the {ow}x{oh} original"))
+                               else f"Made a 9:16 version (black bars) from the {ow}x{oh} original")
+                + "; Facebook gets the original shape")
         except Exception as e:  # never lose the post over the reframe
             log(f"[{key}] Couldn't make the 9:16 version ({e}); posting the original shape")
             tall = video
@@ -267,8 +268,9 @@ def cross_post(key, job, video, entry):
         texts["credit"] = (f"🎬 Original by @{h} on X: {job['meta'].get('x_post')}" if h
                            else "🎬 Original from the YouMind Seedance 2.5 gallery")
         log(f"[{key}] Credit for your comments: {texts['credit']}")
+        # Facebook gets the original shape (same file as X): fills the player on PC and phones.
         entry["other"] = post_all(tall, texts, entry.get("other"), job["meta"].get("video_url"),
-                                  log=lambda m: log(f"[{key}] {m}"))
+                                  log=lambda m: log(f"[{key}] {m}"), wide=video)
     except Exception as e:
         log(f"[{key}] Cross-posting failed: {e}")
         return
