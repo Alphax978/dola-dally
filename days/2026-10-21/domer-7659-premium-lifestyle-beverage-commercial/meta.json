@@ -1,0 +1,32 @@
+{
+  "url": "https://domer.io/prompts/seedance-7659",
+  "source": "domer",
+  "slug": "domer-7659-premium-lifestyle-beverage-commercial",
+  "title": "Premium Lifestyle Beverage Commercial",
+  "video_url": "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/7659.mp4",
+  "x_post": "https://x.com/AIwithkhan/status/2079424272636969282",
+  "model": "Seedance 2.0",
+  "duration": 14.74,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    2.52,
+    3.19,
+    3.69,
+    4.89,
+    5.64,
+    6.48,
+    6.98,
+    7.81,
+    8.81,
+    9.89,
+    10.69,
+    11.77
+  ],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ]
+}
