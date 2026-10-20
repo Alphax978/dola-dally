@@ -1,0 +1,16 @@
+name: Probe source
+on:
+  push:
+    paths: [probe/request.txt]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install -y -qq ffmpeg >/dev/null && pip install -q opencv-python-headless numpy && python3 probe/probe.py
+      - name: Save
+        run: |
+          git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"
+          git add probe && git commit -q -m "Source probe results [skip ci]" && git pull -q --rebase && git push -q
