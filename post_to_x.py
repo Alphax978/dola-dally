@@ -58,6 +58,27 @@ def load_job(day, slot):
     return job
 
 
+def sentences(line):
+    """Split a line into sentences, keeping any emoji that follow a sentence with it."""
+    out = []
+    while True:
+        m = re.match(r"(.+?[.!?]+[\"'”’)]*(?:\s*[^\w\s\"'“‘(]+)*?)\s+(?=[\"'“‘(]?[A-Za-z0-9])", line)
+        if not m:
+            return out + [line.strip()]
+        out.append(m.group(1).strip())
+        line = line[m.end():]
+
+
+def one_sentence(line, prefer=None):
+    """Keep one sentence: the one that mentions `prefer` (e.g. the model name) if any, else the first."""
+    parts = sentences(line)
+    if prefer:
+        for p in parts:
+            if prefer.lower() in p.lower():
+                return p
+    return parts[0]
+
+
 def caption_lines(job):
     """The 2 caption lines: the hook, then a line that names the model (when the source names it).
     The routine writes line 2 with the model in it; if it's missing, it's added here so it's always there."""
@@ -66,11 +87,12 @@ def caption_lines(job):
     if len(lines) > 2:
         lines = [lines[0], " ".join(lines[1:])]
     model = job.get("model")
+    lines = [one_sentence(l, model if i == 1 else None) for i, l in enumerate(lines)]  # never two sentences in a line
     if model and model.lower() not in " ".join(lines).lower():
         if len(lines) < 2:
             lines.append(f"Made with {model} 🎥")
         else:
-            lines[1] = lines[1].rstrip() + f" 🎥 {model}"
+            lines[1] = lines[1].rstrip().rstrip(".") + f" 🎥 {model}"
     return lines
 
 
