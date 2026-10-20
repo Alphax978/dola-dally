@@ -296,6 +296,34 @@ def text_strips(path, out_dir, dur, w, h):
     return files
 
 
+PICKS_HEADER = """# Your picks for the NEXT morning run (5:00 AM Nepal time).
+# Paste up to 2 video links below, one per line (YouMind, ReelCine or Domer pages).
+#   1st link -> posted at 4:30 PM, 2nd link -> posted at 9:30 PM.
+#   Only 1 link -> it's posted at 9:30 PM and the other video is picked automatically.
+#   No links -> everything is picked automatically, as usual.
+# The morning run uses these links and then empties this list.
+"""
+
+
+def read_picks(path):
+    if not os.path.exists(path):
+        return []
+    links = [l.strip() for l in open(path, encoding="utf-8") if l.strip().startswith("http")]
+    return list(dict.fromkeys(links))
+
+
+def details_for(url):
+    """The right page reader for a link the user picked, or None if the site isn't supported."""
+    host = urllib.parse.urlparse(url).netloc.lower()
+    if host.endswith("youmind.com"):
+        return item_details
+    if host.endswith("reelcine.org") and "/video-prompt/" in url:
+        return reelcine_details
+    if host.endswith("domer.io") and re.search(r"/prompts/seedance-\d+", url):
+        return domer_details
+    return None
+
+
 SOURCES = ["youmind", "reelcine", "domer"]  # rotated by day: each day one source goes first, the others fill any gap
 
 
@@ -355,12 +383,37 @@ def main():
     os.makedirs(day_dir, exist_ok=True)
     prepared = []
     used_set = set(used)
-    for url, details in candidates(today, used_set):
+
+    # The user's own picks (picks.txt) go first; automatic candidates fill the rest.
+    picks_path = os.path.join(root, "picks.txt")
+    picks = read_picks(picks_path)
+    pick_jobs = []
+    for url in picks:
+        fn = details_for(url)
+        if not fn:
+            print(f"  your pick skipped (not a YouMind, ReelCine or Domer video page): {url}")
+        elif len(pick_jobs) < 2:  # two videos a day
+            pick_jobs.append((url, fn, len(pick_jobs) + 1))
+        else:
+            print(f"  your pick skipped (only 2 a day): {url}")
+    if picks:
+        print(f"Your picks: {len(pick_jobs)} usable link(s)")
+
+    def all_candidates():
+        for url, fn, n in pick_jobs:
+            yield url, fn, n
+        for url, fn in candidates(today, used_set):
+            if url not in picks:
+                yield url, fn, None
+
+    for url, details, pick_no in all_candidates():
         if len(prepared) >= HOW_MANY:
             break
         try:
             d = details(url)
-            if d.get("x_post") and d["x_post"] in used_set:  # same video already used via another site
+            if pick_no and (url in used_set or (d.get("x_post") and d["x_post"] in used_set)):
+                print(f"  note: your pick #{pick_no} was used or rejected before; using it anyway because you chose it")
+            elif d.get("x_post") and d["x_post"] in used_set:  # same video already used via another site
                 print(f"  skip (already used, from another source): {d['title']}")
                 continue
             if not d["video_url"]:
@@ -398,16 +451,26 @@ def main():
             with open(os.path.join(out_dir, "creator_page.txt"), "w", encoding="utf-8") as f:
                 f.write(d.pop("page_text"))
             json.dump(d, open(os.path.join(out_dir, "meta.json"), "w"), indent=2, ensure_ascii=False)
-            prepared.append({"slug": d["slug"], "title": d["title"], "url": url, "source": d["source"],
-                             "duration": d["duration"], "dir": f"days/{today}/{d['slug']}"})
+            item = {"slug": d["slug"], "title": d["title"], "url": url, "source": d["source"],
+                    "duration": d["duration"], "dir": f"days/{today}/{d['slug']}"}
+            if pick_no:
+                item.update(user_pick=True, pick_order=pick_no)
+            prepared.append(item)
             # not marked used here: only posted (post_to_x.py) or watermarked videos are
             print(f"  ok: {d['title']} ({d['duration']}s, {len(d['cuts'])} cuts)")
         except Exception as e:  # one bad video shouldn't stop the run
-            print(f"  failed: {url}: {e}")
+            print(f"  failed{f' (your pick #{pick_no})' if pick_no else ''}: {url}: {e}")
 
     json.dump({"date": today, "videos": prepared}, open(os.path.join(day_dir, "index.json"), "w"),
               indent=2, ensure_ascii=False)
     json.dump(used[-50000:], open(used_path, "w"), indent=1)
+
+    if picks:  # used up: keep a record with the day, then empty the list for the next pick
+        ok = [p["url"] for p in prepared if p.get("user_pick")]
+        with open(os.path.join(day_dir, "picks.txt"), "w", encoding="utf-8") as f:
+            f.write("".join(f"{u}  {'OK' if u in ok else 'NOT USED (see the run log)'}\n" for u in picks))
+    with open(picks_path, "w", encoding="utf-8") as f:
+        f.write(PICKS_HEADER)
 
     # tidy up old days
     days = os.path.join(root, "days")

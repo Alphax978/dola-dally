@@ -1,0 +1,6 @@
+# Your picks for the NEXT morning run (5:00 AM Nepal time).
+# Paste up to 2 video links below, one per line (YouMind, ReelCine or Domer pages).
+#   1st link -> posted at 4:30 PM, 2nd link -> posted at 9:30 PM.
+#   Only 1 link -> it's posted at 9:30 PM and the other video is picked automatically.
+#   No links -> everything is picked automatically, as usual.
+# The morning run uses these links and then empties this list.
