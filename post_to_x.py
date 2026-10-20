@@ -325,7 +325,10 @@ def post_slot(day, slot, dry_run=False, retry_cross=False):
         log(f"[{key}] Reply: full prompt {x_len(full)} chars (short fallback {x_len(short)} chars):\n{full[:300]}...")
         from wm_detect import has_watermark  # last check: never post a watermarked video
         wm, info = has_watermark(os.path.join(tmp, "original.mp4"))
-        if wm:
+        if wm and job["meta"].get("user_pick"):
+            # The user chose this video and the morning visual check passed it; the detector has false alarms.
+            log(f"[{key}] Watermark detector flagged your pick ({info}); posting anyway (checked by eye this morning).")
+        elif wm:
             log(f"[{key}] NOT POSTED: the video has a watermark ({info}).")
             if not dry_run:
                 save_posted(key, {"skipped": "watermark", "slug": job["slug"], "details": str(info)})

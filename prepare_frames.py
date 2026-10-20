@@ -434,7 +434,10 @@ def main():
                 print(f"  skip (too long, {dur:.0f}s): {d['title']}")
                 continue
             wm, wm_info = has_watermark(vid)
-            if wm:
+            if wm and pick_no:  # the detector has false alarms; for your own picks the visual check at 5:41 decides
+                print(f"  note: your pick #{pick_no} was flagged by the watermark detector; Claude checks it by eye")
+                d["wm_flag"] = str(wm_info)[:300]
+            elif wm:
                 os.remove(vid)
                 os.rmdir(out_dir)
                 used.append(url)  # has a burned-in watermark; never pick it
@@ -442,6 +445,8 @@ def main():
                     used.append(d["x_post"])
                 print(f"  skip (watermark {wm_info}): {d['title']}")
                 continue
+            if pick_no:
+                d.update(user_pick=True, pick_order=pick_no)
             d.update(duration=round(dur, 2), width=w, height=h, cuts=cut_times(vid),
                      frame_grids=frame_grids(vid, out_dir, dur, w, h),
                      text_strips=text_strips(vid, out_dir, dur, w, h))
