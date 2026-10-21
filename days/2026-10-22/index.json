@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-22",
+  "videos": [
+    {
+      "slug": "martial-arts-quarry-battle-12681",
+      "title": "Cinematic Martial Arts Battle in Quarry",
+      "url": "https://youmind.com/video-prompts/martial-arts-quarry-battle-12681",
+      "source": "youmind",
+      "duration": 15.14,
+      "dir": "days/2026-10-22/martial-arts-quarry-battle-12681",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "japanese-fantasy-sword-duel-12645",
+      "title": "Japanese Fantasy Sword Duel",
+      "url": "https://youmind.com/video-prompts/japanese-fantasy-sword-duel-12645",
+      "source": "youmind",
+      "duration": 30.11,
+      "dir": "days/2026-10-22/japanese-fantasy-sword-duel-12645",
+      "user_pick": true,
+      "pick_order": 2
+    },
+    {
+      "slug": "seedance-pyona-water-action-fight-10051",
+      "title": "Seedance 2.5 Supernatural Action Short Film",
+      "url": "https://youmind.com/video-prompts/seedance-pyona-water-action-fight-10051",
+      "source": "youmind",
+      "duration": 26.73,
+      "dir": "days/2026-10-22/seedance-pyona-water-action-fight-10051"
+    },
+    {
+      "slug": "seedance-2-0-prompt-for-high-viral-comedic-payoff-video-1640",
+      "title": "Seedance 2.0 prompt for high-viral comedic payoff video",
+      "url": "https://youmind.com/video-prompts/seedance-2-0-prompt-for-high-viral-comedic-payoff-video-1640",
+      "source": "youmind",
+      "duration": 15.15,
+      "dir": "days/2026-10-22/seedance-2-0-prompt-for-high-viral-comedic-payoff-video-1640"
+    }
+  ]
+}

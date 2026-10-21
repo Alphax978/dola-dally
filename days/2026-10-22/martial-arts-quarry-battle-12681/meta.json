@@ -1,0 +1,47 @@
+{
+  "url": "https://youmind.com/video-prompts/martial-arts-quarry-battle-12681",
+  "source": "youmind",
+  "slug": "martial-arts-quarry-battle-12681",
+  "title": "Cinematic Martial Arts Battle in Quarry",
+  "video_url": "https://cms-assets.youmind.com/media/1792307070017_a7y1sd_Martial-Arts-Battle-in-Quarry.mp4",
+  "x_post": "https://x.com/Zoyavelle/status/2111690502412390875",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 15.14,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    1.54,
+    1.58,
+    1.92,
+    1.96,
+    2.12,
+    2.17,
+    2.96,
+    3.92,
+    3.96,
+    4.38,
+    4.42,
+    4.46,
+    4.5,
+    4.88,
+    5.38,
+    5.42,
+    5.88,
+    6.54,
+    7.62,
+    7.83,
+    8.62,
+    9.12,
+    10.0,
+    11.79,
+    12.88
+  ],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ],
+  "model": "Seedance 2.5"
+}
