@@ -1,0 +1,19 @@
+{
+  "url": "https://reelcine.org/video-prompt/3279",
+  "source": "reelcine",
+  "slug": "reelcine-3279-school-supplies-transformation-into-robot",
+  "title": "School Supplies Transformation into Robot",
+  "video_url": "https://assets-prompts.reelcine.org/prompts/video/meigen/seedance-2.0/2040731808799633561/video-0.mp4",
+  "x_post": "https://x.com/TechTalkNAVI/status/2040731808799633561",
+  "duration": 10.1,
+  "width": 1280,
+  "height": 720,
+  "cuts": [],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ],
+  "model": "Seedance 2.0"
+}
