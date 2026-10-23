@@ -1,0 +1,28 @@
+{
+ "hook": {"from": 6.5, "text_top": "They laughed at the quiet girl.", "text_bottom": "Then this happened...",
+          "voice": "They laughed at the quiet girl. Then this happened."},
+ "intro_voice": "Here's the original, made with Seedance two point five.",
+ "shots": [
+  {"n": 2, "from": 2.7, "to": 6.5,
+   "excerpt": "Close-up of the girl, front-on, locked-off with a very slow push-in. She raises her eyes straight into the lens. At the very end, a faint cold half-smile.",
+   "highlight": ["Close-up", "slow push-in", "into the lens", "cold half-smile"],
+   "voice": "Shot two. A close-up with a very slow push-in. She raises her eyes into the lens, and ends on a cold half-smile."},
+  {"n": 5, "from": 8.9, "to": 10.0,
+   "excerpt": "Handheld wider shot facing the front of the room: she spins away from a falling boy and lands in a fighting stance. Boys jump up and rush toward her.",
+   "highlight": ["Handheld", "spins away", "fighting stance", "rush toward her"],
+   "voice": "Shot five. Handheld and wider. She spins away, lands in a fighting stance, and the whole class rushes her."},
+  {"n": 9, "from": 13.0, "to": 14.0,
+   "excerpt": "Low-angle handheld close to the floor: a boy lunges, she drops low under his arms and flips him over her back. Loose white papers scatter.",
+   "highlight": ["Low-angle", "close to the floor", "flips him over her back", "papers scatter"],
+   "voice": "Shot nine. Low angle, right on the floor. She drops under his arms and flips him over her back."},
+  {"n": 15, "from": 20.8, "to": 23.5,
+   "excerpt": "Locked-off wide shot: the boy flies over the wooden lectern and crashes behind it. Dozens of white papers burst into the air and slowly flutter down.",
+   "highlight": ["Locked-off wide shot", "flies over the wooden lectern", "papers burst into the air"],
+   "voice": "Shot fifteen. A locked-off wide shot. He crashes behind the lectern, and dozens of papers burst into the air."},
+  {"n": 17, "from": 26.7, "to": 29.3,
+   "excerpt": "Close-up of her face, warm light, dust specks floating. She raises her eyes straight into the lens with a cold, satisfied half-smile. Slow push-in.",
+   "highlight": ["Close-up", "dust specks", "into the lens", "satisfied half-smile", "Slow push-in"],
+   "voice": "And the final shot. A close-up, a slow push-in, and that same cold half-smile, straight into the lens."}
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
