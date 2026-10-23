@@ -362,8 +362,13 @@ def build(day, key, out_path, src=None):
     parts = clean_parts(script.get("shots"), dur)
     used = {(round(p["from"], 1), round(p["to"], 1)) for p in parts}
     reserve = [p for p in auto_parts(job.get("prompt", ""), dur) if (round(p["from"], 1), round(p["to"], 1)) not in used]
-    if not parts:
-        parts, reserve = reserve[:5], reserve[5:]
+    if not parts:  # no script: pick parts spread evenly across the clip
+        k = min(len(reserve), 4 if dur >= 25 else 5 if dur >= 15 else 6)
+        idx = sorted({round(i * (len(reserve) - 1) / max(1, k - 1)) for i in range(k)}) if k else []
+        parts = [reserve[i] for i in idx]
+        reserve = [p for i, p in enumerate(reserve) if i not in idx]
+    # extra parts (only used if the video would be under a minute): spread out too, middle of the gaps first
+    reserve.sort(key=lambda p: min([abs(p["from"] - q["from"]) for q in parts] or [0]), reverse=True)
 
     def wav(name, text):
         p = os.path.join(tmp, name + ".wav")
