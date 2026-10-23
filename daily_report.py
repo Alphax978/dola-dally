@@ -163,6 +163,9 @@ def slot_report(day, slot, posted):
     title = hook(day, slot)
     head = f"🎬 <b>{TIMES[slot]}</b>" + (f": {html.escape(title)}" if title else "")
     if not entry:
+        h, m = (16, 30) if slot == 1 else (21, 30)
+        if dt.datetime.now(TZ) < dt.datetime.fromisoformat(day).replace(hour=h, minute=m, tzinfo=TZ):
+            return head + "\n⏳ Not due yet", []
         why = "never ran" if title else "no video was prepared (morning step failed?)"
         return head + f"\n❌ Not posted: {why}", [f"{TIMES[slot]} video: {why}"]
     if entry.get("skipped"):
