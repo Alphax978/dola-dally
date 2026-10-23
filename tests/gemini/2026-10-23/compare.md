@@ -16,15 +16,15 @@ Seedance 2.5 turned it into a full fight scene.
 **Gemini:**
 
 ```
-She took down the entire classroom without breaking a sweat.
-Seedance 2.5 delivered pure cinematic action.
+One quiet girl completely dismantles her bullies.
+Seedance 2.5 handles this choreography flawlessly.
 ```
 
 ### Short prompt
 
 **Claude:** Photoreal Korean school action drama, 16:9. A calm girl with a sleek black bob in a navy uniform is mocked by bullies, stares them down, then takes out the whole class in a fast handheld fight. Papers rain down; she ends with a cold smile.
 
-**Gemini:** Cinematic Korean school action scene: a calm high school girl with a black bob takes down classroom bullies in a flurry of precise martial arts strikes, sending desks flying before calmly walking down the aisle with a cold smirk. Realistic lighting and fast choreography
+**Gemini:** Cinematic Korean high school drama, 16:9. A quiet girl with a sleek black bob is provoked by classroom bullies, suddenly erupting into precise martial arts choreography, taking down multiple students before calmly walking away with a cold smirk.
 
 ### Full prompt: Claude
 
@@ -84,30 +84,37 @@ SOUND: 00:00-06.5 quiet classroom ambience, boys' mocking laughter and chatter, 
 ```
 use seedance 2.5 for this
 
-VIDEO PROMPT — 30 seconds, 16:9, hyper-realistic Korean cinematic action thriller style, shallow depth of field, warm natural classroom sunlight, dynamic handheld and steady tracking camera, sharp and fast pacing.
+VIDEO PROMPT — 30 seconds, 16:9 aspect ratio, cinematic Korean action thriller aesthetic, natural warm afternoon sunlight through high classroom windows, shallow depth of field, 35mm lens, realistic physical choreography.
 
 CHARACTERS:
-- Female Student: Late teens, sleek black bob haircut, pale skin, cold fearless gaze. Wears a navy high school uniform blazer, white collared shirt, dark tie, and pleated skirt.
-- Male Bullies: Group of Korean teenage boys in matching navy school uniforms.
+- THE GIRL: Korean high school student, late teens, pale skin, sleek chin-length black bob haircut, sharp piercing eyes. Wears dark navy blazer, white collared shirt, dark tie, pleated skirt, black knee socks, black shoes.
+- THE BULLIES: Male Korean high school students in matching navy school uniforms, arrogant and aggressive expressions.
 
 LOCATION:
-Sunlit Korean high school classroom with wooden desks, large sunny windows with sheer curtains, and a green chalkboard.
+South Korean high school classroom with wooden desks arranged in rows, green chalkboard, large windows with cream curtains casting golden light beams.
 
 SHOTS:
-SHOT 1 (00:00.0-00:02.7) — Slow push-in on the female student seated calmly at her desk while male students laugh arrogantly in the background.
-SHOT 2 (00:02.7-00:06.5) — Close-up on the girl's face as she slowly raises her head, staring forward with a piercing, composed glare.
-SHOT 3 (00:06.5-00:08.0) — Medium shot of an arrogant male student leaning forward, smirking tauntingly at her.
-SHOT 4 (00:08.0-00:23.5) — Fast-paced action handheld camera. She dodges a sudden strike, counters swiftly, and dismantles multiple bullies using rapid punches, joint locks, and spinning kicks, sending bodies crashing into desks and knocking papers into the air.
-SHOT 5 (00:23.5-00:26.7) — Wide tracking shot. Classroom littered with overturned desks and groaning students. The girl calmly walks down the center aisle through floating sheets of paper.
-SHOT 6 (00:26.7-00:30.1) — Extreme close-up push-in. She looks up into the lens with a sharp, subtle, triumphant smirk.
+SHOT 1 (00:00.0-00:02.7) — Classroom Tension. Wide shot, slow push-in. THE GIRL sits calmly at her desk by the window. Behind her, male students laugh loudly and lean back arrogantly.
+
+SHOT 2 (00:02.7-00:06.5) — The Cold Stare. Tight close-up, static camera. THE GIRL looks down at her desk, then slowly lifts her head, fixing an icy, fearless gaze directly toward the bullies.
+
+SHOT 3 (00:06.5-00:08.0) — The Provocation. Medium shot. A male bully leans over his desk toward her, flashing a smug, provocative smirk.
+
+SHOT 4 (00:08.0-00:21.0) — The Brawl. Dynamic tracking handheld camera. THE GIRL explodes into fast martial arts action, ducking punches, redirecting strikes, and landing crisp kicks. Desks scrape and tilt across the floor as she takes down multiple students one after another, hurling the last bully backward.
+
+SHOT 5 (00:21.0-00:23.5) — Settling Dust. Wide shot, locked-off. View of the front podium and empty aisle where white notebook papers float gently down through sunlit air. MUST SHOW: papers fluttering in slow motion.
+
+SHOT 6 (00:23.5-00:26.7) — Calm Victory. Medium-wide tracking shot backward. THE GIRL stands erect in the center aisle, straightens her uniform jacket, and walks forward calmly through floating dust motes.
+
+SHOT 7 (00:26.7-00:30.1) — The Smirk. Dramatic close-up, subtle push-in. THE GIRL tilts her chin down, then raises her dark eyes directly to camera, curling her lips into a chilling, confident smirk.
 
 SOUND:
-Ambient classroom murmurs erupting into rapid hand-to-hand impacts, shattering desks, rustling papers, and heavy thuds, accompanied by a driving, suspenseful cinematic action beat. No dialogue.
+Ambient classroom chatter abruptly cutting out; crisp impact sounds of punches, kicks, and sliding wooden furniture; fluttering papers settling; low cinematic sub-bass drone rising to an intense finish; no dialogue.
 ```
 
 ## 9:30 PM: Pink Supercar Transformation Sequence
 
-Gemini model: gemini-3.8-flash · check: PASS · hook score: 9
+Gemini model: gemini-3.6-flash · check: PASS · hook score: 9
 
 ### Caption
 
@@ -121,15 +128,15 @@ Seedance 2.5 drove it straight through a store.
 **Gemini:**
 
 ```
-A tiny toy car unleashes pure cinematic chaos.
-Seedance 2.5 handled every drift effortlessly.
+A toy supercar morphs into a real drifting beast.
+Seedance 2.5 nailed every single frame.
 ```
 
 ### Short prompt
 
 **Claude:** Hyper-real car ad, 16:9. A woman in a black mini dress tosses a toy pink supercar; it grows mid-air, lands full size and drifts through Tokyo with tire smoke, day into neon night, then crashes into a convenience store. She walks out over the glass.
 
-**Gemini:** Cinematic sequence: a woman tosses a miniature pink supercar that expands mid-air into a full-sized exotic. She aggressively drifts through city streets day and night, crashing into a convenience store and confidently walking out through shattered glass.
+**Gemini:** A miniature pink toy car tossed into the air transforms into a full-sized supercar landing on city streets. A stylish woman drifts the supercar around sharp corners and backs it into a convenience store before calmly walking out through shattered glass.
 
 ### Full prompt: Claude
 
@@ -178,20 +185,27 @@ SOUND: 00:00-02.4 quiet suburban ambience, birds, a soft rising synth swell. 00:
 ```
 use seedance 2.5 for this
 
-VIDEO PROMPT — 30 seconds, 16:9, cinematic commercial realism, shallow depth of field, vibrant city colors, fast-paced action.
+VIDEO PROMPT — 30 seconds, 16:9, hyper-realistic automotive commercial style, dynamic street lighting, tracking camera, energetic pacing.
 
 CHARACTERS:
-- Young Asian woman: long dark hair, wearing a sleeveless black mini dress with a fiery orange chest graphic, black boots.
-- Car: sleek pastel-pink modern supercar, black rims, red leather interior.
+- THE WOMAN: East Asian woman, 20s, long dark brown hair, black graphic t-shirt dress, black boots.
+- THE SUPERCAR: Pastel pink luxury supercar, black rims, red leather interior.
+- THE TOY CAR: Miniature pink supercar model.
 
-SHOTS:
-00:00.0 - 00:02.5: Porch steps. Woman sits holding a miniature pink toy car, then flips it into the air toward the street.
-00:02.5 - 00:05.5: Street air. Tracking low-angle shot of the toy car floating, flipping, and rapidly expanding in size above the asphalt.
-00:05.5 - 00:14.5: Daytime Japanese city intersection. The full-sized pink supercar lands and initiates a high-speed drift, producing heavy white tire smoke. Dynamic tracking cuts alternate between wide drift angles and close-ups of the woman steering calmly inside.
-00:14.5 - 00:20.5: Night transition. The supercar drifts past neon-lit storefronts. Tracking shot shows the woman glancing aside and smiling while counter-steering.
-00:20.5 - 00:23.0: Convenience store exterior. Wide shot as the pink car slides sideways through the glass entrance, shattering the front panels in an explosion of sparks and debris.
-00:23.0 - 00:30.0: Store interior looking out. Static wide shot as the woman steps out from the parked car and struts forward through the shattered glass onto the pavement, striking a confident pose.
+LOCATION:
+Urban city streets, crosswalk intersection, convenience store.
+
+SHOT LIST:
+SHOT 1 (00:00.0-00:02.4) — Toy Hold. Medium shot, THE WOMAN holds THE TOY CAR cupped in her hands on porch steps.
+SHOT 2 (00:02.4-00:05.3) — Air Spin. Low angle, THE TOY CAR flips and spins mid-air above city crosswalk.
+SHOT 3 (00:05.3-00:08.8) — Drift Landing. Low tracking shot, full-sized SUPERCAR lands on street, drifting with white tire smoke.
+SHOT 4 (00:08.8-00:12.3) — Side Tracking. Low dynamic angle, tracking SUPERCAR sliding around corner, showing red interior and THE WOMAN driving.
+SHOT 5 (00:12.3-00:14.6) — Front Drift. Low front view, SUPERCAR powers through smoke facing camera.
+SHOT 6 (00:14.6-00:18.2) — Night Drift. Wide night tracking shot, SUPERCAR drifts across crosswalk surrounded by city lights and smoke.
+SHOT 7 (00:18.2-00:20.4) — Driver Close-Up. Medium side shot, THE WOMAN drives calmly and gives a hand gesture.
+SHOT 8 (00:20.4-00:23.5) — Store Crash. Wide shot, SUPERCAR reverses into convenience store glass storefront, shattering windows.
+SHOT 9 (00:23.5-00:30.2) — Store Walkout. Wide static shot, THE WOMAN walks out from store aisle through broken glass entrance toward camera.
 
 SOUND:
-Upbeat electronic trap beat, roaring V8 engine revs, screeching tires, loud shattering glass crash, footsteps crunching on broken glass.
+Engine revs, tire shrieks, shattering glass, urban ambient background. No music.
 ```
