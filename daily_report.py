@@ -226,6 +226,8 @@ def main():
         return
     msg = build(day)
     print(msg)
+    if os.environ.get("GITHUB_ACTIONS"):
+        print("::notice title=Report::" + msg.replace("\n", " | ")[:900], flush=True)
     tg("sendMessage", chat_id=chat_id(), text=msg, parse_mode="HTML", disable_web_page_preview=True)
     if not test:
         with open(SENT_FILE, "w") as f:
@@ -234,4 +236,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except BaseException as e:  # show the reason on the run page too
+        if os.environ.get("GITHUB_ACTIONS") and not (isinstance(e, SystemExit) and not e.code):
+            print(f"::error title=Daily report::{str(e)[:500] or type(e).__name__}", flush=True)
+        raise
