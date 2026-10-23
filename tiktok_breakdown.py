@@ -337,8 +337,7 @@ def build(day, key, out_path, src=None):
     sys.path.insert(0, ROOT)
     import models
     model = models.detect_in_dir(meta, folder) or ""
-    handle = re.search(r"(?:x|twitter)\.com/([A-Za-z0-9_]+)/status", meta.get("x_post") or "")
-    credit = (f"Made with {model}" if model else "AI video") + (f"  ·  by @{handle.group(1)}" if handle else "")
+    credit = f"Made with {model}" if model else "AI video"  # no creator name on screen: credits go in the comments
 
     tmp = tempfile.mkdtemp()
     if not src:
