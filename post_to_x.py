@@ -402,8 +402,12 @@ def auto(dry_run=False):
             who = "@" + me.json()["data"]["username"] if me.status_code < 300 else f"error {me.status_code} {me.text[:200]}"
         except BaseException as e:
             who = f"error {e}"
-        log(f"X: posting as {who}{' [PAUSED in paused.txt]' if 'x' in paused() else ''}")
-        check_accounts(log=log)
+        def note(m):  # also shown as a notice on the run page (easy to read from anywhere)
+            log(m)
+            if os.environ.get("GITHUB_ACTIONS"):
+                print(f"::notice title=Account check::{m}", flush=True)
+        note(f"X: posting as {who}{' [PAUSED in paused.txt]' if 'x' in paused() else ''}")
+        check_accounts(log=note)
         for slot in SLOTS:
             log(f"[{day}-{slot}] {post_slot(day, slot, dry_run=True)}")
         return
