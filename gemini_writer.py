@@ -137,9 +137,12 @@ def ask(parts, system):
             if r.status_code == 400 and "thinking" in r.text.lower() and model not in NO_THINKING:
                 NO_THINKING.add(model)  # this model doesn't take the thinking setting: ask again without it
                 continue
-            if r.status_code == 429:  # this model's free quota is used up: try the next model
+            if r.status_code == 429:  # per-minute limit: wait and retry once; daily limit: try the next model
                 last = f"{model}: quota reached"
                 log(f"  {last}")
+                if attempt == 0 and "PerDay" not in r.text:
+                    time.sleep(65)
+                    continue
                 break
             if r.status_code >= 300:
                 last = f"{model}: {r.status_code} {r.text[:300]}"
