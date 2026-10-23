@@ -80,9 +80,18 @@ replace them as the rules below say.
 IF IT PASSES, write its prompt following these rules exactly:
 {step3}
 
+DETAIL LEVEL (very important): write a LONG, highly detailed prompt, typically 4,000-8,000 characters for a
+15-30 second video. Use exactly this shot format, one line per real cut:
+"SHOT n (00:00.0-00:02.4) — Title. <framing, camera move and speed, what happens, light, MUST SHOW items>".
+Give characters CAPITALISED names (THE WOMAN, THE CAR...) with full, fixed descriptions, and repeat the look
+details (lens, grade, light, era, architecture) explicitly. Never summarise several cuts in one line.
+
 ALSO WRITE:
 - caption: {cap.group(1) if cap else 'exactly TWO short lines, one sentence each; line 1 the hook, line 2 names the model.'}
 - prompt_short: {short.group(1).split(':', 1)[1].strip() if short else 'the prompt condensed to at most 270 characters.'}
+  Make line 1 concrete: name the specific surprising thing that happens on screen (for example "He opened the
+  fridge and a whole ocean poured out."). Never use vague filler words such as cinematic, epic, chaos, insane,
+  pure, effortlessly, stunning, mind-blowing.
 - hook_score: 1-10, how likely the clip is to stop someone scrolling.
 
 Reply with ONLY this JSON object:
@@ -106,6 +115,16 @@ def models():
     return flash or [n for n in names if "flash" in n and "lite" not in n][:3]
 
 
+NO_THINKING = set()
+
+
+def gen_config(model):
+    c = {"responseMimeType": "application/json", "temperature": 0.4, "maxOutputTokens": 32768}
+    if model not in NO_THINKING:
+        c["thinkingConfig"] = {"thinkingLevel": "high"}
+    return c
+
+
 def ask(parts, system):
     last = None
     for model in models():
@@ -114,8 +133,10 @@ def ask(parts, system):
                               timeout=600, json={
                                   "systemInstruction": {"parts": [{"text": system}]},
                                   "contents": [{"role": "user", "parts": parts}],
-                                  "generationConfig": {"responseMimeType": "application/json",
-                                                       "temperature": 0.4, "maxOutputTokens": 32768}})
+                                  "generationConfig": gen_config(model)})
+            if r.status_code == 400 and "thinking" in r.text.lower() and model not in NO_THINKING:
+                NO_THINKING.add(model)  # this model doesn't take the thinking setting: ask again without it
+                continue
             if r.status_code == 429:  # this model's free quota is used up: try the next model
                 last = f"{model}: quota reached"
                 log(f"  {last}")
@@ -160,6 +181,20 @@ def study(day, v):
     parts.append({"text": "Check this candidate, then (if it passes) write its prompt, prompt_short and caption. "
                           "Reply with the JSON object only."})
     out = ask(parts, rules())
+    if out.get("pass") and out.get("prompt"):  # second pass: check the draft frame by frame and fix it
+        draft = {k: out.get(k) for k in ("title", "hook_score", "characters_swapped", "caption", "prompt", "prompt_short")}
+        review = parts[:-1] + [{"text": "YOUR DRAFT:\n" + json.dumps(draft, ensure_ascii=False, indent=1) + "\n\n"
+                                "Review the draft against the frame grids one frame at a time. Add every missing shot, "
+                                "object, action, camera move and detail; fix anything wrong or out of order; make sure it "
+                                "follows the DETAIL LEVEL and shot format rules and the caption rules. Reply with the "
+                                "complete, improved JSON object only (same fields, pass true)."}]
+        try:
+            better = ask(review, rules())
+            if better.get("prompt") and len(better["prompt"]) >= 0.8 * len(out["prompt"]):
+                better.setdefault("watermark", False)
+                out = {**out, **{k: better[k] for k in draft if better.get(k)}, "_model": better["_model"]}
+        except Exception as e:
+            log(f"  review pass skipped: {e}")
     out["meta"] = meta
     if out.get("pass"):
         p = (out.get("prompt") or "").strip()
