@@ -1,3 +1,2 @@
 # Platforms switched off: the automation skips them until their line is removed.
 # One per line: x, youtube, facebook, instagram, tiktok
-tiktok
