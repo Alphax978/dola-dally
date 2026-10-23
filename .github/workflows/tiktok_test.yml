@@ -11,7 +11,7 @@ permissions:
   contents: write
 jobs:
   test:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       SLOT: ${{ inputs.slot }}
@@ -21,8 +21,8 @@ jobs:
       - name: Install tools
         timeout-minutes: 15
         run: |
-          bash ci/install.sh apt ffmpeg
-          bash ci/install.sh pip requests requests-oauthlib opencv-python-headless numpy cryptography
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q requests requests-oauthlib opencv-python-headless numpy cryptography
       - name: Send to TikTok
         run: python3 tiktok_test.py "$SLOT" buffer
       - name: Save the feed
