@@ -240,7 +240,7 @@ def build(day, key, out_path):
     with urllib.request.urlopen(req, timeout=300) as r, open(src, "wb") as f:
         f.write(r.read())
     dur, w, h, has_audio = probe(src)
-    clip_h = round(W * h / w / 2) * 2  # full width; tall (9:16) clips are fitted into the box below
+    clip_h = round(W * h / w / 2) * 2
     clip_y_center = (H - clip_h) // 2
     parts = []
 
