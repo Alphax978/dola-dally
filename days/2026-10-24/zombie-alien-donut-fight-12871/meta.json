@@ -1,0 +1,26 @@
+{
+  "url": "https://youmind.com/video-prompts/zombie-alien-donut-fight-12871",
+  "source": "youmind",
+  "slug": "zombie-alien-donut-fight-12871",
+  "title": "Zombie Alien Donut Shop Comedy",
+  "video_url": "https://cms-assets.youmind.com/media/1792648534861_23oa6k_Zombie-Alien-Donut-Shop-Comedy.mp4",
+  "x_post": "https://x.com/bmx_ai13/status/2112946391878393917",
+  "wm_flag": "{'band': '0.0-0.2', 'score': 105.8, 'edges': (0.0, 0, 0.0), 'still': (0.0432, 5, 0.228), 'hit': True, 'motion': 32.6}",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 30.08,
+  "width": 854,
+  "height": 480,
+  "cuts": [
+    15.97
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}

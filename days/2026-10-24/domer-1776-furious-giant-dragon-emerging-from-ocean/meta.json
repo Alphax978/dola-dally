@@ -1,0 +1,29 @@
+{
+  "url": "https://domer.io/prompts/seedance-1776",
+  "source": "domer",
+  "slug": "domer-1776-furious-giant-dragon-emerging-from-ocean",
+  "title": "Furious Giant Dragon Emerging from Ocean",
+  "video_url": "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/1776.mp4",
+  "x_post": "https://x.com/hedo_ist/status/2035094507813822814",
+  "model": "Seedance 2.0",
+  "duration": 15.09,
+  "width": 1280,
+  "height": 716,
+  "cuts": [
+    0.71,
+    1.0,
+    1.67,
+    2.42,
+    2.54,
+    6.42,
+    6.5,
+    8.92,
+    12.25
+  ],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ]
+}

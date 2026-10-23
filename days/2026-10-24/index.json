@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-24",
+  "videos": [
+    {
+      "slug": "zombie-alien-donut-fight-12871",
+      "title": "Zombie Alien Donut Shop Comedy",
+      "url": "https://youmind.com/video-prompts/zombie-alien-donut-fight-12871",
+      "source": "youmind",
+      "duration": 30.08,
+      "dir": "days/2026-10-24/zombie-alien-donut-fight-12871",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "water-thunder-breathing-duel-189",
+      "title": "Live-Action Anime Adaptation: Water vs. Thunder Breathing Duel",
+      "url": "https://youmind.com/video-prompts/water-thunder-breathing-duel-189",
+      "source": "youmind",
+      "duration": 15.12,
+      "dir": "days/2026-10-24/water-thunder-breathing-duel-189",
+      "user_pick": true,
+      "pick_order": 2
+    },
+    {
+      "slug": "domer-6823-nostalgic-japanese-summer-path",
+      "title": "Nostalgic Japanese Summer Path",
+      "url": "https://domer.io/prompts/seedance-6823",
+      "source": "domer",
+      "duration": 29.91,
+      "dir": "days/2026-10-24/domer-6823-nostalgic-japanese-summer-path"
+    },
+    {
+      "slug": "domer-1776-furious-giant-dragon-emerging-from-ocean",
+      "title": "Furious Giant Dragon Emerging from Ocean",
+      "url": "https://domer.io/prompts/seedance-1776",
+      "source": "domer",
+      "duration": 15.09,
+      "dir": "days/2026-10-24/domer-1776-furious-giant-dragon-emerging-from-ocean"
+    }
+  ]
+}

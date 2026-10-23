@@ -1,0 +1,31 @@
+{
+  "url": "https://domer.io/prompts/seedance-6823",
+  "source": "domer",
+  "slug": "domer-6823-nostalgic-japanese-summer-path",
+  "title": "Nostalgic Japanese Summer Path",
+  "video_url": "https://storage.brightvectorlabs.com/prompts/awesome-seedance-2-prompts/6823.mp4",
+  "x_post": "https://x.com/harboriis/status/2073327203761139780",
+  "model": "Seedance 2.0",
+  "duration": 29.91,
+  "width": 1440,
+  "height": 1080,
+  "cuts": [
+    2.4,
+    5.4,
+    7.9,
+    10.23,
+    14.77,
+    16.77,
+    19.77,
+    22.6,
+    25.37
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ]
+}
