@@ -144,7 +144,8 @@ def overlay_shot(shot, excerpt, highlight, clip_y, clip_h, path):
     centered(d, 182, "that made this", font(40, False), GREY)
     y = clip_y + clip_h + 50
     d.rounded_rectangle((60, y, W - 60, y + 90), 20, fill=YEL)
-    centered(d, y + 22, f"SHOT {shot['n']}  ·  {tc(shot['from'])} - {tc(shot['to'])}", font(40), BG, stroke=0)
+    label = shot.get("label") or f"SHOT {shot['n']}"
+    centered(d, y + 22, f"{label.upper()}  ·  {tc(shot['from'])} - {tc(shot['to'])}", font(40), BG, stroke=0)
     # mark highlighted character spans, then draw word by word
     spans = []
     for h in highlight:
@@ -218,13 +219,18 @@ def segment(src, has_audio, start, length, out_dur, png, layout, out, voice=None
 CLIP_TOP = 300
 
 
-def build(day, slot, out_path):
-    job = json.load(open(os.path.join(ROOT, "prompts", "x", f"{day}-{slot}.json"), encoding="utf-8"))
-    script = json.load(open(os.path.join(ROOT, "breakdowns", f"{day}-{slot}.json"), encoding="utf-8"))
-    meta = json.load(open(os.path.join(ROOT, "days", day, job["slug"], "meta.json"), encoding="utf-8"))
+def build(day, key, out_path):
+    """key: 1 or 2 (that day's posted video) or a candidate's slug."""
+    if str(key).isdigit():
+        slug = json.load(open(os.path.join(ROOT, "prompts", "x", f"{day}-{key}.json"), encoding="utf-8"))["slug"]
+    else:
+        slug = key
+    script = json.load(open(os.path.join(ROOT, "breakdowns", f"{day}-{key}.json"), encoding="utf-8"))
+    folder = os.path.join(ROOT, "days", day, slug)
+    meta = json.load(open(os.path.join(folder, "meta.json"), encoding="utf-8"))
     sys.path.insert(0, ROOT)
     import models
-    model = models.detect_in_dir(meta, os.path.join(ROOT, "days", day, job["slug"])) or "AI"
+    model = models.detect_in_dir(meta, folder) or "AI"
     handle = re.search(r"(?:x|twitter)\.com/([A-Za-z0-9_]+)/status", meta.get("x_post") or "")
     credit = f"Made with {model}" + (f"  ·  by @{handle.group(1)}" if handle else "")
 
@@ -234,7 +240,7 @@ def build(day, slot, out_path):
     with urllib.request.urlopen(req, timeout=300) as r, open(src, "wb") as f:
         f.write(r.read())
     dur, w, h, has_audio = probe(src)
-    clip_h = round(W * h / w / 2) * 2
+    clip_h = round(W * h / w / 2) * 2  # full width; tall (9:16) clips are fitted into the box below
     clip_y_center = (H - clip_h) // 2
     parts = []
 
@@ -291,4 +297,4 @@ def build(day, slot, out_path):
 
 
 if __name__ == "__main__":
-    build(sys.argv[1], int(sys.argv[2]), sys.argv[3])
+    build(sys.argv[1], sys.argv[2], sys.argv[3])

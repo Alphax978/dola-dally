@@ -9,7 +9,7 @@ on:
         type: string
         required: true
       slot:
-        description: "Video 1 or 2"
+        description: "Video 1 or 2, or a candidate slug"
         type: string
         default: "1"
 permissions:
