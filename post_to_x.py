@@ -408,6 +408,9 @@ def auto(dry_run=False):
                 print(f"::notice title=Account check::{m}", flush=True)
         note(f"X: posting as {who}{' [PAUSED in paused.txt]' if 'x' in paused() else ''}")
         check_accounts(log=note)
+        if os.environ.get("CHECK_ONLY") == "true":
+            log("Account check only: skipping the video previews.")
+            return
         for slot in SLOTS:
             log(f"[{day}-{slot}] {post_slot(day, slot, dry_run=True)}")
         return

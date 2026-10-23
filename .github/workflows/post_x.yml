@@ -11,6 +11,10 @@ on:
         description: "Dry run (prepare everything, post nothing)"
         type: boolean
         default: true
+      check_only:
+        description: "Dry run: only check the accounts (about 1 minute, skips the video previews)"
+        type: boolean
+        default: false
       slot:
         description: "Post this video now (1 or 2); if it's already on X, only posts it where it's missing (YouTube/Facebook/Instagram). Leave empty to post on schedule"
         type: string
@@ -40,6 +44,7 @@ jobs:
       IG_USER_ID: ${{ secrets.IG_USER_ID }}
       TIKTOK_MODE: ${{ vars.TIKTOK_MODE || secrets.TIKTOK_MODE }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CHECK_ONLY: ${{ github.event_name == 'workflow_dispatch' && (inputs.check_only == true || inputs.check_only == 'true') && 'true' || 'false' }}
       DRY: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run == true || inputs.dry_run == 'true') && '--dry-run' || '' }}
     steps:
       - uses: actions/checkout@v4
