@@ -28,7 +28,22 @@ def env(name):
     return os.environ.get(name, "").strip()
 
 
+PAUSE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "paused.txt")
+
+
+def paused():
+    """Platforms switched off in paused.txt (one per line: x, youtube, facebook, instagram, tiktok)."""
+    if not os.path.exists(PAUSE_FILE):
+        return set()
+    return {l.split("#")[0].strip().lower() for l in open(PAUSE_FILE, encoding="utf-8")} - {""}
+
+
 def enabled():
+    out = [n for n in _connected() if n not in paused()]
+    return out
+
+
+def _connected():
     out = []
     if env("YT_CLIENT_ID") and env("YT_CLIENT_SECRET") and env("YT_REFRESH_TOKEN"):
         out.append("youtube")

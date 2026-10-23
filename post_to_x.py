@@ -305,7 +305,7 @@ def post_slot(day, slot, dry_run=False, retry_cross=False):
     Returns 'posted', 'done-before', 'no-job', 'watermark' or 'dry'."""
     key = f"{day}-{slot}"
     entry = load_posted().get(key)
-    if entry and not (retry_cross and entry.get("post_id") and needs_cross(entry)):
+    if entry and not (retry_cross and (entry.get("post_id") or entry.get("x") == "paused") and needs_cross(entry)):
         return "done-before"
     job = load_job(day, slot)
     if not job:
@@ -336,6 +336,17 @@ def post_slot(day, slot, dry_run=False, retry_cross=False):
                 commit_posted("Skipped a watermarked video")
             return "watermark"
         log(f"[{key}] Video ready: {os.path.getsize(video) // 1024} KB")
+        from cross_post import paused
+        if "x" in paused():
+            log(f"[{key}] X is paused (paused.txt): posting to {', '.join(needs_cross({})) or 'nothing'} only.")
+            if dry_run:
+                return "dry"
+            entry = {"x": "paused", "slug": job["slug"], "posted_at": dt.datetime.now(TZ).isoformat()}
+            save_posted(key, entry)  # recorded right away: never posted twice
+            mark_used(job["meta"].get("url"), job["meta"].get("x_post"))
+            commit_posted()
+            cross_post(key, job, video, entry)
+            return "posted"
         if dry_run:
             t = cross_texts(job)
             log(f"[{key}] YouTube title: {t['title']}")
