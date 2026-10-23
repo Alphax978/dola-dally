@@ -1,0 +1,32 @@
+{
+ "hook": {"from": 12.2, "text_top": "She folded a paper crane and flew it home.", "text_bottom": "Watch what it becomes...",
+          "voice": "She folded a paper crane, and flew it home. Watch what it becomes."},
+ "intro_voice": "Here's the original, made with Seedance two point five.",
+ "shots": [
+  {"label": "The style", "from": 1.5, "to": 3.8,
+   "excerpt": "Cinematic 2.5D painterly animation, like gouache concept art in motion: visible brush texture, matte finish, magenta and cyan neon rain. No black outlines, no cel-shading.",
+   "highlight": ["2.5D painterly animation", "gouache concept art", "visible brush texture", "No black outlines"],
+   "voice": "First, the style. Painterly 2.5D animation, like gouache concept art in motion, with visible brush texture and no black outlines."},
+  {"n": 5, "from": 7.9, "to": 10.1,
+   "excerpt": "Close-up, slight low angle: she lifts the tiny yellow paper crane to her lips and blows a warm breath over it; the crane glows soft gold and lights her face.",
+   "highlight": ["Close-up", "slight low angle", "blows a warm breath", "glows soft gold"],
+   "voice": "Shot five is the magic moment. A low close-up. She breathes on the paper crane, and it glows gold on her face."},
+  {"n": 8, "from": 12.4, "to": 14.25,
+   "excerpt": "Wide low-angle front view of the rooftop edge: she holds the giant paper crane above her head like a hang-glider, then leaps.",
+   "highlight": ["Wide low-angle", "giant paper crane", "like a hang-glider"],
+   "voice": "Shot eight. A wide low angle on the rooftop edge. She holds the giant crane like a hang glider, and jumps."},
+  {"n": 9, "from": 14.25, "to": 17.7,
+   "excerpt": "Fast FPV shot from the glider's point of view, diving steeply between dark glass skyscrapers toward glowing neon signs, rain streaking past.",
+   "highlight": ["Fast FPV shot", "diving steeply", "glowing neon signs", "rain streaking past"],
+   "voice": "Shots nine and ten. Ask for a fast F P V dive, between skyscrapers and neon signs, with rain streaking past the lens."},
+  {"n": 12, "from": 19.96, "to": 21.83,
+   "excerpt": "Extreme macro on the wet paper wing: the soaked fibers soften and a small crease rips open; her gloved fist clenches the edge.",
+   "highlight": ["Extreme macro", "soaked fibers", "crease rips open", "fist clenches"],
+   "voice": "Shot twelve adds tension. An extreme macro of the wet paper starting to tear, and her fist holding on."},
+  {"n": 17, "from": 27.1, "to": 30.1,
+   "excerpt": "Wide, locked-off from outside the balcony: the two stand in near-silhouette against the warm golden doorway. Warm tungsten light replaces the neon.",
+   "highlight": ["Wide, locked-off", "near-silhouette", "warm golden doorway", "tungsten light"],
+   "voice": "And the ending. Locked off and quiet, warm golden light instead of neon. That contrast is what makes it land."}
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
