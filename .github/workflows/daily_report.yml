@@ -1,0 +1,39 @@
+name: Daily report
+# 10:30 PM Nepal time: checks that today's 2 videos are live on every site, sends the result to Telegram.
+# Later schedules are backups (GitHub sometimes starts late); the report is only sent once a day.
+on:
+  schedule:
+    - cron: "45 16 * * *"   # 22:30 Nepal
+    - cron: "15 17 * * *"   # 23:00 Nepal (backup)
+    - cron: "45 17 * * *"   # 23:30 Nepal (backup)
+  workflow_dispatch:
+    inputs:
+      test:
+        description: "Send the report now (even if already sent today)"
+        type: boolean
+        default: true
+permissions:
+  contents: write
+concurrency:
+  group: report
+  cancel-in-progress: false
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+      FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+      X_API_SECRET: ${{ secrets.X_API_SECRET }}
+      TEST: ${{ github.event_name == 'workflow_dispatch' && (inputs.test == true || inputs.test == 'true') && '--test' || '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q requests cryptography
+      - name: Check every site and send to Telegram
+        run: python3 daily_report.py $TEST
+      - name: Save
+        if: always()
+        run: |
+          git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"
+          for f in tg_chat.enc report_sent.txt; do git add -- "$f" 2>/dev/null || true; done
+          git diff --cached --quiet || (git commit -q -m "Daily report [skip ci]" && git pull -q --rebase && git push -q)
