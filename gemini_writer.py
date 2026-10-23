@@ -61,6 +61,7 @@ def rules():
     step3 = step3.group(1).replace("Before saving, review", "Before answering, review") if step3 else ""
     cap = re.search(r'("caption": exactly TWO lines.*?)\n', t)
     short = re.search(r'("prompt_short":.*?)\n', t)
+    bd = re.search(r"BREAKDOWN SCRIPT FORMAT:\s*(.*?the voice reads them out\.)", t, re.S)
     return f"""You recreate short AI videos so they can be regenerated with Seedance 2.5 (in Dola AI).
 For ONE candidate video you get: its metadata, timestamped frame grids (each frame stamped with its time
 in yellow, top-left: we add those stamps, ignore them), bottom-of-frame strips (subtitles / on-screen text),
@@ -93,11 +94,14 @@ ALSO WRITE:
   fridge and a whole ocean poured out."). Never use vague filler words such as cinematic, epic, chaos, insane,
   pure, effortlessly, stunning, mind-blowing.
 - hook_score: 1-10, how likely the clip is to stop someone scrolling.
+- breakdown: the TikTok "prompt breakdown" script for this video, in this format (times are seconds in the original clip):
+{bd.group(1) if bd else '{"hook": {...}, "intro_voice": "...", "shots": [...], "outro_voice": "..."}'}
 
 Reply with ONLY this JSON object:
 {{"pass": true|false, "watermark": true|false, "fail_reason": "<why it failed, or null>",
  "title": "<short title>", "hook_score": <1-10>, "characters_swapped": true|false,
- "caption": "<line 1>\\n<line 2>", "prompt": "<full prompt or null>", "prompt_short": "<or null>"}}"""
+ "caption": "<line 1>\\n<line 2>", "prompt": "<full prompt or null>", "prompt_short": "<or null>",
+ "breakdown": {{"hook": {{...}}, "intro_voice": "...", "shots": [...], "outro_voice": "..."}} or null}}"""
 
 
 # ---------- Gemini ----------
@@ -191,7 +195,8 @@ def study(day, v):
                           "Reply with the JSON object only."})
     out = ask(parts, rules())
     if out.get("pass") and out.get("prompt"):  # second pass: check the draft frame by frame and fix it
-        draft = {k: out.get(k) for k in ("title", "hook_score", "characters_swapped", "caption", "prompt", "prompt_short")}
+        draft = {k: out.get(k) for k in ("title", "hook_score", "characters_swapped", "caption", "prompt", "prompt_short",
+                                         "breakdown")}
         review = parts[:-1] + [{"text": "YOUR DRAFT:\n" + json.dumps(draft, ensure_ascii=False, indent=1) + "\n\n"
                                 "Review the draft against the frame grids one frame at a time. Add every missing shot, "
                                 "object, action, camera move and detail; fix anything wrong or out of order; make sure it "
@@ -228,6 +233,12 @@ def save(day, chosen):
         json.dump({"date": day, "slot": slot, "slug": v["slug"], "caption": res["caption"],
                    "prompt": res["prompt"], "prompt_short": res["prompt_short"], "writer": res["_model"]},
                   open(os.path.join(xdir, f"{day}-{slot}.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    bdir = os.path.join(ROOT, "breakdowns")
+    os.makedirs(bdir, exist_ok=True)
+    for slot, (v, res) in chosen.items():
+        if isinstance(res.get("breakdown"), dict):  # TikTok breakdown script (the video maker fills any gaps)
+            json.dump(res["breakdown"], open(os.path.join(bdir, f"{day}-{slot}.json"), "w", encoding="utf-8"),
+                      ensure_ascii=False, indent=1)
     v, res = chosen.get(2) or chosen.get(1)
     m = res["meta"]
     w, h = m.get("width") or 16, m.get("height") or 9
