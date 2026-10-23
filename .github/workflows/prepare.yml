@@ -2,7 +2,10 @@ name: Prepare daily video frames
 
 on:
   schedule:
-    - cron: "15 23 * * *"   # 23:15 UTC = 5:00 AM Nepal time (GitHub can start late or skip; the routine covers that)
+    # cron-job.org starts this at exactly 5:00 AM Nepal time. These are backups in case that call fails;
+    # a run stops at once if today's frames already exist (GitHub can also start late or skip).
+    - cron: "30 23 * * *"   # 5:15 AM Nepal
+    - cron: "45 23 * * *"   # 5:30 AM Nepal
   workflow_dispatch:          # run it by hand from the Actions tab
   push:
     paths:
