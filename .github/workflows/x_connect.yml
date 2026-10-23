@@ -16,14 +16,16 @@ concurrency:
   cancel-in-progress: false
 jobs:
   connect:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       X_API_KEY: ${{ secrets.X_API_KEY }}
       X_API_SECRET: ${{ secrets.X_API_SECRET }}
       PIN: ${{ inputs.pin }}
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q requests requests-oauthlib cryptography
+      - name: Install tools
+        timeout-minutes: 8
+        run: bash ci/install.sh pip requests requests-oauthlib cryptography
       - name: Connect X
         run: |
           if [ -z "$PIN" ]; then python3 x_connect.py --start; else python3 x_connect.py --pin "$PIN"; fi

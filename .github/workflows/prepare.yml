@@ -20,15 +20,16 @@ concurrency:
 
 jobs:
   prepare:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
       - name: Install ffmpeg
+        timeout-minutes: 15
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
-          pip install -q opencv-python-headless numpy
+          bash ci/install.sh apt ffmpeg fonts-dejavu-core
+          bash ci/install.sh pip opencv-python-headless numpy
 
       - name: Download videos and make frame grids
         run: python3 prepare_frames.py
@@ -38,7 +39,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
         run: |
-          pip install -q requests cryptography
+          bash ci/install.sh pip requests cryptography
           python3 gemini_writer.py --if-mode gemini
 
       - name: Save to the repo

@@ -29,7 +29,7 @@ concurrency:
 
 jobs:
   post:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
       X_API_KEY: ${{ secrets.X_API_KEY }}
@@ -50,24 +50,34 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install tools
+        timeout-minutes: 15
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-          pip install -q requests requests-oauthlib opencv-python-headless numpy cryptography
+          bash ci/install.sh apt ffmpeg
+          bash ci/install.sh pip requests requests-oauthlib opencv-python-headless numpy cryptography
 
       # Extras for TikTok's breakdown video. Never blocks posting: if any of these fail or hang,
       # TikTok simply gets the normal 9:16 clip.
-      - name: Install breakdown extras (fonts, backup voice)
+      - name: Restore saved downloads (voice software and model)
         continue-on-error: true
-        timeout-minutes: 4
-        run: |
-          sudo apt-get install -y -qq espeak-ng fonts-dejavu-core
-          pip install -q pillow soundfile
-      - name: Install the free voice (Kokoro)
+        timeout-minutes: 5
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: voice-v1-ubuntu-24.04
+      - name: Install breakdown extras (fonts, backup voice)
         continue-on-error: true
         timeout-minutes: 6
         run: |
-          pip install -q --progress-bar off torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -q --progress-bar off "kokoro>=0.9"
+          bash ci/install.sh apt espeak-ng fonts-dejavu-core
+          bash ci/install.sh pip pillow soundfile
+      - name: Install the free voice (Kokoro)
+        continue-on-error: true
+        timeout-minutes: 8
+        run: |
+          bash ci/install.sh pip torch --index-url https://download.pytorch.org/whl/cpu
+          bash ci/install.sh pip "kokoro>=0.9"
 
       - name: Post today's videos at 16:30 and 21:30 Nepal time
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.slot == '' }}

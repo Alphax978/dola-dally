@@ -44,8 +44,9 @@ def font(size, bold=True):
     return ImageFont.truetype(FONT_DIR + ("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"), size)
 
 
-def run(cmd):
-    r = subprocess.run(cmd, capture_output=True, text=True)
+def run(cmd, limit=600):
+    """Run a tool; give up after `limit` seconds so a stuck tool can never freeze the posting run."""
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=limit)
     if r.returncode:
         raise RuntimeError(f"{cmd[0]} failed: {r.stderr[-1500:]}")
     return r.stdout
@@ -98,8 +99,18 @@ def say(text, out_wav):
             from kokoro import KPipeline
             _kokoro = KPipeline(lang_code="a")
         import numpy as np
+        import signal
         import soundfile as sf
-        audio = np.concatenate([a for _, _, a in _kokoro(text, voice="af_heart", speed=1.0)])
+
+        def stuck(*_):
+            raise TimeoutError("voice took over 2 minutes")
+        old_handler = signal.signal(signal.SIGALRM, stuck)
+        signal.alarm(120)
+        try:
+            audio = np.concatenate([a for _, _, a in _kokoro(text, voice="af_heart", speed=1.0)])
+        finally:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, old_handler)
         sf.write(out_wav, audio, 24000)
         _note("Voice: Kokoro (af_heart)")
     except Exception as e:
