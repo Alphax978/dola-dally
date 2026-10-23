@@ -62,7 +62,7 @@ def rules():
     cap = re.search(r'("caption": exactly TWO lines.*?)\n', t)
     short = re.search(r'("prompt_short":.*?)\n', t)
     bd = re.search(r"BREAKDOWN SCRIPT FORMAT:\s*(.*?the voice reads them out\.)", t, re.S)
-    return f"""You recreate short AI videos so they can be regenerated with Seedance 2.5 (in Dola AI).
+    return f"""You recreate short AI videos so they can be regenerated with Seedance 2.5.
 For ONE candidate video you get: its metadata, timestamped frame grids (each frame stamped with its time
 in yellow, top-left: we add those stamps, ignore them), bottom-of-frame strips (subtitles / on-screen text),
 and the text of the original creator's page (it contains the creator's own prompt; use it for intent,
@@ -214,8 +214,6 @@ def study(day, v):
         p = (out.get("prompt") or "").strip()
         if not p:
             raise RuntimeError("passed but no prompt was written")
-        if not p.lower().startswith("use seedance 2.5 for this"):
-            p = "use seedance 2.5 for this\n\n" + p
         out["prompt"] = p
         out["prompt_short"] = (out.get("prompt_short") or "").strip()[:270]
         lines = [l.strip() for l in (out.get("caption") or "").splitlines() if l.strip()]
@@ -239,19 +237,10 @@ def save(day, chosen):
         if isinstance(res.get("breakdown"), dict):  # TikTok breakdown script (the video maker fills any gaps)
             json.dump(res["breakdown"], open(os.path.join(bdir, f"{day}-{slot}.json"), "w", encoding="utf-8"),
                       ensure_ascii=False, indent=1)
-    v, res = chosen.get(2) or chosen.get(1)
-    m = res["meta"]
-    w, h = m.get("width") or 16, m.get("height") or 9
-    ratio = "16:9" if w / h > 1.5 else "9:16" if h / w > 1.5 else "1:1" if abs(w - h) < 10 else f"{w}:{h}"
-    today_md = (f"DATE: {day}\nSTATUS: READY\nTITLE: {res.get('title') or m.get('title')}\n"
-                f"LENGTH: {round(m.get('duration') or 0)} seconds, {ratio}\n\n"
-                "MAIN PROMPT — generate ONE video from everything between the two lines below:\n"
-                f"----- START -----\n{res['prompt']}\n----- END -----\n")
-    for name in ("today.md", f"{day}.md"):
-        open(os.path.join(ROOT, "prompts", name), "w", encoding="utf-8").write(today_md)
-    parts = os.path.join(ROOT, "prompts", "today-parts.md")
-    if os.path.exists(parts):
-        os.remove(parts)
+    for old in ("today.md", "today-parts.md"):  # no Dola copy any more
+        p = os.path.join(ROOT, "prompts", old)
+        if os.path.exists(p):
+            os.remove(p)
 
 
 def mark_used(urls):

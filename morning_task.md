@@ -1,8 +1,8 @@
-# Morning task (read by the Claude routine "Daily Dola video pick")
+# Morning task (read by the Claude morning routine)
 
-Every morning: pick TWO watermark-free videos from the video prompt galleries of YouMind, ReelCine and Domer (Seedance 2.0, 2.5 and other models), study each frame by frame, write ONE precise prompt per video that recreates it, save them for Dola and for the two X posts, and report. Two videos per day. Nobody reviews the prompt before it is used, so it must be precise, complete and work on the first try.
+Every morning: pick TWO watermark-free videos from the video prompt galleries of YouMind, ReelCine and Domer (Seedance 2.0, 2.5 and other models), study each frame by frame, write ONE precise prompt per video that recreates it, save them for the day's posts, and report. Two videos per day. Nobody reviews the prompt before it is used, so it must be precise, complete and work on the first try.
 
-CONTEXT: The user runs Dola AI (built on ByteDance's Seedance 2.0 and 2.5) and posts on X. Dola now accepts a prompt for a video of any length, so there is always exactly ONE prompt per video, however long it is: no parts, no options. A GitHub Action posts each ORIGINAL video to X (credited to its creator) with our prompt as the reply: video 1 at 4:30 PM and video 2 at 9:30 PM Nepal time. Dola's scheduled task generates the user's own version of video 2 from its prompt.
+CONTEXT: The user runs the Mira AI pages (X, YouTube, Facebook, Instagram, TikTok). There is always exactly ONE prompt per video, however long the video is: no parts, no options. GitHub posts each ORIGINAL video with our prompt (on X as the reply): video 1 at 4:30 PM and video 2 at 9:30 PM Nepal time.
 
 STEP 0 — Check who writes today. Read writer.txt in <repo> (after the git fetch/checkout below). If its setting line says gemini, Gemini writes the prompts on GitHub instead of you: end with a final reply "Writer is set to Gemini (writer.txt); nothing to do today." and do nothing else. Also, if prompts/x/<today's Nepal date>-1.json or -2.json already exists on origin/main (the Gemini backup already wrote today's prompts), don't write or overwrite anything: end with a final reply saying "Today's prompts were already written by the Gemini backup." Check this again right before STEP 4's commit.
 
@@ -14,7 +14,7 @@ STEP 1 — Get today's frames. A GitHub Action in the user's PUBLIC repo Alphax9
   3. If it still isn't there after 40 minutes, stop: end with a final reply (and a push notification if that tool exists) saying "Today's frames didn't arrive: the GitHub Action failed or didn't start. Check Actions at https://github.com/Alphax978/dola-dally/actions, then press Run now on this routine." Leave prompts/today.md untouched and do nothing else. (youmind.com can't be reached from this environment, so there is no other fallback.)
 - THE USER'S OWN PICKS COME FIRST: candidates in index.json with "user_pick": true were chosen by the user (they paste links into picks.txt the day before). Use them whenever they pass the checks below. With two user picks, "pick_order": 1 is video 1 (4:30 PM) and "pick_order": 2 is video 2 (9:30 PM); the stronger-hook rule below does not apply. With one user pick, it is video 2 (9:30 PM) and the other video is the first automatic candidate that passes. If a user pick fails a check, or index.json has fewer user picks than days/<today>/picks.txt lists, say so clearly at the top of your final reply (which link and why) and fill its place automatically. A user pick's meta.json may have "wm_flag": the automatic watermark detector suspected something (it often raises false alarms on dark skies, dashboards and fixed background objects). Check that video's frames extra carefully: if you see no real watermark, logo, @handle or "made with" label, it PASSES and is posted; if you do see one, it fails as usual.
 - Pick today's two videos: go through the candidates in index.json in order (user picks are listed first) and take the FIRST TWO that pass both checks below. If only one passes, use just that one (as video 2, the 9:30 PM post, and for Dola). If none passes, say so in your final reply, list why each was skipped, and stop (write no prompts).
-- When there are no user picks: of the two, the one with the stronger hook (more striking, more likely to stop the scroll) is "video 2" (posted at 9:30 PM, the best slot, and remade in Dola); the other is "video 1" (posted at 4:30 PM).
+- When there are no user picks: of the two, the one with the stronger hook (more striking, more likely to stop the scroll) is "video 2" (posted at 9:30 PM, the best slot); the other is "video 1" (posted at 4:30 PM).
   - Not sexual or graphically violent (gore).
   - NO WATERMARK: look closely at every frame grid and text strip of the candidate for anything burned in on top of the picture that isn't part of the scene: an app or AI-tool name or logo (e.g. "Wizstar AI", "Dola AI", "Kling", "Hailuo", "Jimeng", "Vidu", "Pika", "Runway", "Sora", "Veo", "Seedance", "Dreamina", "CapCut"), a creator @handle or website, a "made with"/"generated by" label, or any small fixed logo, even faint or semi-transparent, in any corner, along any edge or in the centre. Ignore only the yellow time stamps in the top-left of each tile: we add those. If you see anything like this, or you're unsure, the candidate fails: skip it and don't use it in any way, and add its YouMind url (from meta.json) to used.json in <repo> (a JSON list; create it if missing) so it's never picked again; include used.json in the STEP 4 commit.
   - Do NOT skip a video because it features copyrighted characters, a franchise cast, or real people/celebrities; keep it and handle it in STEP 3.
@@ -27,7 +27,6 @@ STEP 3 — For each video, write ONE prompt that recreates it faithfully, for th
 The only exception: if the original features copyrighted or franchise characters, or real people/celebrities, replace each of them with an original character who plays the same role in the same scene — new face, hair, build, costume, colors and emblems — and keep everything else identical. Don't carry over any signature look, costume, color scheme, emblem, catchphrase or name from those characters or people, and don't mention them in the prompt.
 Leave out burned-in subtitles and on-screen text (AI video garbles text); keep the spoken lines as dialogue instead.
 Format of the prompt:
-- FIRST LINE: "use seedance 2.5 for this", followed by a blank line.
 - Header line: "VIDEO PROMPT — N seconds" (the original's real length), aspect ratio (same as the original), the look (realism/style, lens, color grade, light), the camera feel, and pacing.
 - CHARACTERS block: concrete, fixed descriptions (age, skin, hair, face, clothing, one or two signature details visible in every shot). LOCATION block if relevant.
 - Shot list with timecodes from 00:00 matching the real cuts (SHOT n (00:00.0-00:01.5) — title. what happens, framing, camera move, speed), using specific camera language (push-in, dolly, tracking, crane, whip pan, locked-off, low angle) and physical cause and effect.
@@ -41,25 +40,13 @@ FIDELITY RULES (video models drop or blur anything vague, so be concrete):
 - Camera angle of each key moment exactly as seen: side view vs top-down, close-up vs wide, from behind vs from the front.
 - Before saving, review your prompt against the frame grids one frame at a time: for each frame, check the prompt already describes what is on screen at that time. Fix anything missing, wrong or out of order, then save.
 
-STEP 4 — Save to GitHub (Dola's scheduled task and the X post read these files).
+STEP 4 — Save to GitHub (the posting reads these files).
 - In <repo> (on main, as set up in STEP 1): git pull --ff-only origin main, then write these files (Nepal date for <date>):
-  - prompts/today.md — exactly this layout and nothing else:
-      DATE: <YYYY-MM-DD>
-      STATUS: READY
-      TITLE: <short title of video 2>
-      LENGTH: <N> seconds, <aspect ratio>
-      (blank line)
-      MAIN PROMPT — generate ONE video from everything between the two lines below:
-      ----- START -----
-      <video 2's prompt, exactly as in the message>
-      ----- END -----
-  - prompts/<date>.md — a copy of today.md, as history.
   - prompts/x/<date>-1.json (video 1) and prompts/x/<date>-2.json (video 2), written with python3 and json.dump(..., ensure_ascii=False, indent=1), never by hand-typing JSON. Fields:
       "date": "<YYYY-MM-DD>", "slot": 1 or 2, "slug": <that video's slug from index.json>,
       "caption": exactly TWO lines separated by a newline, at most 180 characters in total, no links, no hashtags, no @mentions. EACH LINE IS EXACTLY ONE SHORT SENTENCE: never two sentences in a line, no "..." trailing off, ideally under 10 words per line. Short and catchy beats descriptive. Line 1: the hook, one short punchy sentence about what makes the clip striking. Line 2: one short sentence that names the model from meta.json's "model" field in a natural way, e.g. "Seedance 2.5 nailed every frame of this." or "All made with Seedance 2.0, no camera." (vary it every day, never copy these examples). If meta.json has no "model", line 2 is a second punchy line without a model name. "Prompt: ⤵️" is added automatically below, so don't include it.
-      "prompt": that video's full prompt (for video 2, the same as in today.md),
-      "prompt_short": the same prompt condensed to at most 270 characters (style, main character, the key action, mood), without the "use seedance 2.5 for this" line. It is only used if X refuses the full prompt.
-  - If an old prompts/today-parts.md exists, delete it (git rm).
+      "prompt": that video's full prompt,
+      "prompt_short": the same prompt condensed to at most 270 characters (style, main character, the key action, mood). It is only used if X refuses the full prompt.
   - breakdowns/<date>-1.json and breakdowns/<date>-2.json — the TikTok "prompt breakdown" script for each video (TikTok gets a 1-minute+ version: hook, the original, then key moments replayed with the prompt words that made them, read by a voice). Write them with python3 json.dump(..., ensure_ascii=False, indent=1). BREAKDOWN SCRIPT FORMAT:
       {"hook": {"from": <second where the most striking 3-5 s moment starts>, "text_top": <the caption's line 1, max 45 characters>, "text_bottom": <a short teaser, e.g. "Wait for the ending...", max 30 characters>, "voice": <one or two short spoken sentences, max 15 words>},
        "intro_voice": "Here's the original, made with <model from meta.json, e.g. Seedance 2.5>.",
@@ -83,17 +70,9 @@ STEP 5 — Deliver the message. Write it as your FINAL REPLY in this session (pl
 **Prompt**
 <code block>
 
-**9:30 PM — video 2: <short title>** (also sent to Dola)
+**9:30 PM — video 2: <short title>**
 <the same four parts for video 2>
 
 <one line if any candidates were skipped: "Skipped: <title> (watermark), …">
-**Saved:** "✅ prompts saved · X posts at 4:30 PM and 9:30 PM · Dola gets video 2" or "⚠️ Couldn't save: <exact error>"
-**Next:** Dola's scheduled task generates your version of video 2. To post it yourself, upload the Dola clip here and I'll send it back without the watermark.
+**Saved:** "✅ prompts saved · posts at 4:30 PM and 9:30 PM" or "⚠️ Couldn't save: <exact error>"
 The "Watch the original" links are required for each video and must be the exact, full URLs.
-
-STEP 6 — FINISHING (when the user later uploads a Dola clip in this chat; no need to ask anything first):
-1. Find the uploaded video file.
-2. Make sure the tools exist: ffmpeg must be installed (check with "which ffmpeg"); if "python3 -c 'import cv2'" fails, run "pip install --break-system-packages opencv-python-headless".
-3. Run: python3 <repo>/dola_finish.py CLIP.mp4 -o <short_title>.mp4 (it removes the "Dola AI" watermark frame by frame, keeping the exact resolution and framing). If several clips were uploaded, pass them in order to join them.
-4. Check the result: extract a frame from the middle and look at the bottom-right corner to confirm the watermark is gone, and confirm the duration with ffprobe. If the script printed "No clear watermark found", say so in one line.
-5. Deliver the final video: if a SendUserFile tool is available, send it with the caption "Ready to post". If not, say so in one line and tell the user to upload the clip to their regular Claude chat for finishing instead.

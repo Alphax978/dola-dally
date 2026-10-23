@@ -116,7 +116,7 @@ def main_text(job):
 
 
 def public_prompt(text):
-    """The prompt as people should see it: without our Dola-only first line."""
+    """The prompt as people should see it (older prompts started with a "use seedance" line for Dola)."""
     lines = text.strip().splitlines()
     if lines and lines[0].strip().lower().startswith("use seedance"):
         lines = lines[1:]
