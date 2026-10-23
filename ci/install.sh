@@ -9,11 +9,13 @@ kind="$1"; shift
 for attempt in 1 2 3; do
   start=$(date +%s)
   if [ "$kind" = "apt" ]; then
-    timeout 180 sudo apt-get -o DPkg::Lock::Timeout=60 -o Acquire::http::Timeout=20 -o Acquire::Retries=2 update -qq \
-      && timeout 300 sudo apt-get -o DPkg::Lock::Timeout=60 -o Acquire::http::Timeout=20 -o Acquire::Retries=2 \
-           install -y -qq "$@" && ok=1 || ok=0
+    # never let apt (or Ubuntu's restart helper) stop to ask a question: no one is there to answer
+    APT="sudo DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a NEEDRESTART_SUSPEND=1 apt-get -o DPkg::Lock::Timeout=60 \
+         -o Acquire::http::Timeout=20 -o Acquire::Retries=2 -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold"
+    timeout -k 10 180 $APT update -qq </dev/null \
+      && timeout -k 10 300 $APT install -y -qq --no-install-recommends "$@" </dev/null && ok=1 || ok=0
   else
-    timeout 420 pip install -q --progress-bar off --timeout 30 --retries 3 "$@" && ok=1 || ok=0
+    timeout -k 10 420 pip install -q --progress-bar off --timeout 30 --retries 3 "$@" </dev/null && ok=1 || ok=0
   fi
   if [ "$ok" = 1 ]; then
     echo "installed ($kind) in $(( $(date +%s) - start ))s: $*"
