@@ -17,7 +17,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       DAY: ${{ inputs.day }}
@@ -29,7 +29,15 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core
           pip install -q torch --index-url https://download.pytorch.org/whl/cpu
           pip install -q "kokoro>=0.9" soundfile pillow
+      - name: Load the voice (Kokoro)
+        continue-on-error: true
+        timeout-minutes: 10
+        run: |
+          start=$(date +%s)
+          python3 -c "from kokoro import KPipeline; import numpy as np; p=KPipeline(lang_code='a'); a=np.concatenate([x for _,_,x in p('Testing the voice.', voice='af_heart')]); print(len(a))"
+          echo "::notice title=Voice loaded::Kokoro ready in $(( $(date +%s) - start ))s"
       - name: Build the video
+        timeout-minutes: 20
         run: python3 tiktok_breakdown.py "$DAY" "$SLOT" "breakdown-$DAY-$SLOT.mp4"
       - name: Upload for review
         run: |

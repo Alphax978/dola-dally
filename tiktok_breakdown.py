@@ -18,6 +18,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.request
 
 from PIL import Image, ImageDraw, ImageFont
@@ -70,7 +71,9 @@ def say(text, out_wav):
             _kokoro = KPipeline(lang_code="a")
         import numpy as np
         import soundfile as sf
+        t0 = time.time()
         audio = np.concatenate([a for _, _, a in _kokoro(text, voice="af_heart", speed=1.0)])
+        print(f"  voice line done in {time.time() - t0:.1f}s", flush=True)
         sf.write(out_wav, audio, 24000)
         _note("Voice: Kokoro (af_heart)")
     except Exception as e:
