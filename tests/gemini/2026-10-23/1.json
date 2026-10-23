@@ -1,0 +1,12 @@
+{
+ "pass": true,
+ "watermark": false,
+ "fail_reason": null,
+ "title": "Korean School Action Drama Scene",
+ "hook_score": 9,
+ "characters_swapped": false,
+ "caption": "She took down the entire classroom without breaking a sweat.\nSeedance 2.5 delivered pure cinematic action.",
+ "prompt": "use seedance 2.5 for this\n\nVIDEO PROMPT — 30 seconds, 16:9, hyper-realistic Korean cinematic action thriller style, shallow depth of field, warm natural classroom sunlight, dynamic handheld and steady tracking camera, sharp and fast pacing.\n\nCHARACTERS:\n- Female Student: Late teens, sleek black bob haircut, pale skin, cold fearless gaze. Wears a navy high school uniform blazer, white collared shirt, dark tie, and pleated skirt.\n- Male Bullies: Group of Korean teenage boys in matching navy school uniforms.\n\nLOCATION:\nSunlit Korean high school classroom with wooden desks, large sunny windows with sheer curtains, and a green chalkboard.\n\nSHOTS:\nSHOT 1 (00:00.0-00:02.7) — Slow push-in on the female student seated calmly at her desk while male students laugh arrogantly in the background.\nSHOT 2 (00:02.7-00:06.5) — Close-up on the girl's face as she slowly raises her head, staring forward with a piercing, composed glare.\nSHOT 3 (00:06.5-00:08.0) — Medium shot of an arrogant male student leaning forward, smirking tauntingly at her.\nSHOT 4 (00:08.0-00:23.5) — Fast-paced action handheld camera. She dodges a sudden strike, counters swiftly, and dismantles multiple bullies using rapid punches, joint locks, and spinning kicks, sending bodies crashing into desks and knocking papers into the air.\nSHOT 5 (00:23.5-00:26.7) — Wide tracking shot. Classroom littered with overturned desks and groaning students. The girl calmly walks down the center aisle through floating sheets of paper.\nSHOT 6 (00:26.7-00:30.1) — Extreme close-up push-in. She looks up into the lens with a sharp, subtle, triumphant smirk.\n\nSOUND:\nAmbient classroom murmurs erupting into rapid hand-to-hand impacts, shattering desks, rustling papers, and heavy thuds, accompanied by a driving, suspenseful cinematic action beat. No dialogue.",
+ "prompt_short": "Cinematic Korean school action scene: a calm high school girl with a black bob takes down classroom bullies in a flurry of precise martial arts strikes, sending desks flying before calmly walking down the aisle with a cold smirk. Realistic lighting and fast choreography",
+ "_model": "gemini-3.8-flash"
+}

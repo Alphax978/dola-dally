@@ -1,0 +1,12 @@
+{
+ "pass": true,
+ "watermark": false,
+ "fail_reason": null,
+ "title": "Pink Supercar Transformation Sequence",
+ "hook_score": 9,
+ "characters_swapped": false,
+ "caption": "A tiny toy car unleashes pure cinematic chaos.\nSeedance 2.5 handled every drift effortlessly.",
+ "prompt": "use seedance 2.5 for this\n\nVIDEO PROMPT — 30 seconds, 16:9, cinematic commercial realism, shallow depth of field, vibrant city colors, fast-paced action.\n\nCHARACTERS:\n- Young Asian woman: long dark hair, wearing a sleeveless black mini dress with a fiery orange chest graphic, black boots.\n- Car: sleek pastel-pink modern supercar, black rims, red leather interior.\n\nSHOTS:\n00:00.0 - 00:02.5: Porch steps. Woman sits holding a miniature pink toy car, then flips it into the air toward the street.\n00:02.5 - 00:05.5: Street air. Tracking low-angle shot of the toy car floating, flipping, and rapidly expanding in size above the asphalt.\n00:05.5 - 00:14.5: Daytime Japanese city intersection. The full-sized pink supercar lands and initiates a high-speed drift, producing heavy white tire smoke. Dynamic tracking cuts alternate between wide drift angles and close-ups of the woman steering calmly inside.\n00:14.5 - 00:20.5: Night transition. The supercar drifts past neon-lit storefronts. Tracking shot shows the woman glancing aside and smiling while counter-steering.\n00:20.5 - 00:23.0: Convenience store exterior. Wide shot as the pink car slides sideways through the glass entrance, shattering the front panels in an explosion of sparks and debris.\n00:23.0 - 00:30.0: Store interior looking out. Static wide shot as the woman steps out from the parked car and struts forward through the shattered glass onto the pavement, striking a confident pose.\n\nSOUND:\nUpbeat electronic trap beat, roaring V8 engine revs, screeching tires, loud shattering glass crash, footsteps crunching on broken glass.",
+ "prompt_short": "Cinematic sequence: a woman tosses a miniature pink supercar that expands mid-air into a full-sized exotic. She aggressively drifts through city streets day and night, crashing into a convenience store and confidently walking out through shattered glass.",
+ "_model": "gemini-3.8-flash"
+}
