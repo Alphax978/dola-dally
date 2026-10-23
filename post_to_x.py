@@ -156,6 +156,10 @@ def get_video(meta, workdir):
 def session():
     from requests_oauthlib import OAuth1Session
     keys = [os.environ.get(k, "").strip() for k in ("X_API_KEY", "X_API_SECRET", "X_ACCESS_TOKEN", "X_ACCESS_SECRET")]
+    from x_connect import saved_token
+    saved = saved_token()  # account connected with x_connect.py (the new @miraai_creates), if any
+    if saved:
+        keys[2], keys[3] = saved[0], saved[1]
     if not all(keys):
         sys.exit("X keys missing: add X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET as repo secrets.")
     return OAuth1Session(keys[0], client_secret=keys[1], resource_owner_key=keys[2], resource_owner_secret=keys[3])
