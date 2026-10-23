@@ -1,1 +1,0 @@
-https://api.x.com/oauth/authorize?oauth_token=aoMp5QAAAAAB_9vkAAABoWhLuJQ
