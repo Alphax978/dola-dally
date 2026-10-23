@@ -1,4 +1,4 @@
 # Who writes the daily prompts and captions (one word on the line below):
-#   claude  the Claude routine at 5:41 AM; Gemini (free) steps in only if nothing is written by ~7:30 AM
+#   claude  the Claude routine at 5:41 AM; Gemini (free) steps in only if nothing is written by 9:40 AM
 #   gemini  Gemini writes right after the 5 AM frames; the Claude routine stands down
 claude

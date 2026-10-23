@@ -8,7 +8,7 @@ routine saves, so posting works the same. The rules are read from morning_task.m
 always follow the same instructions.
 
 Which writer runs is set in writer.txt:
-  claude   (default) the Claude routine writes; Gemini only steps in if nothing is written by ~7:30 AM
+  claude   (default) the Claude routine writes; Gemini only steps in if nothing is written by 9:40 AM
   gemini   Gemini writes right after the 5 AM frames; the Claude routine stands down
 
   python3 gemini_writer.py                 write today's prompts now (skips if already written)

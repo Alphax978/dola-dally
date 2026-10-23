@@ -1,11 +1,10 @@
 name: Gemini writer
-# Backup writer: if the Claude routine hasn't written today's prompts by ~7:30 AM Nepal time (for example
+# Backup writer: if the Claude routine hasn't written today's prompts by 9:40 AM Nepal time (for example
 # when the Claude plan's usage ran out), Gemini (free) writes them, so the 4:30 and 9:30 posts still go out.
 # It does nothing when today's prompts already exist. Also: run by hand to compare Gemini with Claude.
 on:
   schedule:
-    - cron: "45 1 * * *"    # 7:30 AM Nepal
-    - cron: "15 3 * * *"    # 9:00 AM Nepal (backup)
+    - cron: "55 3 * * *"    # 9:40 AM Nepal
   workflow_dispatch:
     inputs:
       action:
