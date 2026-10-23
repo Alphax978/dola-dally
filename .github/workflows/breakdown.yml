@@ -24,12 +24,19 @@ jobs:
       SLOT: ${{ inputs.slot }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install tools
-        timeout-minutes: 8
+      - name: Install tools (apt)
+        timeout-minutes: 5
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core
-          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -q "kokoro>=0.9" soundfile pillow
+          start=$(date +%s); sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core
+          echo "::notice title=Timing::apt took $(( $(date +%s) - start ))s"
+      - name: Install Python packages
+        timeout-minutes: 6
+        run: |
+          start=$(date +%s); pip install -q --progress-bar off pillow soundfile
+          pip install -q --progress-bar off torch --index-url https://download.pytorch.org/whl/cpu
+          echo "::notice title=Timing::torch took $(( $(date +%s) - start ))s"
+          start=$(date +%s); pip install -q --progress-bar off "kokoro>=0.9"
+          echo "::notice title=Timing::kokoro took $(( $(date +%s) - start ))s"
       - name: Load the voice (Kokoro)
         continue-on-error: true
         timeout-minutes: 10

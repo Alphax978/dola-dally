@@ -51,15 +51,23 @@ jobs:
 
       - name: Install tools
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core
-          pip install -q requests requests-oauthlib opencv-python-headless numpy cryptography pillow
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q requests requests-oauthlib opencv-python-headless numpy cryptography
 
-      - name: Install the free voice for TikTok breakdowns (skipped on failure; espeak-ng is the backup)
+      # Extras for TikTok's breakdown video. Never blocks posting: if any of these fail or hang,
+      # TikTok simply gets the normal 9:16 clip.
+      - name: Install breakdown extras (fonts, backup voice)
         continue-on-error: true
-        timeout-minutes: 8
+        timeout-minutes: 4
         run: |
-          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -q "kokoro>=0.9" soundfile
+          sudo apt-get install -y -qq espeak-ng fonts-dejavu-core
+          pip install -q pillow soundfile
+      - name: Install the free voice (Kokoro)
+        continue-on-error: true
+        timeout-minutes: 6
+        run: |
+          pip install -q --progress-bar off torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q --progress-bar off "kokoro>=0.9"
 
       - name: Post today's videos at 16:30 and 21:30 Nepal time
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.slot == '' }}
