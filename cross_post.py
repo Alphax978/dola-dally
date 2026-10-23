@@ -294,11 +294,13 @@ NICE = {"youtube": "YouTube", "facebook": "Facebook", "instagram": "Instagram", 
 POSTERS = {"youtube": youtube, "facebook": facebook, "instagram": instagram, "tiktok": tiktok_post}
 
 
-def post_all(video, t, done=None, video_url=None, log=print, wide=None):
+def post_all(video, t, done=None, video_url=None, log=print, wide=None, tiktok_video=None):
     """Post to every platform that has secrets and isn't done yet. One failure doesn't stop the others.
 
     video: the 9:16 version (YouTube, Instagram, TikTok). wide: the original-shape version for Facebook,
-    which fills the player on PC as well as phones (falls back to `video` if not given)."""
+    which fills the player on PC as well as phones (falls back to `video` if not given).
+    tiktok_video: a function that makes TikTok's own version (the 1-minute+ prompt breakdown); it only runs
+    when TikTok's turn comes, so the other platforms aren't kept waiting. If it fails, TikTok gets `video`."""
     done = dict(done or {})
     for name in enabled():
         if isinstance(done.get(name), dict) and done[name].get("id"):
@@ -308,6 +310,13 @@ def post_all(video, t, done=None, video_url=None, log=print, wide=None):
                 res = instagram(video, t, video_url)
             elif name == "facebook":
                 res = facebook(wide or video, t)
+            elif name == "tiktok" and tiktok_video:
+                try:
+                    tv = tiktok_video()
+                except Exception as e:
+                    log(f"TikTok: couldn't make the breakdown version ({str(e)[:300]}); sending the normal clip")
+                    tv = video
+                res = POSTERS[name](tv or video, t)
             else:
                 res = POSTERS[name](video, t)
             done[name] = res

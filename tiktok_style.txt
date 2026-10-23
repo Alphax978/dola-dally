@@ -1,0 +1,4 @@
+# What TikTok gets (one word on the line below):
+#   breakdown  the 1-minute+ prompt breakdown video (hook, the original, key moments with their prompt words, voiceover)
+#   clip       the same 9:16 clip as YouTube and Instagram
+breakdown

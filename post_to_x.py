@@ -273,6 +273,17 @@ def needs_cross(entry):
     return [n for n in enabled() if not (isinstance(other.get(n), dict) and other[n].get("id"))]
 
 
+def tiktok_style():
+    """'breakdown' (TikTok gets the 1-minute+ prompt breakdown) or 'clip' (the same 9:16 clip as the others)."""
+    p = os.path.join(ROOT, "tiktok_style.txt")
+    if os.path.exists(p):
+        for line in open(p, encoding="utf-8"):
+            w = line.split("#")[0].strip().lower()
+            if w in ("breakdown", "clip"):
+                return w
+    return "clip"
+
+
 def cross_post(key, job, video, entry):
     """Post the same video to YouTube, Facebook and Instagram; never stops the X flow."""
     from cross_post import post_all, vertical
@@ -294,9 +305,19 @@ def cross_post(key, job, video, entry):
         texts["credit"] = (f"🎬 Original by @{h} on X: {job['meta'].get('x_post')}" if h
                            else "🎬 Original from the YouMind Seedance 2.5 gallery")
         log(f"[{key}] Credit for your comments: {texts['credit']}")
+        def tiktok_version():  # TikTok: the 1-minute+ prompt breakdown (tiktok_style.txt switches it)
+            if tiktok_style() != "breakdown":
+                return tall
+            import tiktok_breakdown
+            out = os.path.join(os.path.dirname(video), "tiktok_breakdown.mp4")
+            src = original if os.path.exists(original) else video
+            length = tiktok_breakdown.build(key[:10], key[11:], out, src=src)
+            log(f"[{key}] TikTok breakdown video ready: {length:.0f}s")
+            return out
+
         # Facebook gets the original shape (same file as X): fills the player on PC and phones.
         entry["other"] = post_all(tall, texts, entry.get("other"), job["meta"].get("video_url"),
-                                  log=lambda m: log(f"[{key}] {m}"), wide=video)
+                                  log=lambda m: log(f"[{key}] {m}"), wide=video, tiktok_video=tiktok_version)
     except Exception as e:
         log(f"[{key}] Cross-posting failed: {e}")
         return
