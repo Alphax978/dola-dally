@@ -51,6 +51,14 @@ def probe(path):
 # ---------- voice ----------
 
 _kokoro = None
+_noted = set()
+
+
+def _note(msg):
+    print(msg, flush=True)
+    if os.environ.get("GITHUB_ACTIONS") and msg not in _noted:
+        _noted.add(msg)
+        print(f"::notice title=Breakdown::{msg}", flush=True)
 
 
 def say(text, out_wav):
@@ -64,8 +72,9 @@ def say(text, out_wav):
         import soundfile as sf
         audio = np.concatenate([a for _, _, a in _kokoro(text, voice="af_heart", speed=1.0)])
         sf.write(out_wav, audio, 24000)
+        _note("Voice: Kokoro (af_heart)")
     except Exception as e:
-        print(f"  Kokoro unavailable ({e}); using espeak-ng")
+        _note(f"Voice: espeak-ng fallback (Kokoro unavailable: {str(e)[:200]})")
         run(["espeak-ng", "-v", "en-us", "-s", "165", "-w", out_wav, text])
     return float(run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", out_wav]))
 
