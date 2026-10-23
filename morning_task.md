@@ -60,7 +60,17 @@ STEP 4 — Save to GitHub (Dola's scheduled task and the X post read these files
       "prompt": that video's full prompt (for video 2, the same as in today.md),
       "prompt_short": the same prompt condensed to at most 270 characters (style, main character, the key action, mood), without the "use seedance 2.5 for this" line. It is only used if X refuses the full prompt.
   - If an old prompts/today-parts.md exists, delete it (git rm).
-- git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add -A prompts used.json; git commit -m "Prompts for <date>"; git push origin main (if rejected because the remote moved: git pull --rebase origin main, then push again once). Push nothing else: no other branches, no pull requests. Once main is pushed, nothing is left unpushed. GitHub's schedule then posts video 1 at 4:30 PM and video 2 at 9:30 PM Nepal time.
+  - breakdowns/<date>-1.json and breakdowns/<date>-2.json — the TikTok "prompt breakdown" script for each video (TikTok gets a 1-minute+ version: hook, the original, then key moments replayed with the prompt words that made them, read by a voice). Write them with python3 json.dump(..., ensure_ascii=False, indent=1). BREAKDOWN SCRIPT FORMAT:
+      {"hook": {"from": <second where the most striking 3-5 s moment starts>, "text_top": <the caption's line 1, max 45 characters>, "text_bottom": <a short teaser, e.g. "Wait for the ending...", max 30 characters>, "voice": <one or two short spoken sentences, max 15 words>},
+       "intro_voice": "Here's the original, made with <model from meta.json, e.g. Seedance 2.5>.",
+       "shots": [ {"n": <shot number from your prompt> OR "label": <for clips without real cuts: "The look", "The trigger", "The face", "The camera", "The secret"...>,
+                   "from": <start second>, "to": <end second> (the matching moment in the ORIGINAL clip, from your shot timecodes),
+                   "excerpt": <that shot's part of YOUR prompt, condensed to at most 200 characters, still in prompt language; write names in normal case, not capitals>,
+                   "highlight": [2-4 exact phrases copied from the excerpt: the camera move, framing, light or the signature detail],
+                   "voice": <one or two spoken sentences, max 25 words, explaining what the words make happen, e.g. "Shot two. A close-up with a very slow push-in. She raises her eyes into the lens.">} ],
+       "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."}
+      How many shots: aim for a finished video of 65-85 seconds (hook ~4 s + the whole original + ~6 s per shot + outro ~5 s): clips of 25 s or more: 4-5 shots; 15-25 s: 5-6; under 15 s: 6-8 (use labels for clips with few cuts). Pick the most striking and most teachable moments, in time order, spread across the clip. Write numbers as digits; the voice reads them out.
+- git config user.name "dola-daily bot"; git config user.email "dola-daily@users.noreply.github.com"; git add -A prompts breakdowns used.json; git commit -m "Prompts for <date>"; git push origin main (if rejected because the remote moved: git pull --rebase origin main, then push again once). Push nothing else: no other branches, no pull requests. Once main is pushed, nothing is left unpushed. GitHub's schedule then posts video 1 at 4:30 PM and video 2 at 9:30 PM Nepal time.
 - The commit message must be exactly that one line: no trailers, no Co-Authored-By, no session or chat links (the repo is public and the user does not want chat links in it).
 - Use no token, password or credentials of any kind. If the push fails (for example for lack of permission), don't look for a way around it: remember the exact error for the message and carry on.
 
