@@ -396,7 +396,13 @@ def auto(dry_run=False):
     """
     day = today()
     if dry_run:
-        from cross_post import check_accounts
+        from cross_post import check_accounts, paused
+        try:
+            me = session().get(f"{API}/users/me")
+            who = "@" + me.json()["data"]["username"] if me.status_code < 300 else f"error {me.status_code} {me.text[:200]}"
+        except BaseException as e:
+            who = f"error {e}"
+        log(f"X: posting as {who}{' [PAUSED in paused.txt]' if 'x' in paused() else ''}")
         check_accounts(log=log)
         for slot in SLOTS:
             log(f"[{day}-{slot}] {post_slot(day, slot, dry_run=True)}")

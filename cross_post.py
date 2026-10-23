@@ -321,11 +321,13 @@ def post_all(video, t, done=None, video_url=None, log=print, wide=None):
 def check_accounts(log=print):
     """Confirm each platform's keys work, without posting. Returns True if all enabled ones are fine."""
     good = True
-    names = enabled()
+    names = _connected()  # paused platforms are checked too, so new keys can be tested before switching them on
+    off = paused()
     for name in ("youtube", "facebook", "instagram", "tiktok"):
         if name not in names:
             log(f"{NICE[name]}: skipped ({'not connected yet' if name == 'tiktok' else 'secrets not added'})")
     for name in names:
+        tag = " [PAUSED in paused.txt]" if name in off else ""
         try:
             if name == "youtube":
                 # the key may only upload (youtube.upload scope), so it can't read the channel name
@@ -347,10 +349,10 @@ def check_accounts(log=print):
             else:
                 who = "@" + ok(requests.get(f"{GRAPH}/{env('IG_USER_ID')}", params={"fields": "username",
                                "access_token": env("FB_PAGE_TOKEN")}, timeout=30), "Instagram account")["username"]
-            log(f"{NICE[name]}: keys OK, posting as {who}")
+            log(f"{NICE[name]}: keys OK, posting as {who}{tag}")
         except Exception as e:
             good = False
-            log(f"{NICE[name]}: keys NOT working: {str(e)[:400]}")
+            log(f"{NICE[name]}: keys NOT working: {str(e)[:400]}{tag}")
     return good
 
 
