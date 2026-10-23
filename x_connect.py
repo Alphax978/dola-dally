@@ -67,6 +67,8 @@ def start():
     r = s.fetch_request_token(f"{API}/oauth/request_token")
     save(REQUEST_FILE, {"token": r["oauth_token"], "secret": r["oauth_token_secret"], "at": time.time()})
     url = f"{API}/oauth/authorize?oauth_token={r['oauth_token']}"
+    with open(os.path.join(ROOT, "x_connect_link.txt"), "w") as f:  # only the public half; useless without your approval
+        f.write(url + "\n")
     summary(f"## Connect the new X account\n\n1. Make sure you're signed in to the NEW account on x.com.\n"
             f"2. Open: {url}\n3. Press **Authorize app** and copy the PIN it shows.\n4. Send the PIN to Claude.")
 
@@ -83,6 +85,9 @@ def finish(pin):
                       "screen_name": r.get("screen_name"), "user_id": r.get("user_id"),
                       "saved": time.strftime("%Y-%m-%d %H:%M")})
     os.remove(REQUEST_FILE)
+    link = os.path.join(ROOT, "x_connect_link.txt")
+    if os.path.exists(link):
+        os.remove(link)
     summary(f"Connected: the automation now posts to X as @{r.get('screen_name')}")
 
 
