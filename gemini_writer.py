@@ -110,9 +110,11 @@ def models():
     r.raise_for_status()
     names = [m["name"].split("/", 1)[1] for m in r.json().get("models", [])
              if "generateContent" in m.get("supportedGenerationMethods", [])]
-    flash = [n for n in names if re.fullmatch(r"gemini-\d+(\.\d+)?-flash", n)]
-    flash.sort(key=lambda n: [int(x) for x in re.findall(r"\d+", n)], reverse=True)
-    return flash or [n for n in names if "flash" in n and "lite" not in n][:3]
+    ver = lambda n: [int(x) for x in re.findall(r"\d+", n)]
+    flash = sorted([n for n in names if re.fullmatch(r"gemini-\d+(\.\d+)?-flash", n)], key=ver, reverse=True)
+    lite = sorted([n for n in names if re.fullmatch(r"gemini-\d+(\.\d+)?-flash-lite", n)], key=ver, reverse=True)
+    # best Flash models first; the lighter Flash-Lite ones (own free quota) only as a last resort
+    return (flash[:2] + lite[:1]) or [n for n in names if "flash" in n][:3]
 
 
 NO_THINKING = set()
@@ -128,7 +130,7 @@ def gen_config(model):
 def ask(parts, system):
     last = None
     for model in models():
-        for attempt in range(2):
+        for attempt in range(4):
             r = requests.post(f"{API}/models/{model}:generateContent", params={"key": env("GEMINI_API_KEY")},
                               timeout=600, json={
                                   "systemInstruction": {"parts": [{"text": system}]},
@@ -147,8 +149,10 @@ def ask(parts, system):
             if r.status_code >= 300:
                 last = f"{model}: {r.status_code} {r.text[:300]}"
                 log(f"  {last}")
-                time.sleep(5)
-                continue
+                if r.status_code in (500, 502, 503, 504) and attempt < 3:
+                    time.sleep(30 * (attempt + 1))  # Google is busy: wait longer each time
+                    continue
+                break
             j = r.json()
             text = "".join(p.get("text", "") for c in j.get("candidates", [])[:1]
                            for p in c.get("content", {}).get("parts", []) if not p.get("thought"))
@@ -162,6 +166,8 @@ def ask(parts, system):
             except Exception as e:
                 last = f"{model}: unreadable reply ({e})"
                 log(f"  {last}")
+                if attempt >= 1:
+                    break
     raise RuntimeError(f"Gemini couldn't answer: {last}")
 
 
