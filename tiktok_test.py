@@ -2,11 +2,11 @@
 """tiktok_test.py: send one of today's videos to TikTok, to test a mode.
 
   python3 tiktok_test.py [slot] [mode]   slot 1 or 2 (default 1; falls back to the newest saved video)
-                                         mode: direct (default; private until TikTok audits the app) or buffer
+                                         mode: buffer (default, through Zapier + Buffer)
 """
 import glob, json, os, sys, tempfile
 
-os.environ["TIKTOK_MODE"] = sys.argv[2] if len(sys.argv) > 2 else "direct"
+os.environ["TIKTOK_MODE"] = sys.argv[2] if len(sys.argv) > 2 else "buffer"
 import post_to_x as p
 import cross_post
 import tiktok
