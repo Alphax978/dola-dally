@@ -1,0 +1,40 @@
+{
+  "url": "https://youmind.com/video-prompts/cgi-ninja-anime-battle-11821",
+  "source": "youmind",
+  "slug": "cgi-ninja-anime-battle-11821",
+  "title": "CGI Ninja Anime Battle Sequence",
+  "video_url": "https://cms-assets.youmind.com/media/1791011779647_l9rqsx_CGI-Ninja-Anime-Battle-Sequence.mp4",
+  "x_post": "https://x.com/juliaevee/status/2105868338694086964",
+  "wm_flag": "{'band': '0.8-1.0', 'score': 2.1, 'edges': (0.0, 0, 0.0), 'still': (0.013, 4, 0.153), 'hit': True, 'motion': 31.1}",
+  "user_pick": true,
+  "pick_order": 2,
+  "duration": 30.79,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    2.9,
+    3.07,
+    5.8,
+    7.3,
+    12.8,
+    13.63,
+    15.63,
+    15.73,
+    17.73,
+    19.4,
+    19.57,
+    26.93,
+    26.97,
+    27.03
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg",
+    "frames_3.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}

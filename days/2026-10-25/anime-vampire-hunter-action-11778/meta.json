@@ -1,0 +1,50 @@
+{
+  "url": "https://youmind.com/video-prompts/anime-vampire-hunter-action-11778",
+  "source": "youmind",
+  "slug": "anime-vampire-hunter-action-11778",
+  "title": "Anime Vampire Hunter Action Sequence",
+  "video_url": "https://cms-assets.youmind.com/media/1790925079781_7hcuqx_Anime-Vampire-Hunter-Action-Sequence.mp4",
+  "x_post": "https://x.com/nonameoasis/status/2105439181488976178",
+  "wm_flag": "{'band': '0.6-0.8', 'score': 7.0, 'edges': (0.0, 0, 0.0), 'still': (0.0059, 1, 0.0), 'hit': False, 'motion': 43.4}",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 30.14,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    0.25,
+    1.08,
+    2.33,
+    2.54,
+    2.58,
+    6.17,
+    9.58,
+    12.38,
+    14.33,
+    14.5,
+    14.62,
+    14.71,
+    14.88,
+    14.92,
+    15.12,
+    15.21,
+    15.29,
+    20.08,
+    20.17,
+    20.46,
+    26.54,
+    26.96,
+    27.12,
+    27.21,
+    28.92
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}

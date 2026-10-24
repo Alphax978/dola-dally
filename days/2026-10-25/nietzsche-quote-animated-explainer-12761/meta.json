@@ -1,0 +1,40 @@
+{
+  "url": "https://youmind.com/video-prompts/nietzsche-quote-animated-explainer-12761",
+  "source": "youmind",
+  "slug": "nietzsche-quote-animated-explainer-12761",
+  "title": "Nietzsche Quote Animated Explainer",
+  "video_url": "https://cms-assets.youmind.com/media/1792400410661_sg6qsk_Nietzsche-Quote-Animated-Explainer.mp4",
+  "x_post": "https://x.com/zhusenze_xyz/status/2111822774964814216",
+  "duration": 176.92,
+  "width": 1920,
+  "height": 1080,
+  "cuts": [
+    72.23,
+    73.9,
+    96.33,
+    98.77,
+    101.2,
+    103.8,
+    103.83,
+    105.37,
+    105.5,
+    105.57,
+    105.67,
+    150.53,
+    150.57
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg",
+    "frames_3.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg",
+    "text_3.jpg",
+    "text_4.jpg",
+    "text_5.jpg",
+    "text_6.jpg"
+  ],
+  "model": null
+}
