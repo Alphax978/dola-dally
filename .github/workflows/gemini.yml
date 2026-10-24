@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "write = today's prompts if missing; compare = Gemini's version of the videos Claude chose"
+        description: "test = the whole morning job by Gemini into a test folder + TikTok videos (nothing posted); write = today's prompts if missing; compare = Gemini's version of Claude's videos"
         type: choice
-        options: [compare, write]
+        options: [test, compare, write]
         default: compare
       day:
         description: "Day for compare (YYYY-MM-DD, empty = today)"
@@ -24,7 +24,7 @@ concurrency:
 jobs:
   write:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
@@ -37,7 +37,36 @@ jobs:
         run: pip install -q requests cryptography
       - name: Write with Gemini
         run: |
-          if [ "$ACTION" = "compare" ]; then python3 gemini_writer.py --compare $DAY; else python3 gemini_writer.py; fi
+          if [ "$ACTION" = "compare" ]; then python3 gemini_writer.py --compare $DAY
+          elif [ "$ACTION" = "test" ]; then python3 gemini_writer.py --test $DAY
+          else python3 gemini_writer.py; fi
+      - name: Restore saved downloads (voice software and model)
+        if: ${{ env.ACTION == 'test' }}
+        continue-on-error: true
+        timeout-minutes: 5
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: voice-v1-ubuntu-24.04
+      - name: Test - build the TikTok videos from Gemini's scripts
+        if: ${{ env.ACTION == 'test' }}
+        timeout-minutes: 25
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core
+          pip install -q pillow soundfile
+          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q "kokoro>=0.9"
+          D="${DAY:-$(TZ=Asia/Kathmandu date +%F)}"; BASE="tests/gemini/$D/run"
+          gh release view demos >/dev/null 2>&1 || gh release create demos --title "Demos" --notes "Demo videos for review."
+          for S in 1 2; do
+            if [ -f "$BASE/prompts/x/$D-$S.json" ]; then
+              python3 tiktok_breakdown.py "$D" "$S" "gemini-test-$D-$S.mp4" "$BASE" && gh release upload demos "gemini-test-$D-$S.mp4" --clobber
+            fi
+          done
       - name: Save
         if: always()
         run: |

@@ -30,6 +30,8 @@ import time
 import requests
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+OUT = ROOT        # where results are saved; a test run saves under tests/gemini/<day>/run instead
+TEST = False
 TZ = dt.timezone(dt.timedelta(hours=5, minutes=45))
 API = "https://generativelanguage.googleapis.com/v1beta"
 SLOT_TIME = {1: "4:30 PM", 2: "9:30 PM"}
@@ -225,26 +227,26 @@ def study(day, v):
 
 def save(day, chosen):
     """chosen: {slot: (index_entry, result)}"""
-    xdir = os.path.join(ROOT, "prompts", "x")
+    xdir = os.path.join(OUT, "prompts", "x")
     os.makedirs(xdir, exist_ok=True)
     for slot, (v, res) in chosen.items():
         json.dump({"date": day, "slot": slot, "slug": v["slug"], "caption": res["caption"],
                    "prompt": res["prompt"], "prompt_short": res["prompt_short"], "writer": res["_model"]},
                   open(os.path.join(xdir, f"{day}-{slot}.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    bdir = os.path.join(ROOT, "breakdowns")
+    bdir = os.path.join(OUT, "breakdowns")
     os.makedirs(bdir, exist_ok=True)
     for slot, (v, res) in chosen.items():
         if isinstance(res.get("breakdown"), dict):  # TikTok breakdown script (the video maker fills any gaps)
             json.dump(res["breakdown"], open(os.path.join(bdir, f"{day}-{slot}.json"), "w", encoding="utf-8"),
                       ensure_ascii=False, indent=1)
     for old in ("today.md", "today-parts.md"):  # no Dola copy any more
-        p = os.path.join(ROOT, "prompts", old)
+        p = os.path.join(OUT, "prompts", old)
         if os.path.exists(p):
             os.remove(p)
 
 
 def mark_used(urls):
-    p = os.path.join(ROOT, "used.json")
+    p = os.path.join(OUT, "used.json")
     used = json.load(open(p)) if os.path.exists(p) else []
     used += [u for u in urls if u and u not in used]
     json.dump(used[-50000:], open(p, "w"), indent=1)
@@ -254,6 +256,8 @@ def telegram(text):
     try:
         sys.path.insert(0, ROOT)
         import daily_report
+        if TEST:
+            text = "🧪 <b>TEST RUN</b> (nothing is posted)\n" + text
         if env("TG_BOT_TOKEN"):
             daily_report.tg("sendMessage", chat_id=daily_report.chat_id(), text=text, parse_mode="HTML",
                             disable_web_page_preview=True)
@@ -264,7 +268,7 @@ def telegram(text):
 # ---------- main jobs ----------
 
 def write(day):
-    if any(os.path.exists(os.path.join(ROOT, "prompts", "x", f"{day}-{s}.json")) for s in (1, 2)):
+    if any(os.path.exists(os.path.join(OUT, "prompts", "x", f"{day}-{s}.json")) for s in (1, 2)):
         log(f"Prompts for {day} are already written; nothing to do.")
         return
     index = os.path.join(ROOT, "days", day, "index.json")
@@ -324,6 +328,33 @@ def write(day):
     if skipped:
         msg.append("\nSkipped: " + h.escape("; ".join(skipped)))
     telegram("\n".join(msg))
+    if TEST:
+        preview(day, chosen)
+
+
+def preview(day, chosen):
+    """Test runs: what each platform would get, written next to the test results."""
+    sys.path.insert(0, ROOT)
+    import models
+    import post_to_x
+    md = [f"# Gemini test run: {day}", "", "Nothing was posted. This is what each platform would get.", ""]
+    for s in sorted(chosen):
+        v, res = chosen[s]
+        job = json.load(open(os.path.join(OUT, "prompts", "x", f"{day}-{s}.json"), encoding="utf-8"))
+        job["meta"] = res["meta"]
+        job["model"] = models.detect_in_dir(res["meta"], os.path.join(ROOT, v["dir"]))
+        full, short = post_to_x.reply_texts(job)
+        t = post_to_x.cross_texts(job)
+        md += [f"## {SLOT_TIME[s]}: {res.get('title') or v['title']}", "",
+               f"Model: {job['model']} · hook score {res.get('hook_score')} · prompt {len(job['prompt'])} characters"
+               f" · breakdown script: {'yes, ' + str(len((res.get('breakdown') or {}).get('shots') or [])) + ' parts' if isinstance(res.get('breakdown'), dict) else 'no (made from the prompt)'}", "",
+               "### X post", "```", post_to_x.main_text(job), "```",
+               f"### X reply ({len(full)} characters; short fallback {len(short)})", "```", full[:1500] + (" …" if len(full) > 1500 else ""), "```",
+               f"### YouTube title", "```", t["title"], "```",
+               f"### Instagram / TikTok caption ({len(t['instagram'])} characters)", "```", t["instagram"], "```",
+               f"### Facebook ({len(t['facebook'])} characters)", "```", t["facebook"][:600] + " …", "```", ""]
+    open(os.path.join(OUT, "preview.md"), "w", encoding="utf-8").write("\n".join(md))
+    log(f"Preview saved to {os.path.relpath(OUT, ROOT)}/preview.md")
 
 
 def compare(day):
@@ -362,7 +393,13 @@ def main():
         sys.exit("GEMINI_API_KEY is missing.")
     args = sys.argv[1:]
     day = dt.datetime.now(TZ).date().isoformat()
-    if "--compare" in args:
+    if "--test" in args:  # the whole morning job, saved into a test folder; nothing live is touched
+        global OUT, TEST
+        rest = [a for a in args if a != "--test"]
+        day = rest[0] if rest else day
+        OUT, TEST = os.path.join(ROOT, "tests", "gemini", day, "run"), True
+        write(day)
+    elif "--compare" in args:
         rest = [a for a in args if a != "--compare"]
         compare(rest[0] if rest else day)
     elif "--if-mode" in args:

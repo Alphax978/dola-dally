@@ -330,16 +330,16 @@ def segment(src, has_audio, start, length, out_dur, png, layout, size, out, voic
     run(cmd)
 
 
-def build(day, key, out_path, src=None):
+def build(day, key, out_path, src=None, base=None):
     """key: 1 or 2 (that day's posted video) or a candidate's slug. src: the original file, if already downloaded.
     Returns the finished video's length in seconds."""
     job = {}
     if str(key).isdigit():
-        job = json.load(open(os.path.join(ROOT, "prompts", "x", f"{day}-{key}.json"), encoding="utf-8"))
+        job = json.load(open(os.path.join(base or ROOT, "prompts", "x", f"{day}-{key}.json"), encoding="utf-8"))
         slug = job["slug"]
     else:
         slug = key
-    sp = os.path.join(ROOT, "breakdowns", f"{day}-{key}.json")
+    sp = os.path.join(base or ROOT, "breakdowns", f"{day}-{key}.json")
     script = json.load(open(sp, encoding="utf-8")) if os.path.exists(sp) else {}
     if not script:
         _note("No breakdown script saved for this video: making one from the prompt")
@@ -446,4 +446,4 @@ def build(day, key, out_path, src=None):
 
 
 if __name__ == "__main__":
-    build(sys.argv[1], sys.argv[2], sys.argv[3])
+    build(sys.argv[1], sys.argv[2], sys.argv[3], base=sys.argv[4] if len(sys.argv) > 4 else None)
