@@ -1,0 +1,71 @@
+{
+ "hook": {
+  "from": 12.6,
+  "text_top": "Water clashes with lightning.",
+  "text_bottom": "Wait for the impact...",
+  "voice": "Witness this epic clash of elemental breathing techniques."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.0.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 6.0,
+   "excerpt": "Wide tracking shot as the swordsman takes a low stance and summons a colossal crystalline blue water dragon.",
+   "highlight": [
+    "Wide tracking shot",
+    "low stance",
+    "crystalline blue water dragon"
+   ],
+   "voice": "Shot one. A wide tracking setup introduces the water stance and the magnificent water dragon."
+  },
+  {
+   "n": 3,
+   "from": 7.0,
+   "to": 8.0,
+   "excerpt": "Dynamic push-in shot as the muddy ground fractures and explodes outwards in a fiery corona.",
+   "highlight": [
+    "Dynamic push-in shot",
+    "ground fractures",
+    "fiery corona"
+   ],
+   "voice": "Shot three. A fast push-in captures the ground exploding right before the charge."
+  },
+  {
+   "n": 4,
+   "from": 8.0,
+   "to": 11.2,
+   "excerpt": "Fast whip-pan tracking shots following the warrior blurring into a blinding golden lightning afterimage.",
+   "highlight": [
+    "Fast whip-pan tracking",
+    "golden lightning afterimage"
+   ],
+   "voice": "Shot four. Fast whip-pan tracking follows the lightning warrior darting through the trees."
+  },
+  {
+   "n": 6,
+   "from": 12.6,
+   "to": 13.6,
+   "excerpt": "Centered action shot as both warriors slam head-on into the center, locking their steel blades.",
+   "highlight": [
+    "Centered action shot",
+    "slam head-on",
+    "locking their steel blades"
+   ],
+   "voice": "Shot six. Centered action captures the exact moment the two blades lock together."
+  },
+  {
+   "n": 7,
+   "from": 13.6,
+   "to": 15.1,
+   "excerpt": "Wide expanding shot of the massive outward energy storm and concussive shockwave.",
+   "highlight": [
+    "Wide expanding shot",
+    "energy storm",
+    "concussive shockwave"
+   ],
+   "voice": "Shot seven. The finale explodes into a blinding shockwave of water and lightning."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

@@ -1,0 +1,72 @@
+{
+ "hook": {
+  "from": 0,
+  "text_top": "Alien and zombie fight for the last donut.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "An alien and a zombie freeze time to battle for the last donut."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 11.8,
+   "excerpt": "Medium shot pushing along the counter. Spilled coffee hangs frozen mid-air as a zombie and an alien stare down over the last donut.",
+   "highlight": [
+    "pushing along the counter",
+    "coffee hangs frozen mid-air",
+    "last donut"
+   ],
+   "voice": "Shot one. A slow push past frozen coffee establishes the deadpan standoff."
+  },
+  {
+   "n": 2,
+   "from": 11.8,
+   "to": 13.7,
+   "excerpt": "Wide tracking shot down diner floor. The zombie lunges with a stiff swipe; the alien ducks, kicks a stool, and scrambles away.",
+   "highlight": [
+    "Wide tracking shot",
+    "lunges with a stiff swipe",
+    "kicks a stool"
+   ],
+   "voice": "Shot two. The brawl kicks off with a low tracking slide down the aisle."
+  },
+  {
+   "n": 3,
+   "from": 13.7,
+   "to": 18.8,
+   "excerpt": "Medium shot angled along counter stools. The alien vaults onto the counter and fires a bright camera flash into the zombie's face.",
+   "highlight": [
+    "vaults onto the counter",
+    "bright camera flash",
+    "stagger backward"
+   ],
+   "voice": "Shot three. The alien hops onto the counter and blinds him with a camera flash."
+  },
+  {
+   "n": 4,
+   "from": 18.8,
+   "to": 21.5,
+   "excerpt": "Wide tracking shot facing the red neon sign. The alien leaps mid-air across booth backs, evading the zombie's grasping hands.",
+   "highlight": [
+    "Wide tracking shot",
+    "leaps mid-air",
+    "booth backs"
+   ],
+   "voice": "Shot four. A wide stunt angle captures the alien leaping across the diner booths."
+  },
+  {
+   "n": 5,
+   "from": 21.5,
+   "to": 30.1,
+   "excerpt": "Medium shot at display case. Time snaps back, coffee splashes down, and both dive cheek-to-cheek onto the lone donut.",
+   "highlight": [
+    "Time snaps back",
+    "coffee splashes down",
+    "dive cheek-to-cheek"
+   ],
+   "voice": "Shot five. Time unfreezes as liquid splashes and both creatures mash together over the pastry."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
