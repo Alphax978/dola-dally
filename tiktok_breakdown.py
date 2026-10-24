@@ -2,7 +2,7 @@
 """
 tiktok_breakdown.py: turn a clip of any length into a 1-minute+ "prompt breakdown" video for TikTok, 9:16:
 
-  1. hook       a still frame of the most striking moment, the hook in big text (voiceover)
+  1. hook       the most striking moment, with the hook in big text            (voiceover)
   2. original   the full clip, credited                                         (original sound + voice intro)
   3. breakdown  key moments replayed on top, the prompt words that made them below, key words in yellow (voiceover)
   4. outro      "full prompt in the caption, follow for more"                  (voiceover)
@@ -417,8 +417,8 @@ def build(day, key, out_path, src=None, base=None):
     segs = []
     png = os.path.join(tmp, "hook.png")
     overlay_hook(hk["text_top"], hk["text_bottom"], cy, center[1], png)
-    # hook: one still frame (the striking moment) while the voice reads the hook; the video starts after it
-    segs.append(("hook", hk["from"], 0.1, hook_dur, png, "center", center, hook_vo[0], 0.0, 1.0))
+    segs.append(("hook", hk["from"], min(hook_dur, dur - hk["from"]), hook_dur, png, "center", center,
+                 hook_vo[0], 0.35, 1.0))
     png = os.path.join(tmp, "orig.png")
     overlay_original(credit, cy, center[1], png)
     segs.append(("orig", 0, dur, round(dur, 2), png, "center", center, intro_vo[0], 0.8, 1.0))
