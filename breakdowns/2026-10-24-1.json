@@ -1,0 +1,72 @@
+{
+ "hook": {
+  "from": 18.4,
+  "text_top": "A zombie and an alien fight over one donut.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "A zombie and an alien, one last donut. Wait for the ending."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 11.8,
+   "excerpt": "Coffee cup flips, everything freezes. Near-locked close-up by the glass: zombie and alien stare at the donut. MUST SHOW: coffee frozen in mid-air as a glossy ribbon.",
+   "highlight": [
+    "everything freezes",
+    "Near-locked close-up",
+    "coffee frozen in mid-air"
+   ],
+   "voice": "Shot 1. Time freezes mid spill. A near-locked close-up, and the coffee hangs in the air like a glossy ribbon."
+  },
+  {
+   "n": 2,
+   "from": 11.8,
+   "to": 13.3,
+   "excerpt": "Fast handheld at knee height: the zombie lunges, the alien skids on the wet tile between the stools; the camera whip pans with it.",
+   "highlight": [
+    "Fast handheld at knee height",
+    "skids on the wet tile",
+    "whip pans"
+   ],
+   "voice": "Shot 2. Handheld at knee height. The alien skids on the wet tile, and the camera whip pans after it."
+  },
+  {
+   "n": 6,
+   "from": 19.3,
+   "to": 20.4,
+   "excerpt": "Wide, low angle toward the rain-streaked windows and the red neon sign: the alien somersaults over the zombie's swinging arm.",
+   "highlight": [
+    "Wide, low angle",
+    "rain-streaked windows",
+    "somersaults"
+   ],
+   "voice": "Shot 6. A wide, low angle on the rainy windows. The alien flips right over the zombie's arm."
+  },
+  {
+   "n": 8,
+   "from": 21.4,
+   "to": 28.3,
+   "excerpt": "Close-medium at the display case: they catch their breath, the coffee ribbon still hanging; they shake hands, four lilac fingers around a grey palm.",
+   "highlight": [
+    "Close-medium",
+    "coffee ribbon still hanging",
+    "four lilac fingers around a grey palm"
+   ],
+   "voice": "Shot 8. The truce. They shake hands, four lilac fingers in a grey palm, and both eyes flick to the donut."
+  },
+  {
+   "n": 9,
+   "from": 28.3,
+   "to": 30.08,
+   "excerpt": "Closer low angle: forehead to forehead, both gripping the one donut. The world unfreezes and the customers turn to stare.",
+   "highlight": [
+    "Closer low angle",
+    "both gripping the one donut",
+    "The world unfreezes"
+   ],
+   "voice": "Shot 9. Time snaps back. Both of them grip the same donut, and everyone turns to stare."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

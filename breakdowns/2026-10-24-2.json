@@ -1,0 +1,84 @@
+{
+ "hook": {
+  "from": 2.3,
+  "text_top": "A water dragon meets living lightning.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "A water dragon against living lightning. Wait for the ending."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.0.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 2.3,
+   "excerpt": "Full-body low-angle shot: the water swordsman in a deep crouch, blade raised, the full moon top left. Slow push-in with a gentle orbit.",
+   "highlight": [
+    "Full-body low-angle shot",
+    "full moon",
+    "Slow push-in with a gentle orbit"
+   ],
+   "voice": "Shot 1. A low-angle full-body shot under the full moon, with a slow push-in and a gentle orbit."
+  },
+  {
+   "n": 2,
+   "from": 2.3,
+   "to": 6.0,
+   "excerpt": "MUST SHOW: a giant translucent cyan-blue dragon made of rushing water. Its head sweeps past the lens, then it wraps around him in two spiraling rings.",
+   "highlight": [
+    "MUST SHOW",
+    "made of rushing water",
+    "two spiraling rings"
+   ],
+   "voice": "Shot 2. Must show: a dragon made of rushing water. Its head fills the lens, then it coils around him."
+  },
+  {
+   "n": 3,
+   "from": 6.0,
+   "to": 7.7,
+   "excerpt": "Hard cut to darkness and stillness: extreme wide shot, the lightning swordsman small in the center in a sword-drawing stance. Slow push-in.",
+   "highlight": [
+    "Hard cut to darkness and stillness",
+    "extreme wide shot",
+    "sword-drawing stance"
+   ],
+   "voice": "Shot 3. A hard cut to darkness. The opponent is tiny in an extreme wide shot, ready to draw."
+  },
+  {
+   "n": 4,
+   "from": 7.7,
+   "to": 8.4,
+   "excerpt": "MUST SHOW: a massive golden lightning bolt striking down onto him; the ground explodes, gold light flaring across the trunks, white flash frames.",
+   "highlight": [
+    "golden lightning bolt",
+    "the ground explodes",
+    "white flash frames"
+   ],
+   "voice": "Shot 4. A golden lightning bolt hits him and the ground explodes, with white flash frames."
+  },
+  {
+   "n": 5,
+   "from": 8.4,
+   "to": 9.0,
+   "excerpt": "Low tracking shot skimming the ground: he streaks left to right, bent almost horizontal, leaving a gold-white lightning trail.",
+   "highlight": [
+    "Low tracking shot",
+    "skimming the ground",
+    "lightning trail"
+   ],
+   "voice": "Shot 5. A low tracking shot skims the ground as he becomes a streak of lightning."
+  },
+  {
+   "n": 13,
+   "from": 13.2,
+   "to": 14.0,
+   "excerpt": "Medium shot, blades locked: blue water and gold lightning explode outward in radiating streaks of light, debris flying.",
+   "highlight": [
+    "Medium shot",
+    "blades locked",
+    "explode outward"
+   ],
+   "voice": "Shot 13. Blades locked, and the water and lightning explode outward in streaks of light."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
