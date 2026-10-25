@@ -32,7 +32,7 @@ with tempfile.TemporaryDirectory() as tmp:
             elif name == "facebook":
                 res = facebook(video, t)
             elif name == "instagram":
-                res = instagram(video, t, url)
+                res = instagram(video, t, url, prefer_link=True)
             elif name == "tiktok":
                 res = tiktok_post(video, t)
             else:

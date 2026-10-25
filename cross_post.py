@@ -228,25 +228,36 @@ def facebook(video, t):
 
 # ---------- Instagram Reels ----------
 
-def instagram(video, t, video_url=None):
+def instagram(video, t, video_url=None, prefer_link=False):
+    """prefer_link: hand Instagram the public link straight away (used for breakdown videos, which
+    Instagram rejects as a direct upload but accepts by link)."""
     ig, token = env("IG_USER_ID"), env("FB_PAGE_TOKEN")
     base = {"media_type": "REELS", "caption": t["instagram"], "share_to_feed": "true", "access_token": token}
     note = ""
-    try:  # upload our own file
-        c = ok(requests.post(f"{GRAPH}/{ig}/media", data={**base, "upload_type": "resumable"}, timeout=60),
-               "Instagram container")
-        size = os.path.getsize(video)
-        with open(video, "rb") as f:
-            ok(requests.post(c["uri"], data=f, timeout=900, headers={
-                "Authorization": f"OAuth {token}", "offset": "0", "file_size": str(size)}), "Instagram upload")
-        container = c["id"]
-    except PostError as e:
-        if not video_url:
-            raise
-        # fallback: let Instagram fetch the same video from a public link
-        note = f" (direct upload failed: {str(e)[:160]}; sent by link)"
-        container = ok(requests.post(f"{GRAPH}/{ig}/media", data={**base, "video_url": video_url}, timeout=60),
-                       "Instagram container (from link)")["id"]
+    container = None
+    if prefer_link and video_url:
+        try:
+            container = ok(requests.post(f"{GRAPH}/{ig}/media", data={**base, "video_url": video_url}, timeout=60),
+                           "Instagram container (from link)")["id"]
+        except PostError as e:
+            note = f" (link didn't work: {str(e)[:160]}; uploaded directly)"
+            video_url = None
+    if not container:
+        try:  # upload our own file
+            c = ok(requests.post(f"{GRAPH}/{ig}/media", data={**base, "upload_type": "resumable"}, timeout=60),
+                   "Instagram container")
+            size = os.path.getsize(video)
+            with open(video, "rb") as f:
+                ok(requests.post(c["uri"], data=f, timeout=900, headers={
+                    "Authorization": f"OAuth {token}", "offset": "0", "file_size": str(size)}), "Instagram upload")
+            container = c["id"]
+        except PostError as e:
+            if not video_url:
+                raise
+            # fallback: let Instagram fetch the same video from a public link
+            note = f" (direct upload failed: {str(e)[:160]}; sent by link)"
+            container = ok(requests.post(f"{GRAPH}/{ig}/media", data={**base, "video_url": video_url}, timeout=60),
+                           "Instagram container (from link)")["id"]
     for _ in range(60):  # Instagram processes the video first (usually under a minute)
         st = ok(requests.get(f"{GRAPH}/{container}", params={"fields": "status_code,status", "access_token": token},
                              timeout=30), "Instagram status")
@@ -284,15 +295,7 @@ def instagram_trial(video, video_url=None, log=print):
         log(f"Instagram test ({how}): still processing after 400 s")
         return False
 
-    try:
-        c = ok(requests.post(f"{GRAPH}/{ig}/media", data={**base, "upload_type": "resumable"}, timeout=60), "container")
-        with open(video, "rb") as f:
-            ok(requests.post(c["uri"], data=f, timeout=900, headers={
-                "Authorization": f"OAuth {token}", "offset": "0", "file_size": str(os.path.getsize(video))}), "upload")
-        wait(c["id"], "direct upload")
-    except Exception as e:
-        log(f"Instagram test (direct upload): FAILED {str(e)[:400]}")
-    if video_url:
+    if video_url:  # the way breakdown videos are sent (by link)
         try:
             c = ok(requests.post(f"{GRAPH}/{ig}/media", data={**base, "video_url": video_url}, timeout=60), "container")
             wait(c["id"], "by link")
@@ -361,7 +364,8 @@ def post_all(video, t, done=None, video_url=None, log=print, wide=None, breakdow
         try:
             bv = breakdown_video() if breakdown and name in breakdown_for else None
             if name == "instagram":
-                res = instagram(bv or video, t, made.get("url") if bv else video_url)
+                res = (instagram(bv, t, made.get("url"), prefer_link=True) if bv
+                       else instagram(video, t, video_url))
             elif name == "facebook":
                 res = facebook(bv or wide or video, t)
             else:
