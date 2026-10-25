@@ -378,7 +378,7 @@ def build(day, key, out_path, src=None, base=None):
     hk = {"from": min(max(0.0, float(hk.get("from", dur * 0.3))), max(0.0, dur - 1)),
           "text_top": hook_line or hk.get("text_top"), "text_bottom": "Wait for the ending...",  # always this exact teaser (AI teasers can be confusing)
           "voice": spoken_hook(hook_line or hk.get("voice") or "Watch this.")}
-    intro = script.get("intro_voice") or (f"Here's the original, made with {model}." if model else "Here's the original.")
+    intro = "Here's the original."  # always this: the model is shown on screen, not read aloud
     outro = script.get("outro_voice") or "The full prompt is in the caption. Follow Mira AI for a new one every day."
     parts = clean_parts(script.get("shots"), dur)
     used = {(round(p["from"], 1), round(p["to"], 1)) for p in parts}

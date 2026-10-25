@@ -49,7 +49,7 @@ STEP 4 — Save to GitHub (the posting reads these files).
       "prompt_short": the same prompt condensed to at most 270 characters (style, main character, the key action, mood). It is only used if X refuses the full prompt.
   - breakdowns/<date>-1.json and breakdowns/<date>-2.json — the TikTok "prompt breakdown" script for each video (TikTok gets a 1-minute+ version: hook, the original, then key moments replayed with the prompt words that made them, read by a voice). Write them with python3 json.dump(..., ensure_ascii=False, indent=1). BREAKDOWN SCRIPT FORMAT:
       {"hook": {"from": <second where the most striking 3-5 s moment starts>, "text_top": <the caption's line 1, max 45 characters>, "text_bottom": "Wait for the ending..." (always exactly this), "voice": <exactly the caption's line 1, word for word>},
-       "intro_voice": "Here's the original, made with <model from meta.json, e.g. Seedance 2.5>.",
+       "intro_voice": "Here's the original.",
        "shots": [ {"n": <shot number from your prompt> OR "label": <for clips without real cuts: "The look", "The trigger", "The face", "The camera", "The secret"...>,
                    "from": <start second>, "to": <end second> (the matching moment in the ORIGINAL clip, from your shot timecodes),
                    "excerpt": <that shot's part of YOUR prompt, condensed to at most 200 characters, still in prompt language; write names in normal case, not capitals>,
