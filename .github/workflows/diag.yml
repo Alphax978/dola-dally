@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pins: ["spacy==3.8.7", "numpy==2.2.6", "spacy==3.8.7 numpy==2.2.6", "spacy==3.8.11 numpy==2.3.5", "thinc==8.3.6 spacy==3.8.7 numpy==2.2.6"]
+        pins: ["", "spacy==3.8.7", "numpy==2.2.6", "spacy==3.8.7 numpy==2.2.6", "spacy==3.8.11 numpy==2.3.5", "thinc==8.3.6 spacy==3.8.7 numpy==2.2.6"]
     steps:
       - uses: actions/checkout@v4
       - run: |
@@ -20,5 +20,5 @@ jobs:
           pip install -q "kokoro>=0.9" soundfile ${{ matrix.pins }} > /tmp/i.txt 2>&1 || tail -3 /tmp/i.txt
           python -m spacy download en_core_web_sm -q > /dev/null 2>&1 || true
           V=$(pip list 2>/dev/null | grep -iE "^(numpy|spacy|thinc|en.core.web.sm) " | tr -s ' ' | tr '\n' ';')
-          R=$(python -c "from kokoro import KPipeline; import numpy as np; p=KPipeline(lang_code='a'); a=np.concatenate([x for _,_,x in p('Testing the voice, shot two.', voice='af_heart')]); print('WORKS', len(a))" 2>&1 | tail -1)
+          R=$(python -c "from kokoro import KPipeline; import numpy as np; p=KPipeline(lang_code='a'); a=np.concatenate([x for _,_,x in p('Testing the voice, shot two.', voice='af_heart')]); print('WORKS', len(a), flush=True)" 2>&1 | grep -E "WORKS|Error" | tail -2 | tr '\n' ' ')
           echo "::notice title=${{ matrix.pins }}::$R || $V"
