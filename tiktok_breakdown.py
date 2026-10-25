@@ -110,7 +110,9 @@ def voices(lines, folder):
         for f in fails[:3]:
             _note(f"Voice line given the backup voice: {f[5:300]}")
     except Exception as e:
-        _note(f"Voice: espeak-ng fallback (Kokoro unavailable: {str(e)[:250]})")
+        # never publish a robotic-voice video: stop here, and the platforms get their normal clips instead
+        _note(f"Voice unavailable ({str(e)[:250]}): no breakdown video this time, normal clips are posted")
+        raise RuntimeError(f"voice unavailable: {str(e)[:200]}")
     for j in jobs:
         if not os.path.exists(j["out"]):
             run(["espeak-ng", "-v", "en-us", "-s", "165", "-w", j["out"], j["text"]])
