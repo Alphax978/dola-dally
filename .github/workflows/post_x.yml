@@ -81,7 +81,7 @@ jobs:
         timeout-minutes: 8
         run: |
           pip install -q torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -q "kokoro>=0.9"
+          pip install -q "kokoro>=0.9" "preshed==3.0.12"
       - name: Load the voice once (downloads its English data before posting starts)
         continue-on-error: true
         timeout-minutes: 6
