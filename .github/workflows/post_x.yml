@@ -82,8 +82,12 @@ jobs:
         run: |
           python3 -m venv "$HOME/voice"
           "$HOME/voice/bin/pip" install -q torch --index-url https://download.pytorch.org/whl/cpu
-          "$HOME/voice/bin/pip" install -q "kokoro>=0.9" soundfile
-          "$HOME/voice/bin/python" -c "import kokoro, soundfile" && echo "VOICE_PY=$HOME/voice/bin/python" >> "$GITHUB_ENV"
+          "$HOME/voice/bin/pip" install -q "spacy==3.8.7" \
+            "en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl"
+          "$HOME/voice/bin/pip" install -q "kokoro>=0.9" soundfile "spacy==3.8.7"
+          # only use this voice if it really loads (otherwise the backup voice is used)
+          "$HOME/voice/bin/python" -c "import spacy, kokoro; spacy.load('en_core_web_sm'); from kokoro import KPipeline; KPipeline(lang_code='a'); print('voice ok, spacy', spacy.__version__)" \
+            && echo "VOICE_PY=$HOME/voice/bin/python" >> "$GITHUB_ENV"
 
       - name: Test the breakdown (nothing is published)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.test_breakdown != '' }}
