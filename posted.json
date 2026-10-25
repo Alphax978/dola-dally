@@ -404,8 +404,8 @@
     "note": " (direct upload failed: Instagram upload: 400 {\"debug_info\":{\"retriable\":false,\"type\":\"ProcessingFailedError\",\"message\":\"Request processing failed\"}}; sent by link)"
    },
    "tiktok": {
-    "id": "2026-10-25-1-v2",
-    "url": "https://github.com/Alphax978/dola-dally/releases/download/tiktok-videos/2026-10-25-1-v2.mp4",
+    "id": "2026-10-25-1-r125222",
+    "url": "https://github.com/Alphax978/dola-dally/releases/download/tiktok-videos/2026-10-25-1-r125222.mp4",
     "note": " (queued for Buffer: Zapier picks it up from the feed within ~15 min)"
    }
   }
