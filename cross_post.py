@@ -294,33 +294,38 @@ NICE = {"youtube": "YouTube", "facebook": "Facebook", "instagram": "Instagram", 
 POSTERS = {"youtube": youtube, "facebook": facebook, "instagram": instagram, "tiktok": tiktok_post}
 
 
-def post_all(video, t, done=None, video_url=None, log=print, wide=None, tiktok_video=None):
+def post_all(video, t, done=None, video_url=None, log=print, wide=None, breakdown=None, breakdown_for=()):
     """Post to every platform that has secrets and isn't done yet. One failure doesn't stop the others.
 
-    video: the 9:16 version (YouTube, Instagram, TikTok). wide: the original-shape version for Facebook,
-    which fills the player on PC as well as phones (falls back to `video` if not given).
-    tiktok_video: a function that makes TikTok's own version (the 1-minute+ prompt breakdown); it only runs
-    when TikTok's turn comes, so the other platforms aren't kept waiting. If it fails, TikTok gets `video`."""
+    video: the 9:16 clip. wide: the original-shape clip (Facebook's normal version).
+    breakdown: a function that makes the 1-minute+ prompt breakdown video; it runs once, the first time a
+    platform in `breakdown_for` needs it, and that platform (and the later ones) post it instead of the clip.
+    If it can't be made, every platform gets its normal clip."""
     done = dict(done or {})
+    made = {}
+
+    def breakdown_video():
+        if "v" not in made:
+            try:
+                made["v"] = breakdown()
+            except Exception as e:
+                log(f"Couldn't make the breakdown video ({str(e)[:300]}); posting the normal clips")
+                made["v"] = None
+        return made["v"]
+
     for name in enabled():
         if isinstance(done.get(name), dict) and done[name].get("id"):
             continue
         try:
+            bv = breakdown_video() if breakdown and name in breakdown_for else None
             if name == "instagram":
-                res = instagram(video, t, video_url)
+                res = instagram(bv or video, t, video_url)
             elif name == "facebook":
-                res = facebook(wide or video, t)
-            elif name == "tiktok" and tiktok_video:
-                try:
-                    tv = tiktok_video()
-                except Exception as e:
-                    log(f"TikTok: couldn't make the breakdown version ({str(e)[:300]}); sending the normal clip")
-                    tv = video
-                res = POSTERS[name](tv or video, t)
+                res = facebook(bv or wide or video, t)
             else:
-                res = POSTERS[name](video, t)
+                res = POSTERS[name](bv or video, t)
             done[name] = res
-            log(f"{NICE[name]}: posted {res.get('url', '')}{res.get('note', '')}")
+            log(f"{NICE[name]}: posted {'the breakdown video ' if bv else ''}{res.get('url', '')}{res.get('note', '')}")
         except Exception as e:  # keep going with the next platform
             done[name] = {"error": str(e)[:500], "at": time.strftime("%Y-%m-%d %H:%M")}
             log(f"{NICE[name]}: FAILED: {str(e)[:500]}")

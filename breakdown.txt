@@ -1,0 +1,7 @@
+# Platforms that get the 1-minute+ prompt breakdown video (hook, the original, key moments with their prompt
+# words, voiceover) instead of the plain clip. One per line: youtube, facebook, instagram, tiktok.
+# X always gets the original clip. Remove a line to give that platform the plain clip again.
+youtube
+facebook
+instagram
+tiktok
