@@ -90,33 +90,28 @@ def spoken(text):
     return re.sub(r"\b(\d{1,2})\b(?![:.]\d)", lambda m: word(m.group(1)), text)
 
 
-def say(text, out_wav):
-    """Speak `text` into a wav; returns its length in seconds."""
-    global _kokoro
-    text = spoken(text)
+def voices(lines, folder):
+    """Speak every line in one go; returns {text: (wav path, seconds)}. Kokoro runs in its own process
+    (VOICE_PY = the Python of its own environment, if set); any line it can't do gets the espeak-ng voice."""
+    out, jobs = {}, []
+    for i, text in enumerate(dict.fromkeys(t for t in lines if t)):
+        jobs.append({"text": spoken(text), "out": os.path.join(folder, f"voice{i:02d}.wav"), "key": text})
+    jf = os.path.join(folder, "voices.json")
+    json.dump(jobs, open(jf, "w", encoding="utf-8"), ensure_ascii=False)
+    py = os.environ.get("VOICE_PY") or sys.executable
     try:
-        if _kokoro is None:
-            from kokoro import KPipeline
-            _kokoro = KPipeline(lang_code="a")
-        import numpy as np
-        import signal
-        import soundfile as sf
-
-        def stuck(*_):
-            raise TimeoutError("voice took over 2 minutes")
-        old_handler = signal.signal(signal.SIGALRM, stuck)
-        signal.alarm(120)
-        try:
-            audio = np.concatenate([a for _, _, a in _kokoro(text, voice="af_heart", speed=1.0)])
-        finally:
-            signal.alarm(0)
-            signal.signal(signal.SIGALRM, old_handler)
-        sf.write(out_wav, audio, 24000)
+        r = subprocess.run([py, os.path.join(ROOT, "voice.py"), jf], capture_output=True, text=True, timeout=600)
+        if r.returncode:
+            raise RuntimeError((r.stderr or r.stdout).strip().splitlines()[-1][:250] if (r.stderr or r.stdout) else "failed")
         _note("Voice: Kokoro (af_heart)")
     except Exception as e:
-        _note(f"Voice: espeak-ng fallback (Kokoro unavailable: {str(e)[:200]})")
-        run(["espeak-ng", "-v", "en-us", "-s", "165", "-w", out_wav, text])
-    return float(run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", out_wav]))
+        _note(f"Voice: espeak-ng fallback (Kokoro unavailable: {str(e)[:250]})")
+    for j in jobs:
+        if not os.path.exists(j["out"]):
+            run(["espeak-ng", "-v", "en-us", "-s", "165", "-w", j["out"], j["text"]])
+        out[j["key"]] = (j["out"], float(run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                                              "-of", "csv=p=0", j["out"]])))
+    return out
 
 
 # ---------- automatic parts from the prompt (used when the script is missing or too short) ----------
@@ -380,9 +375,10 @@ def build(day, key, out_path, src=None, base=None):
     # extra parts (only used if the video would be under a minute): spread out too, middle of the gaps first
     reserve.sort(key=lambda p: min([abs(p["from"] - q["from"]) for q in parts] or [0]), reverse=True)
 
+    spoken_lines = voices([hk["voice"], intro, outro] + [p["voice"] for p in parts + reserve], tmp)
+
     def wav(name, text):
-        p = os.path.join(tmp, name + ".wav")
-        return p, say(text, p)
+        return spoken_lines[text] if text in spoken_lines else voices([text], tmp)[text]
 
     hook_vo = wav("hook", hk["voice"])
     hook_dur = round(max(hook_vo[1] + 0.9, 3.5), 2)

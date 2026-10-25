@@ -38,6 +38,8 @@ CHUNK = 4 * 1024 * 1024
 
 def log(msg):
     print(f"[{dt.datetime.now(TZ):%H:%M:%S}] {msg}", flush=True)
+    if os.environ.get("GITHUB_ACTIONS") and re.search(r"FAILED|Couldn't|couldn't|failed|fallback|NOT POSTED", msg):
+        print(f"::warning title=Posting::{msg[:900]}", flush=True)  # problems show on the run page
 
 
 def today():
@@ -450,14 +452,34 @@ def auto(dry_run=False):
     log("Done.")
 
 
+def test_breakdown(day, slot):
+    """Build the breakdown in the posting setup, share it for review, and try Instagram without publishing."""
+    import buffer_feed
+    import tiktok_breakdown
+    from cross_post import instagram_trial
+    job = load_job(day, slot)
+    with tempfile.TemporaryDirectory() as tmp:
+        get_video(job["meta"], tmp)
+        out = os.path.join(tmp, "breakdown.mp4")
+        length = tiktok_breakdown.build(day, str(slot), out, src=os.path.join(tmp, "original.mp4"))
+        log(f"Breakdown built: {length:.0f}s")
+        url = buffer_feed.upload(out, f"test-{day}-{slot}-breakdown.mp4")
+        print(f"::notice title=Test::Breakdown video: {url}", flush=True)
+        instagram_trial(out, url, log=lambda m: print(f"::notice title=Test::{m}", flush=True))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--auto", action="store_true", help="post today's videos at their set times")
     ap.add_argument("--slot", type=int, choices=sorted(SLOTS), help="post this video now")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--day", default=None, help="YYYY-MM-DD (default: today in Nepal)")
+    ap.add_argument("--test-breakdown", type=int, choices=sorted(SLOTS), help="build that video's breakdown "
+                    "exactly as posting would, and test Instagram with it (nothing is published)")
     a = ap.parse_args()
-    if a.auto:
+    if a.test_breakdown:
+        test_breakdown(a.day or today(), a.test_breakdown)
+    elif a.auto:
         auto(a.dry_run)
     elif a.slot:
         result = post_slot(a.day or today(), a.slot, a.dry_run, retry_cross=True)

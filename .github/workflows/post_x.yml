@@ -15,6 +15,10 @@ on:
         description: "Dry run: only check the accounts (about 1 minute, skips the video previews)"
         type: boolean
         default: false
+      test_breakdown:
+        description: "Test only: build this video's breakdown exactly as posting would and try Instagram without publishing (1 or 2)"
+        type: string
+        default: ""
       slot:
         description: "Post this video now (1 or 2); if it's already on X, only posts it where it's missing (YouTube/Facebook/Instagram). Leave empty to post on schedule"
         type: string
@@ -72,19 +76,27 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq espeak-ng fonts-dejavu-core
           pip install -q pillow soundfile
-      - name: Install the free voice (Kokoro)
+      - name: Install the free voice (Kokoro, in its own Python environment)
         continue-on-error: true
         timeout-minutes: 8
         run: |
-          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -q "kokoro>=0.9"
+          python3 -m venv "$HOME/voice"
+          "$HOME/voice/bin/pip" install -q torch --index-url https://download.pytorch.org/whl/cpu
+          "$HOME/voice/bin/pip" install -q "kokoro>=0.9" soundfile
+          "$HOME/voice/bin/python" -c "import kokoro, soundfile" && echo "VOICE_PY=$HOME/voice/bin/python" >> "$GITHUB_ENV"
+
+      - name: Test the breakdown (nothing is published)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.test_breakdown != '' }}
+        env:
+          TB: ${{ inputs.test_breakdown }}
+        run: python3 post_to_x.py --test-breakdown "$TB"
 
       - name: Post today's videos at 16:30 and 21:30 Nepal time
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.slot == '' }}
+        if: ${{ github.event_name != 'workflow_dispatch' || (inputs.slot == '' && inputs.test_breakdown == '') }}
         run: python3 post_to_x.py --auto $DRY
 
       - name: Post one video now
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.slot != '' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.slot != '' && inputs.test_breakdown == '' }}
         env:
           SLOT: ${{ inputs.slot }}
         run: python3 post_to_x.py --slot "$SLOT" $DRY
