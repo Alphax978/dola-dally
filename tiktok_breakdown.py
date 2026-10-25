@@ -207,7 +207,7 @@ def centered(d, y, text, f, fill, stroke=4):
 
 def spoken_hook(line):
     """The opening voice: the caption line exactly, then the teaser."""
-    line = line.strip()
+    line = re.sub(r"[\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F\u200D]+", "", line).strip()  # emoji aren't read aloud
     if not line.endswith((".", "!", "?", "…")):
         line += "."
     return line + " Wait for the ending."
