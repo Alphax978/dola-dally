@@ -1,0 +1,72 @@
+{
+ "hook": {
+  "from": 24.5,
+  "text_top": "Her eyes turn red, then the fight starts.",
+  "text_bottom": "Watch time freeze...",
+  "voice": "They mocked her. Then her eyes turned red."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 2.9,
+   "excerpt": "Medium shot, slow push-in: the kunoichi stands calmly, eyes lowered; an attacker reaches out to touch her ponytail bow mockingly. Full moon top left.",
+   "highlight": [
+    "Medium shot, slow push-in",
+    "eyes lowered",
+    "Full moon top left"
+   ],
+   "voice": "Shot 1. A medium shot with a slow push-in. A calm setup before the storm, under a full moon."
+  },
+  {
+   "n": 3,
+   "from": 3.1,
+   "to": 5.8,
+   "excerpt": "Close-up of her face, slow push-in: she lifts her gaze to the lens, her eyes ignite into glowing red light, and her smile widens into a grin.",
+   "highlight": [
+    "Close-up of her face",
+    "eyes ignite into glowing red light",
+    "smile widens into a grin"
+   ],
+   "voice": "Shot 3. A close-up as her eyes ignite red. That one line flips the whole mood."
+  },
+  {
+   "n": 5,
+   "from": 7.3,
+   "to": 12.8,
+   "excerpt": "MUST SHOW: her palm strike explodes in a burst of glowing red energy. He is blasted backward down the corridor. Then a slow orbit around her ready stance.",
+   "highlight": [
+    "MUST SHOW",
+    "burst of glowing red energy",
+    "slow orbit"
+   ],
+   "voice": "Shot 5. Must show: a red energy burst on impact. Then a slow orbit around her stance."
+  },
+  {
+   "n": 8,
+   "from": 15.6,
+   "to": 17.7,
+   "excerpt": "Low angle: she leaps into a flying knee strike, both airborne in front of the full moon, the attacker engulfed in red energy. Slow motion.",
+   "highlight": [
+    "Low angle",
+    "flying knee strike",
+    "Slow motion"
+   ],
+   "voice": "Shot 8. A low angle flying knee against the full moon, in slow motion."
+  },
+  {
+   "n": 11,
+   "from": 23.5,
+   "to": 26.9,
+   "excerpt": "MUST SHOW: time nearly freezes: a huge translucent spherical shockwave bubble expands around the attacker, debris hanging mid-air, her body fully extended.",
+   "highlight": [
+    "time nearly freezes",
+    "translucent spherical shockwave bubble",
+    "debris hanging mid-air"
+   ],
+   "voice": "Shot 11. Time nearly freezes. A see-through shockwave bubble and debris hanging in the air."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

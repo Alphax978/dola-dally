@@ -1,0 +1,72 @@
+{
+ "hook": {
+  "from": 12.4,
+  "text_top": "A catgirl hunter crashes the vampire mafia.",
+  "text_bottom": "Wait for the throne...",
+  "voice": "She walked into the vampire mafia alone. Watch what happens."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 3,
+   "from": 1.1,
+   "to": 2.4,
+   "excerpt": "Extreme close-up of her eyes, slow push-in: red irises with slit pupils, her face split by light, hot magenta on the left, teal-green neon on the right.",
+   "highlight": [
+    "Extreme close-up of her eyes",
+    "slow push-in",
+    "hot magenta on the left, teal-green neon on the right"
+   ],
+   "voice": "Shot 3. An extreme close-up with a slow push-in. Two neon colors split her face in half."
+  },
+  {
+   "n": 4,
+   "from": 2.4,
+   "to": 3.4,
+   "excerpt": "Top-down aerial shot over the skyscrapers; one rooftop is a glass roof glowing magenta. The camera dives straight down at high speed toward it.",
+   "highlight": [
+    "Top-down aerial shot",
+    "glass roof glowing magenta",
+    "dives straight down at high speed"
+   ],
+   "voice": "Shot 4. A top-down aerial that dives straight into the glowing glass roof. That's the transition into the club."
+  },
+  {
+   "n": 7,
+   "from": 9.6,
+   "to": 12.4,
+   "excerpt": "MUST SHOW: a thin bright red laser beam shoots out of the wrist device across his throat. A crystal whiskey tumbler tumbles in slow motion in the foreground.",
+   "highlight": [
+    "MUST SHOW",
+    "thin bright red laser beam",
+    "tumbles in slow motion"
+   ],
+   "voice": "Shot 7. Must show: a red laser from her wrist device. The tumbling glass sells the slow motion."
+  },
+  {
+   "n": 13,
+   "from": 20.5,
+   "to": 23.8,
+   "excerpt": "Deep one-point-perspective shot down the corridor. She runs upside-down along the ceiling, then flips down and lands in a crouch with her back to the camera.",
+   "highlight": [
+    "one-point-perspective shot",
+    "runs upside-down along the ceiling",
+    "lands in a crouch"
+   ],
+   "voice": "Shot 13. A one-point perspective down the neon corridor. She runs upside down on the ceiling."
+  },
+  {
+   "n": 18,
+   "from": 28.9,
+   "to": 30.1,
+   "excerpt": "Close-up of her face, cat ears framing it, glowing red eyes, a wide fanged grin, magenta neon glowing behind her. Slow push-in, then cut to black.",
+   "highlight": [
+    "Close-up of her face",
+    "wide fanged grin",
+    "Slow push-in"
+   ],
+   "voice": "Shot 18. The ending is a close-up with a slow push-in. Red eyes and a fanged grin."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
