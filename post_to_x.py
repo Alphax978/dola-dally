@@ -459,6 +459,13 @@ def test_breakdown(day, slot):
     from cross_post import instagram_trial
     job = load_job(day, slot)
     with tempfile.TemporaryDirectory() as tmp:
+        jf = os.path.join(tmp, "v.json")
+        json.dump([{"text": "Testing the voice.", "out": os.path.join(tmp, "t.wav")}], open(jf, "w"))
+        for label, envv in (("full env", None), ("clean env", {"PATH": os.environ["PATH"], "HOME": os.environ["HOME"]})):
+            r = subprocess.run([sys.executable, os.path.join(ROOT, "voice.py"), jf], capture_output=True, text=True,
+                               env=envv, cwd=tmp, timeout=300)
+            tail = " | ".join([l for l in (r.stdout + r.stderr).splitlines() if l.strip()][-3:])[:600]
+            print(f"::notice title=Voice check ({label})::exit {r.returncode}: {tail}", flush=True)
         get_video(job["meta"], tmp)
         out = os.path.join(tmp, "breakdown.mp4")
         length = tiktok_breakdown.build(day, str(slot), out, src=os.path.join(tmp, "original.mp4"))
