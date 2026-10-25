@@ -103,7 +103,10 @@ def voices(lines, folder):
         r = subprocess.run([py, os.path.join(ROOT, "voice.py"), jf], capture_output=True, text=True, timeout=600)
         if r.returncode:
             raise RuntimeError((r.stderr or r.stdout).strip().splitlines()[-1][:250] if (r.stderr or r.stdout) else "failed")
-        _note("Voice: Kokoro (af_heart)")
+        fails = [l for l in r.stdout.splitlines() if l.startswith("FAIL")]
+        _note(f"Voice: Kokoro (af_heart), {len(jobs) - len(fails)} of {len(jobs)} lines")
+        for f in fails[:3]:
+            _note(f"Voice line given the backup voice: {f[5:300]}")
     except Exception as e:
         _note(f"Voice: espeak-ng fallback (Kokoro unavailable: {str(e)[:250]})")
     for j in jobs:
