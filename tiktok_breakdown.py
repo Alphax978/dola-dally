@@ -366,9 +366,10 @@ def build(day, key, out_path, src=None, base=None):
     # the script, checked and completed
     hook_line = (job.get("caption") or meta.get("title") or "").split("\n")[0]
     hk = script.get("hook") or {}
+    # the opening text and the opening voice are always exactly the post's caption line 1
     hk = {"from": min(max(0.0, float(hk.get("from", dur * 0.3))), max(0.0, dur - 1)),
-          "text_top": hk.get("text_top") or hook_line, "text_bottom": hk.get("text_bottom") or "Watch till the end...",
-          "voice": hk.get("voice") or hook_line or "Watch this."}
+          "text_top": hook_line or hk.get("text_top"), "text_bottom": hk.get("text_bottom") or "Watch till the end...",
+          "voice": hook_line or hk.get("voice") or "Watch this."}
     intro = script.get("intro_voice") or (f"Here's the original, made with {model}." if model else "Here's the original.")
     outro = script.get("outro_voice") or "The full prompt is in the caption. Follow Mira AI for a new one every day."
     parts = clean_parts(script.get("shots"), dur)
