@@ -1,0 +1,52 @@
+name: Repost a video
+# Posts a finished video (e.g. a corrected breakdown) for one day's slot again, to the chosen platforms.
+on:
+  workflow_dispatch:
+    inputs:
+      day:
+        description: "Day (YYYY-MM-DD)"
+        type: string
+        required: true
+      slot:
+        description: "1 or 2"
+        type: string
+        required: true
+      video_url:
+        description: "Public link to the video file"
+        type: string
+        required: true
+      platforms:
+        description: "Comma-separated: youtube,facebook,instagram,tiktok"
+        type: string
+        default: "youtube,facebook,instagram,tiktok"
+permissions:
+  contents: write
+concurrency:
+  group: post-x
+  cancel-in-progress: false
+jobs:
+  repost:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+      YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+      YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+      FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+      FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+      IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      TIKTOK_MODE: ${{ vars.TIKTOK_MODE || secrets.TIKTOK_MODE }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      DAY: ${{ inputs.day }}
+      SLOT: ${{ inputs.slot }}
+      URL: ${{ inputs.video_url }}
+      PLATFORMS: ${{ inputs.platforms }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        timeout-minutes: 10
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q requests requests-oauthlib opencv-python-headless numpy cryptography
+      - name: Repost
+        run: python3 repost.py "$DAY" "$SLOT" "$URL" "$PLATFORMS"
