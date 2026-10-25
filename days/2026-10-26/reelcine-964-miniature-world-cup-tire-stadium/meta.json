@@ -1,0 +1,19 @@
+{
+  "url": "https://reelcine.org/video-prompt/964",
+  "source": "reelcine",
+  "slug": "reelcine-964-miniature-world-cup-tire-stadium",
+  "title": "Miniature World Cup Tire Stadium",
+  "video_url": "https://assets-prompts.reelcine.org/prompts/video/meigen/seedance-2.0/2065139044325937483/video-0.mp4",
+  "x_post": "https://x.com/Samann_ai/status/2065139044325937483",
+  "duration": 10.13,
+  "width": 1248,
+  "height": 1664,
+  "cuts": [],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ],
+  "model": "Seedance 2.0"
+}

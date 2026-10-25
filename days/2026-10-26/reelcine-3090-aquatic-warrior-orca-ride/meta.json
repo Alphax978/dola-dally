@@ -1,0 +1,19 @@
+{
+  "url": "https://reelcine.org/video-prompt/3090",
+  "source": "reelcine",
+  "slug": "reelcine-3090-aquatic-warrior-orca-ride",
+  "title": "Aquatic Warrior Orca Ride",
+  "video_url": "https://assets-prompts.reelcine.org/prompts/video/meigen/seedance-2.0/2043729247416791195/video-0.mp4",
+  "x_post": "https://x.com/CharaspowerAI/status/2043729247416791195",
+  "duration": 15.12,
+  "width": 1280,
+  "height": 720,
+  "cuts": [],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ],
+  "model": "Seedance 2.0"
+}

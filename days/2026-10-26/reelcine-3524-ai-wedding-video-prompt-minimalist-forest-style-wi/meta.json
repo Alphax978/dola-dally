@@ -1,0 +1,23 @@
+{
+  "url": "https://reelcine.org/video-prompt/3524",
+  "source": "reelcine",
+  "slug": "reelcine-3524-ai-wedding-video-prompt-minimalist-forest-style-wi",
+  "title": "AI Wedding Video Prompt: Minimalist Forest Style with Light",
+  "video_url": "https://assets-prompts.reelcine.org/prompts/video/meigen/seedance-2.0/2038159292566798539/video-0.mp4",
+  "x_post": "https://x.com/Cosmoslucy13/status/2038159292566798539",
+  "duration": 15.12,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    0.05,
+    6.92,
+    10.88
+  ],
+  "frame_grids": [
+    "frames_1.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg"
+  ],
+  "model": "Seedance 2.0"
+}
