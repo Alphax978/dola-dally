@@ -205,6 +205,14 @@ def centered(d, y, text, f, fill, stroke=4):
            stroke_width=stroke, stroke_fill=(0, 0, 0))
 
 
+def spoken_hook(line):
+    """The opening voice: the caption line exactly, then the teaser."""
+    line = line.strip()
+    if not line.endswith((".", "!", "?", "…")):
+        line += "."
+    return line + " Wait for the ending."
+
+
 def tc(t):
     return f"{int(t // 60):02d}:{t % 60:04.1f}"
 
@@ -369,7 +377,7 @@ def build(day, key, out_path, src=None, base=None):
     # the opening text and the opening voice are always exactly the post's caption line 1
     hk = {"from": min(max(0.0, float(hk.get("from", dur * 0.3))), max(0.0, dur - 1)),
           "text_top": hook_line or hk.get("text_top"), "text_bottom": "Wait for the ending...",  # always this exact teaser (AI teasers can be confusing)
-          "voice": hook_line or hk.get("voice") or "Watch this."}
+          "voice": spoken_hook(hook_line or hk.get("voice") or "Watch this.")}
     intro = script.get("intro_voice") or (f"Here's the original, made with {model}." if model else "Here's the original.")
     outro = script.get("outro_voice") or "The full prompt is in the caption. Follow Mira AI for a new one every day."
     parts = clean_parts(script.get("shots"), dur)
