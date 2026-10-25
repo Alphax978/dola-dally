@@ -102,7 +102,9 @@ def voices(lines, folder):
     try:
         r = subprocess.run([py, os.path.join(ROOT, "voice.py"), jf], capture_output=True, text=True, timeout=600)
         if r.returncode:
-            raise RuntimeError((r.stderr or r.stdout).strip().splitlines()[-1][:250] if (r.stderr or r.stdout) else "failed")
+            tail = [l.strip() for l in (r.stderr or r.stdout or "failed").strip().splitlines() if l.strip()][-14:]
+            _note("Voice error details: " + " | ".join(tail)[-1500:])
+            raise RuntimeError(tail[-1][:250])
         fails = [l for l in r.stdout.splitlines() if l.startswith("FAIL")]
         _note(f"Voice: Kokoro (af_heart), {len(jobs) - len(fails)} of {len(jobs)} lines")
         for f in fails[:3]:
