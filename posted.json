@@ -387,6 +387,27 @@
     "url": "https://github.com/Alphax978/dola-dally/releases/download/tiktok-videos/2026-10-25-1.mp4",
     "note": " (queued for Buffer: Zapier picks it up from the feed within ~15 min)"
    }
+  },
+  "repost": {
+   "youtube": {
+    "id": "4cq5e3o58hw",
+    "url": "https://youtube.com/shorts/4cq5e3o58hw",
+    "note": " on Mira AI"
+   },
+   "facebook": {
+    "id": "1138864945666511",
+    "url": "https://www.facebook.com/1402835976246648/videos/1138864945666511"
+   },
+   "instagram": {
+    "id": "18142867252720082",
+    "url": "https://www.instagram.com/reel/De6uM2Miac2/",
+    "note": " (direct upload failed: Instagram upload: 400 {\"debug_info\":{\"retriable\":false,\"type\":\"ProcessingFailedError\",\"message\":\"Request processing failed\"}}; sent by link)"
+   },
+   "tiktok": {
+    "id": "2026-10-25-1-v2",
+    "url": "https://github.com/Alphax978/dola-dally/releases/download/tiktok-videos/2026-10-25-1-v2.mp4",
+    "note": " (queued for Buffer: Zapier picks it up from the feed within ~15 min)"
+   }
   }
  }
 }
