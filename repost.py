@@ -6,6 +6,7 @@ The results are kept in posted.json under that slot's "repost" (the original pos
 """
 import os
 import sys
+import time
 import tempfile
 import urllib.request
 
@@ -15,7 +16,7 @@ from cross_post import youtube, facebook, instagram, tiktok_post
 day, slot, url, names = sys.argv[1], int(sys.argv[2]), sys.argv[3], sys.argv[4].split(",")
 job = p.load_job(day, slot)
 t = p.cross_texts(job)
-t["key"] = f"{day}-{slot}-v2"
+t["key"] = f"{day}-{slot}-r{time.strftime('%H%M%S')}"  # a new ID every time, so Zapier treats it as a new video
 h = p.creator_handle(job["meta"])
 t["credit"] = f"🎬 Original by @{h} on X: {job['meta'].get('x_post')}" if h else ""
 with tempfile.TemporaryDirectory() as tmp:
