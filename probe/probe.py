@@ -21,11 +21,20 @@ h = get("https://domer.io/prompts/models/seedance-2-5")
 allmp4 = list(dict.fromkeys(re.findall(r"https://storage\.brightvectorlabs\.com/prompts/seedance-2-5/[^\"'\s<>\\]+?\.mp4", h)))
 tslug = re.sub(r"[^A-Za-z0-9]+", "-", title or "").strip("-").lower()
 mp4 = next((m for m in allmp4 if tslug and tslug in m.lower()), None)
+i = h.find("template=" + T)
+a = h.rfind("<article", 0, i)
+b = h.find("</article>", i)
+out["card_html"] = h[a:b + 10][:4000]
+out["mp4_names"] = [m.rsplit("/", 1)[1] for m in allmp4]
+templates = list(dict.fromkeys(re.findall(r"template=([A-Za-z0-9\-]+)", h)))
+out["template_index"] = templates.index(T) if T in templates else None
+if not mp4:
+    mp4 = "none"
 out["all_mp4_count"], out["title_slug"] = len(allmp4), tslug
 out["mp4"], out["title"] = mp4, title
 if mp4:
     fname = mp4.rsplit("/", 1)[1]
-    ident = fname.split("_")[1] if fname.count("_") >= 2 else ""
+    ident = fname.split("_")[1] if fname.count("_") >= 2 else "zzzz-none"
     out["file_id"] = ident
     # YouMind: same collection; find the page whose video file has the same id
     robots = get("https://youmind.com/robots.txt")
@@ -49,4 +58,4 @@ if mp4:
         ms = set(re.findall(r"https://cms-assets\.youmind\.com/media/[^\"'\s<>]+?\.mp4", p))
         out["candidates"].append({"url": u, "same_file_id": any(ident and ident in m for m in ms),
                                   "x_post": (re.search(r"https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+", p) or [None])[0] if p else None})
-json.dump(out, open("probe/domer25b.json", "w"), indent=1, ensure_ascii=False)
+json.dump(out, open("probe/domer25c.json", "w"), indent=1, ensure_ascii=False)
