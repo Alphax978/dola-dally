@@ -367,6 +367,17 @@ def candidates(today, used):
                 yield u, domer_details
 
 
+def auto_fill_on(root):
+    """auto_fill.txt: 'on' = fill missing or rejected picks with automatic videos; 'off' = only the user's picks."""
+    p = os.path.join(root, "auto_fill.txt")
+    if os.path.exists(p):
+        for line in open(p, encoding="utf-8"):
+            w = line.split("#")[0].strip().lower()
+            if w in ("on", "off"):
+                return w == "on"
+    return False
+
+
 def main():
     today = dt.datetime.now(TZ).date().isoformat()
     root = os.path.dirname(os.path.abspath(__file__))
@@ -399,9 +410,14 @@ def main():
     if picks:
         print(f"Your picks: {len(pick_jobs)} usable link(s)")
 
+    auto = auto_fill_on(root)
+    print(f"Auto-posting (fill with automatic videos): {'ON' if auto else 'OFF, only your picks'}")
+
     def all_candidates():
         for url, fn, n in pick_jobs:
             yield url, fn, n
+        if not auto:  # auto-posting off: nothing but the user's picks
+            return
         for url, fn in candidates(today, used_set):
             if url not in picks:
                 yield url, fn, None
@@ -466,7 +482,7 @@ def main():
         except Exception as e:  # one bad video shouldn't stop the run
             print(f"  failed{f' (your pick #{pick_no})' if pick_no else ''}: {url}: {e}")
 
-    json.dump({"date": today, "videos": prepared}, open(os.path.join(day_dir, "index.json"), "w"),
+    json.dump({"date": today, "videos": prepared, "auto_fill": auto}, open(os.path.join(day_dir, "index.json"), "w"),
               indent=2, ensure_ascii=False)
     json.dump(used[-50000:], open(used_path, "w"), indent=1)
 
@@ -486,6 +502,9 @@ def main():
 
     print(f"Prepared {len(prepared)} video(s) for {today}")
     if not prepared:
+        if not auto:  # auto-posting off and no usable pick: nothing to post today (not an error)
+            print("No usable picks and auto-posting is off: nothing will be posted today.")
+            return
         sys.exit(1)
 
 

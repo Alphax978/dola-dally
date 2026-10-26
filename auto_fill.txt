@@ -1,0 +1,5 @@
+# Auto-posting (one word on the line below):
+#   off  only your picks from picks.txt are posted. 2 picks: 4:30 + 9:30. 1 pick (or 1 usable): 9:30 only.
+#        No picks: nothing is posted that day.
+#   on   missing or rejected picks are filled with automatic videos (2 posts every day).
+off

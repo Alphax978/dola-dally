@@ -274,7 +274,11 @@ def write(day):
     index = os.path.join(ROOT, "days", day, "index.json")
     if not os.path.exists(index):
         sys.exit(f"No frames for {day} yet.")
-    videos = json.load(open(index)).get("videos", [])
+    idx = json.load(open(index))
+    videos = idx.get("videos", [])
+    if not videos and idx.get("auto_fill") is False:
+        log("No picks today and auto-posting is off: nothing to write.")
+        return
     passed, skipped, wm_urls = [], [], []
     for v in videos:
         if len(passed) >= 2:

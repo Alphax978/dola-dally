@@ -157,6 +157,14 @@ def hook(day, slot):
     return ""
 
 
+def auto_fill_off(day):
+    p = os.path.join(ROOT, "days", day, "index.json")
+    try:
+        return json.load(open(p)).get("auto_fill") is False
+    except Exception:
+        return False
+
+
 def slot_report(day, slot, posted):
     key = f"{day}-{slot}"
     entry = posted.get(key)
@@ -166,6 +174,8 @@ def slot_report(day, slot, posted):
         h, m = (16, 30) if slot == 1 else (21, 30)
         if dt.datetime.now(TZ) < dt.datetime.fromisoformat(day).replace(hour=h, minute=m, tzinfo=TZ):
             return head + "\n⏳ Not due yet", []
+        if auto_fill_off(day):  # auto-posting is off: an empty slot just means no usable pick for it
+            return head + "\n⏸ No post: no usable pick for this slot (auto-posting is off)", []
         why = "never ran" if title else "no video was prepared (morning step failed?)"
         return head + f"\n❌ Not posted: {why}", [f"{TIMES[slot]} video: {why}"]
     if entry.get("skipped"):
