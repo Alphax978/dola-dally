@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-27",
+  "videos": [
+    {
+      "slug": "times-square-mechanical-combat-13056",
+      "title": "Times Square Mechanical Combat",
+      "url": "https://youmind.com/video-prompts/times-square-mechanical-combat-13056",
+      "source": "youmind",
+      "duration": 15.3,
+      "dir": "days/2026-10-27/times-square-mechanical-combat-13056",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "anime-ice-magic-rooftop-fight-10420",
+      "title": "Anime Ice Magic Fight Sequence",
+      "url": "https://youmind.com/video-prompts/anime-ice-magic-rooftop-fight-10420",
+      "source": "youmind",
+      "duration": 29.35,
+      "dir": "days/2026-10-27/anime-ice-magic-rooftop-fight-10420",
+      "user_pick": true,
+      "pick_order": 2
+    }
+  ],
+  "auto_fill": false
+}
