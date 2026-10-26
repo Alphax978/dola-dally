@@ -16,8 +16,12 @@ for page in ("https://domer.io/prompts/models/seedance-2-5", "https://domer.io/e
                  "mp4": re.findall(r"https://storage\.brightvectorlabs\.com/prompts/seedance-2-5/[^\"'\s<>]+?\.mp4", card)[:2],
                  "img_alt": re.findall(r'alt="([^"]+)"', card)[:2],
                  "templates_on_page": len(set(re.findall(r"template=([A-Za-z0-9\-]+)", h)))}
-mp4 = next((v["mp4"][0] for v in out.values() if v["mp4"]), None)
 title = next((v["img_alt"][0] for v in out.values() if v["img_alt"]), None)
+h = get("https://domer.io/prompts/models/seedance-2-5")
+allmp4 = list(dict.fromkeys(re.findall(r"https://storage\.brightvectorlabs\.com/prompts/seedance-2-5/[^\"'\s<>\\]+?\.mp4", h)))
+tslug = re.sub(r"[^A-Za-z0-9]+", "-", title or "").strip("-").lower()
+mp4 = next((m for m in allmp4 if tslug and tslug in m.lower()), None)
+out["all_mp4_count"], out["title_slug"] = len(allmp4), tslug
 out["mp4"], out["title"] = mp4, title
 if mp4:
     fname = mp4.rsplit("/", 1)[1]
@@ -45,4 +49,4 @@ if mp4:
         ms = set(re.findall(r"https://cms-assets\.youmind\.com/media/[^\"'\s<>]+?\.mp4", p))
         out["candidates"].append({"url": u, "same_file_id": any(ident and ident in m for m in ms),
                                   "x_post": (re.search(r"https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+", p) or [None])[0] if p else None})
-json.dump(out, open("probe/domer25.json", "w"), indent=1, ensure_ascii=False)
+json.dump(out, open("probe/domer25b.json", "w"), indent=1, ensure_ascii=False)
