@@ -1,0 +1,84 @@
+{
+ "hook": {
+  "from": 8.5,
+  "text_top": "She rode an orca into a shark's jaws.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "She rode an orca into a shark's jaws."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.0.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 2.8,
+   "excerpt": "Wide side tracking shot: the orca swims left to right through the deep blue, god rays above; the colossal great white charges with jaws wide open.",
+   "highlight": [
+    "Wide side tracking shot",
+    "god rays above",
+    "jaws wide open"
+   ],
+   "voice": "Shot 1. A wide side tracking shot with god rays. Then the giant shark charges in."
+  },
+  {
+   "n": 2,
+   "from": 2.8,
+   "to": 5.8,
+   "excerpt": "Low-angle shot from behind the orca's head: the warden stands tall, trident raised; the camera arcs around her and the prongs start to glow ice-blue.",
+   "highlight": [
+    "Low-angle shot",
+    "the camera arcs around her",
+    "glow ice-blue"
+   ],
+   "voice": "Shot 2. A low angle that arcs around her, making her look huge as the trident starts to glow."
+  },
+  {
+   "n": 4,
+   "from": 6.3,
+   "to": 10.3,
+   "excerpt": "Side-profile medium-wide shot, slow push-in: she lunges, trident leveled. MUST SHOW: the shark's gaping mouth fills the right half of the frame.",
+   "highlight": [
+    "Side-profile medium-wide shot",
+    "slow push-in",
+    "MUST SHOW"
+   ],
+   "voice": "Shot 4. A side profile with a slow push-in. The open jaws fill half the frame for maximum tension."
+  },
+  {
+   "n": 5,
+   "from": 10.3,
+   "to": 11.8,
+   "excerpt": "MUST SHOW: the trident fires a blinding blue-white energy beam into the shark's mouth; a spherical shockwave ripples through the water; the camera shakes.",
+   "highlight": [
+    "blinding blue-white energy beam",
+    "spherical shockwave",
+    "the camera shakes"
+   ],
+   "voice": "Shot 5. A blue-white beam, a shockwave and camera shake. That is the payoff moment."
+  },
+  {
+   "n": 6,
+   "from": 11.8,
+   "to": 12.4,
+   "excerpt": "Wide shot: the giant shark is blown back into an exploding cloud of churned white water and debris.",
+   "highlight": [
+    "Wide shot",
+    "blown back",
+    "exploding cloud of churned white water"
+   ],
+   "voice": "Shot 6. A wide shot as the shark is blown back into an exploding cloud of water."
+  },
+  {
+   "n": 7,
+   "from": 12.4,
+   "to": 15.1,
+   "excerpt": "Wide side shot from slightly below: the warden in silhouette on the orca's back, trident held low, white locs streaming. Slow push-in; calm and heroic.",
+   "highlight": [
+    "in silhouette",
+    "white locs streaming",
+    "calm and heroic"
+   ],
+   "voice": "Shot 7. A silhouette from below with a slow push-in. A calm, heroic final hold."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

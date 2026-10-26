@@ -1,0 +1,95 @@
+{
+ "hook": {
+  "from": 2.8,
+  "text_top": "A whole football stadium inside a car tire.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "A whole football stadium inside a car tire."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.0.",
+ "shots": [
+  {
+   "label": "The look",
+   "from": 0.0,
+   "to": 2.0,
+   "excerpt": "Hyper-realistic miniature macro photography, tilt-shift shallow depth of field, warm golden late-afternoon sunlight casting long dramatic shadows.",
+   "highlight": [
+    "miniature macro photography",
+    "tilt-shift shallow depth of field",
+    "long dramatic shadows"
+   ],
+   "voice": "The look. Miniature macro with tilt-shift blur. That one phrase makes everything feel tiny and real."
+  },
+  {
+   "label": "The setting",
+   "from": 0.5,
+   "to": 2.8,
+   "excerpt": "MUST SHOW: the full miniature stadium inside the tire ring, two big banners on the upper stands, tiny fans and a white minivan on the wooden table.",
+   "highlight": [
+    "MUST SHOW",
+    "inside the tire ring",
+    "white minivan on the wooden table"
+   ],
+   "voice": "The setting. Must show the stadium inside the tire ring, plus tiny fans and a van on the table for scale."
+  },
+  {
+   "label": "The camera",
+   "from": 0.0,
+   "to": 2.8,
+   "excerpt": "One continuous take, no cuts. The camera slowly orbits clockwise around the tire and gently pushes in and down.",
+   "highlight": [
+    "One continuous take, no cuts",
+    "slowly orbits clockwise",
+    "pushes in and down"
+   ],
+   "voice": "The camera. One continuous take with no cuts, starting with a slow clockwise orbit."
+  },
+  {
+   "label": "The dive",
+   "from": 2.8,
+   "to": 4.3,
+   "excerpt": "The camera accelerates over the rim of the tire and plunges down into the stadium, rotating slightly, with fast motion blur on the stands.",
+   "highlight": [
+    "accelerates over the rim",
+    "plunges down into the stadium",
+    "fast motion blur"
+   ],
+   "voice": "The dive. The camera plunges over the rim into the stadium, with motion blur selling the speed."
+  },
+  {
+   "label": "The descent",
+   "from": 4.3,
+   "to": 5.5,
+   "excerpt": "The camera swoops low over the stands behind one goal and glides forward just above the grass toward the centre circle.",
+   "highlight": [
+    "swoops low over the stands",
+    "just above the grass",
+    "toward the centre circle"
+   ],
+   "voice": "The descent. It swoops behind the goal and glides just above the grass toward the players."
+  },
+  {
+   "label": "The duel",
+   "from": 5.5,
+   "to": 8.0,
+   "excerpt": "Low-angle macro side view at grass height, the two players facing each other in slow motion; the ball stays between their boots as they jostle.",
+   "highlight": [
+    "Low-angle macro side view",
+    "slow motion",
+    "the ball stays between their boots"
+   ],
+   "voice": "The duel. A low macro angle at grass height, in slow motion, with the ball locked between them."
+  },
+  {
+   "label": "The secret",
+   "from": 7.5,
+   "to": 10.1,
+   "excerpt": "Behind them the packed stands curve around, the black tire tread rises as the upper wall, blue sky above.",
+   "highlight": [
+    "the black tire tread rises as the upper wall",
+    "blue sky above"
+   ],
+   "voice": "The secret. The tire tread becomes the stadium wall, so you never forget where you are."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
