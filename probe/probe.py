@@ -29,7 +29,7 @@ out["mp4_names"] = [m.rsplit("/", 1)[1] for m in allmp4]
 templates = list(dict.fromkeys(re.findall(r"template=([A-Za-z0-9\-]+)", h)))
 out["template_index"] = templates.index(T) if T in templates else None
 if not mp4:
-    mp4 = "none"
+    mp4 = "x/a_none_b.mp4"
 out["all_mp4_count"], out["title_slug"] = len(allmp4), tslug
 out["mp4"], out["title"] = mp4, title
 if mp4:
