@@ -4,3 +4,5 @@
 #   Only 1 link -> it's posted at 9:30 PM and the other video is picked automatically.
 #   No links -> everything is picked automatically, as usual.
 # The morning run uses these links and then empties this list.
+https://youmind.com/video-prompts/times-square-mechanical-combat-13056
+https://youmind.com/video-prompts/anime-ice-magic-rooftop-fight-10420
