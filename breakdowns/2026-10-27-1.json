@@ -1,0 +1,84 @@
+{
+ "hook": {
+  "from": 11.9,
+  "text_top": "Two war machines just leveled Times Square.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "Two war machines just leveled Times Square."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 2.0,
+   "excerpt": "Starts already mid-action. Camera low at street level: A skids backward, boots tearing a trench in the asphalt, then the camera swings up behind A's shoulder.",
+   "highlight": [
+    "Starts already mid-action",
+    "Camera low at street level",
+    "swings up behind A's shoulder"
+   ],
+   "voice": "Shot 1. Start already mid-action, low on the street, then swing up behind his shoulder into the sky."
+  },
+  {
+   "n": 2,
+   "from": 2.0,
+   "to": 4.0,
+   "excerpt": "Wide lateral tracking shot: A and B meet in midair above an intersection; B dissolves into black mist. Sharp upward pan: A against a gigantic blue LED billboard.",
+   "highlight": [
+    "Wide lateral tracking shot",
+    "dissolves into black mist",
+    "Sharp upward pan"
+   ],
+   "voice": "Shot 2. A wide lateral tracking shot keeps both fighters readable while the reaper vanishes into black mist."
+  },
+  {
+   "n": 4,
+   "from": 5.4,
+   "to": 6.3,
+   "excerpt": "Interior of an empty dim office: the room fills with a rolling gray dust cloud under a flickering fluorescent tube; A lands in a low sliding crouch.",
+   "highlight": [
+    "empty dim office",
+    "rolling gray dust cloud",
+    "low sliding crouch"
+   ],
+   "voice": "Shot 4. A quick cut inside a dusty office gives the chaos a breath before he bursts back out."
+  },
+  {
+   "n": 6,
+   "from": 7.3,
+   "to": 8.8,
+   "excerpt": "Medium tracking shot between the buildings: A and B collide in midair; the crimson scythe blade sweeps over A's head; A spins head-over-heels.",
+   "highlight": [
+    "Medium tracking shot",
+    "collide in midair",
+    "spins head-over-heels"
+   ],
+   "voice": "Shot 6. A medium tracking shot right inside the midair duel, with the scythe sweeping overhead."
+  },
+  {
+   "n": 8,
+   "from": 10.0,
+   "to": 11.9,
+   "excerpt": "Top-down drone view looking straight down at the street: A drops from a rooftop ledge, katanas out, toward a fresh round crater in the asphalt.",
+   "highlight": [
+    "Top-down drone view",
+    "katanas out",
+    "fresh round crater"
+   ],
+   "voice": "Shot 8. A top-down drone view shows the height of the fall and the crater waiting below."
+  },
+  {
+   "n": 9,
+   "from": 11.9,
+   "to": 13.9,
+   "excerpt": "Slow motion. Locked-off close-up on B's ivory deer-skull mask, katana flat across the frame; the red eyes go dark and the mask splits down the middle.",
+   "highlight": [
+    "Slow motion",
+    "Locked-off close-up",
+    "the mask splits down the middle"
+   ],
+   "voice": "Shot 9. Everything slows down. A locked close-up as the red eyes die and the mask splits open."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

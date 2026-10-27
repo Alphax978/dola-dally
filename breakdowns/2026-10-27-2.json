@@ -1,0 +1,72 @@
+{
+ "hook": {
+  "from": 23.5,
+  "text_top": "She never takes the lollipop out.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "She never takes the lollipop out."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 5.5,
+   "excerpt": "Locked-off side-profile medium close-up: a high kick sweeps past her face; she flicks her hand and a burst of icy water blasts the bully onto the crash mat.",
+   "highlight": [
+    "Locked-off side-profile medium close-up",
+    "flicks her hand",
+    "burst of icy water"
+   ],
+   "voice": "Shot 1. A locked side profile. She barely moves her head, then one flick of the hand sends the bully flying."
+  },
+  {
+   "n": 2,
+   "from": 5.5,
+   "to": 10.9,
+   "excerpt": "Wide side shot of the rooftop: she touches the floor with one fingertip. MUST SHOW: a square patch of glossy black ice with white cracks spreads out.",
+   "highlight": [
+    "Wide side shot",
+    "one fingertip",
+    "glossy black ice with white cracks"
+   ],
+   "voice": "Shot 2. A wide side shot. One fingertip on the floor spreads a patch of black ice, and the bully slips."
+  },
+  {
+   "n": 3,
+   "from": 10.9,
+   "to": 15.8,
+   "excerpt": "Frontal close-up, slightly low angle: the pole stops at her eyes. MUST SHOW: the metal pole freezes into clear crystal ice from the tip back, then shatters.",
+   "highlight": [
+    "Frontal close-up",
+    "freezes into clear crystal ice",
+    "shatters"
+   ],
+   "voice": "Shot 3. A frontal close-up. She just points, and the metal pole freezes into crystal and shatters at the lens."
+  },
+  {
+   "n": 5,
+   "from": 16.8,
+   "to": 21.9,
+   "excerpt": "Medium-wide front shot: the bully chops down with a shovel. MUST SHOW: a thick glittering pillar of ice shoots up and launches her out of the top of the shot.",
+   "highlight": [
+    "Medium-wide front shot",
+    "glittering pillar of ice",
+    "out of the top of the shot"
+   ],
+   "voice": "Shot 5. A pillar of ice grows taller than the frame and launches the bully straight out of the shot."
+  },
+  {
+   "n": 6,
+   "from": 21.9,
+   "to": 29.3,
+   "excerpt": "Slow gentle push-in: two huge jagged slabs of clear ice trap the last bully in a triangle, then explode into a giant spray of glittering shards.",
+   "highlight": [
+    "Slow gentle push-in",
+    "jagged slabs of clear ice",
+    "giant spray of glittering shards"
+   ],
+   "voice": "Shot 6. A slow push-in for the finale. Two ice walls trap the last bully and explode into shards."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
