@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-29",
+  "videos": [
+    {
+      "slug": "hand-drawn-action-animation-chase-10018",
+      "title": "Hand-Drawn 2.5D Action Animation Chase Scene",
+      "url": "https://youmind.com/video-prompts/hand-drawn-action-animation-chase-10018",
+      "source": "youmind",
+      "duration": 30.11,
+      "dir": "days/2026-10-29/hand-drawn-action-animation-chase-10018",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "superhero-origin-sequence-12880",
+      "title": "Superhero Origin Sequence Prompt",
+      "url": "https://youmind.com/video-prompts/superhero-origin-sequence-12880",
+      "source": "youmind",
+      "duration": 33.92,
+      "dir": "days/2026-10-29/superhero-origin-sequence-12880",
+      "user_pick": true,
+      "pick_order": 2
+    }
+  ],
+  "auto_fill": false
+}

@@ -1,0 +1,49 @@
+{
+  "url": "https://youmind.com/video-prompts/hand-drawn-action-animation-chase-10018",
+  "source": "youmind",
+  "slug": "hand-drawn-action-animation-chase-10018",
+  "title": "Hand-Drawn 2.5D Action Animation Chase Scene",
+  "video_url": "https://cms-assets.youmind.com/media/1787986878488_vq08wg_Hand-Drawn-2.5D-Action-Animation-Chase-Scene",
+  "x_post": "https://x.com/afrinxai/status/2093247856706736226",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 30.11,
+  "width": 992,
+  "height": 432,
+  "cuts": [
+    1.46,
+    2.29,
+    3.42,
+    3.88,
+    4.75,
+    5.79,
+    6.12,
+    6.17,
+    6.88,
+    8.08,
+    9.54,
+    10.58,
+    13.46,
+    16.67,
+    17.54,
+    17.71,
+    18.58,
+    20.79,
+    20.88,
+    21.25,
+    22.29,
+    24.71,
+    25.71,
+    27.54,
+    27.58
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}
