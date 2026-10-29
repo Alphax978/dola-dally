@@ -1,0 +1,71 @@
+{
+ "hook": {
+  "from": 13.9,
+  "text_top": "He just found out he can fly.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "He just found out he can fly."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 2,
+   "from": 0.5,
+   "to": 2.2,
+   "excerpt": "Medium close from the front, framed on his chest: he holds both hands up palms-up, fingers curling and trembling; blurred golden lot behind.",
+   "highlight": [
+    "Medium close from the front",
+    "fingers curling and trembling"
+   ],
+   "voice": "Shot 2. Just his hands, trembling. The story starts before anything happens."
+  },
+  {
+   "n": 6,
+   "from": 5.1,
+   "to": 7.1,
+   "excerpt": "Locked-off wide, low: two scorched footprints burned into the concrete in the foreground, glowing orange embers and black soot, smoking.",
+   "highlight": [
+    "Locked-off wide, low",
+    "two scorched footprints",
+    "glowing orange embers"
+   ],
+   "voice": "Shot 6. The speed is shown by what he leaves behind: two burning footprints in the concrete."
+  },
+  {
+   "n": 10,
+   "from": 13.9,
+   "to": 16.1,
+   "excerpt": "Low-angle shot in the middle of the city street: he lands in a three-point crouch; the asphalt cracks and a dark crater of dust bursts out; cars brake hard.",
+   "highlight": [
+    "Low-angle shot",
+    "three-point crouch",
+    "the asphalt cracks"
+   ],
+   "voice": "Shot 10. A low angle and a three-point landing. The cracked asphalt sells the weight."
+  },
+  {
+   "n": 15,
+   "from": 20.1,
+   "to": 21.3,
+   "excerpt": "Close-up tracking with him as he runs: face sharp, jaw clenched, background streaking in strong horizontal motion blur, slight handheld shake.",
+   "highlight": [
+    "Close-up tracking",
+    "strong horizontal motion blur",
+    "slight handheld shake"
+   ],
+   "voice": "Shot 15. His face stays sharp while the city smears behind him. That is how speed reads on screen."
+  },
+  {
+   "n": 19,
+   "from": 25.0,
+   "to": 28.8,
+   "excerpt": "He springs up off the road; the camera tilts and cranes up with him past a dark glass tower, clears the rooftops; he shrinks to a silhouette against the golden sky.",
+   "highlight": [
+    "tilts and cranes up with him",
+    "clears the rooftops",
+    "silhouette against the golden sky"
+   ],
+   "voice": "Shot 19. The camera cranes up with him until he is a speck against the sunset."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

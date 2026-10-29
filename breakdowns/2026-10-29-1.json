@@ -1,0 +1,83 @@
+{
+ "hook": {
+  "from": 2.3,
+  "text_top": "This anime chase never slows down.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "This anime chase never slows down."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 1.5,
+   "excerpt": "Low camera skimming the road, tracking backward at high speed. The fighter sprints toward camera at frame-left; the swordsman runs behind him, white robe flaring.",
+   "highlight": [
+    "Low camera skimming the road",
+    "tracking backward at high speed"
+   ],
+   "voice": "Shot 1. The camera skims the road and tracks backward, so both fighters run straight at us."
+  },
+  {
+   "n": 5,
+   "from": 3.9,
+   "to": 4.8,
+   "excerpt": "Fast push-in to an upside-down close-up of the fighter's face against the sky: white hair hanging down, dark-red under-eye band, a dangerous smile.",
+   "highlight": [
+    "Fast push-in",
+    "upside-down close-up",
+    "dark-red under-eye band"
+   ],
+   "voice": "Shot 5. A fast push-in on an upside-down face. That one detail makes the vault feel real."
+  },
+  {
+   "n": 9,
+   "from": 6.9,
+   "to": 8.1,
+   "excerpt": "Locked-off low shot by a concrete pillar: the sedan flips upside down through frame, scraping the road in a burst of orange sparks.",
+   "highlight": [
+    "Locked-off low shot",
+    "flips upside down",
+    "burst of orange sparks"
+   ],
+   "voice": "Shot 9. A locked-off camera lets the car flip right through frame, with sparks for impact."
+  },
+  {
+   "n": 17,
+   "from": 17.5,
+   "to": 18.6,
+   "excerpt": "Close-up: the fighter pinches the flat of the steel blade between bare fingers, grinning at camera; gold guard and black glove at frame-left.",
+   "highlight": [
+    "pinches the flat of the steel blade",
+    "bare fingers",
+    "grinning at camera"
+   ],
+   "voice": "Shot 17. He catches the blade with bare fingers. Naming the exact grip keeps his hand on the steel."
+  },
+  {
+   "n": 18,
+   "from": 18.6,
+   "to": 20.8,
+   "excerpt": "Extreme close-up filling the frame with only the fighter's two amber-gold eyes and the dark-red chevron band beneath; very slow push-in, the eyes narrow.",
+   "highlight": [
+    "Extreme close-up",
+    "amber-gold eyes",
+    "very slow push-in"
+   ],
+   "voice": "Shot 18. Everything stops. An extreme close-up on the eyes with a very slow push-in."
+  },
+  {
+   "n": 24,
+   "from": 27.6,
+   "to": 30.1,
+   "excerpt": "Wide side view in mid-air, huge sunset skyline: both fly at each other, punch and parry, the swordsman's white robe billowing open like a cape.",
+   "highlight": [
+    "Wide side view in mid-air",
+    "huge sunset skyline",
+    "billowing open like a cape"
+   ],
+   "voice": "Shot 24. A wide side view in mid-air, with the robe billowing like a cape for the final hit."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
