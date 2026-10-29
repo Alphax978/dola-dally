@@ -1,0 +1,82 @@
+{
+ "hook": {
+  "from": 9.3,
+  "text_top": "She cut through dragon fire with lightning.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "She cut through dragon fire with lightning."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 3,
+   "from": 2.9,
+   "to": 4.3,
+   "excerpt": "Medium close-up, camera falling with her: blue lightning crackles around her arms; the spear transforms into a long glowing electric-blue blade.",
+   "highlight": [
+    "camera falling with her",
+    "glowing electric-blue blade"
+   ],
+   "voice": "Shot 3. The camera falls with her. Blue lightning turns her broken spear into a glowing blade."
+  },
+  {
+   "n": 6,
+   "from": 6.0,
+   "to": 7.0,
+   "excerpt": "Wide side shot: the dragon unleashes a colossal torrent of orange-yellow fire; the warrior cuts straight through it with the blue blade.",
+   "highlight": [
+    "Wide side shot",
+    "colossal torrent of orange-yellow fire",
+    "cuts straight through it"
+   ],
+   "voice": "Shot 6. A wide side shot. Orange fire against a blue blade, and she cuts straight through it."
+  },
+  {
+   "n": 9,
+   "from": 9.3,
+   "to": 10.8,
+   "excerpt": "Wide rear shot, symmetrical: she stands on the dragon's neck, sun ahead, and raises a gigantic column of blue lightning into the sky.",
+   "highlight": [
+    "Wide rear shot, symmetrical",
+    "gigantic column of blue lightning"
+   ],
+   "voice": "Shot 9. A symmetrical shot from behind. The blade becomes a giant column of lightning."
+  },
+  {
+   "n": 10,
+   "from": 10.8,
+   "to": 11.9,
+   "excerpt": "Extreme close-up of the dragon's face: two huge orange slit-pupil eyes widen; the molten-orange cracks turn electric blue.",
+   "highlight": [
+    "Extreme close-up",
+    "orange slit-pupil eyes widen",
+    "cracks turn electric blue"
+   ],
+   "voice": "Shot 10. An extreme close-up. Its eyes widen as the orange cracks turn blue."
+  },
+  {
+   "n": 13,
+   "from": 13.3,
+   "to": 17.6,
+   "excerpt": "Over-the-shoulder from behind her: a gigantic golden wave rises far away; the blade returns to the broken spear; she wipes soot from her cheek.",
+   "highlight": [
+    "Over-the-shoulder from behind her",
+    "gigantic golden wave",
+    "wipes soot from her cheek"
+   ],
+   "voice": "Shot 13. Over her shoulder. A golden wave rises where the dragon fell, and she wipes her cheek."
+  },
+  {
+   "n": 14,
+   "from": 17.6,
+   "to": 19.6,
+   "excerpt": "Extreme wide aerial shot: the ruined floating fortress, waterfalls pouring into the clouds; one final thin blue lightning bolt flashes.",
+   "highlight": [
+    "Extreme wide aerial shot",
+    "waterfalls pouring into the clouds",
+    "one final thin blue lightning bolt"
+   ],
+   "voice": "Shot 14. An extreme wide aerial shot. The floating fortress, waterfalls, and one last bolt of lightning."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
