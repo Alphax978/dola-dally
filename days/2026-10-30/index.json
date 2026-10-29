@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-30",
+  "videos": [
+    {
+      "slug": "zombie-chase-animation-prompt-13116",
+      "title": "Zombie Chase Animation Prompt",
+      "url": "https://youmind.com/video-prompts/zombie-chase-animation-prompt-13116",
+      "source": "youmind",
+      "duration": 28.69,
+      "dir": "days/2026-10-30/zombie-chase-animation-prompt-13116",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "anime-lightning-warrior-dragon-12203",
+      "title": "Anime Lightning Warrior vs Dragon",
+      "url": "https://youmind.com/video-prompts/anime-lightning-warrior-dragon-12203",
+      "source": "youmind",
+      "duration": 20.13,
+      "dir": "days/2026-10-30/anime-lightning-warrior-dragon-12203",
+      "user_pick": true,
+      "pick_order": 2
+    }
+  ],
+  "auto_fill": false
+}
