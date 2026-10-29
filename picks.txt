@@ -4,3 +4,5 @@
 #   Only 1 link -> it's posted at 9:30 PM and the other video is picked automatically.
 #   No links -> everything is picked automatically, as usual.
 # The morning run uses these links and then empties this list.
+https://youmind.com/video-prompts/zombie-chase-animation-prompt-13116
+https://youmind.com/video-prompts/anime-lightning-warrior-dragon-12203
