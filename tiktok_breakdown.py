@@ -205,12 +205,12 @@ def centered(d, y, text, f, fill, stroke=4):
            stroke_width=stroke, stroke_fill=(0, 0, 0))
 
 
-def spoken_hook(line):
+def spoken_hook(line, teaser="Wait for the ending..."):
     """The opening voice: the caption line exactly, then the teaser."""
     line = re.sub(r"[\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F\u200D]+", "", line).strip()  # emoji aren't read aloud
     if not line.endswith((".", "!", "?", "…")):
         line += "."
-    return line + " Wait for the ending."
+    return line + " " + teaser.rstrip(". …") + "."
 
 
 def tc(t):
@@ -376,8 +376,8 @@ def build(day, key, out_path, src=None, base=None):
     hk = script.get("hook") or {}
     # the opening text and the opening voice are always exactly the post's caption line 1
     hk = {"from": min(max(0.0, float(hk.get("from", dur * 0.3))), max(0.0, dur - 1)),
-          "text_top": hook_line or hk.get("text_top"), "text_bottom": "Wait for the ending...",  # always this exact teaser (AI teasers can be confusing)
-          "voice": spoken_hook(hook_line or hk.get("voice") or "Watch this.")}
+          "text_top": hook_line or hk.get("text_top"), "text_bottom": hk.get("text_bottom") or "Wait for the ending...",
+          "voice": spoken_hook(hook_line or hk.get("voice") or "Watch this.", hk.get("text_bottom") or "Wait for the ending...")}
     intro = f"Here's the original, made with {model}." if model else "Here's the original."  # always this wording
     outro = script.get("outro_voice") or "The full prompt is in the caption. Follow Mira AI for a new one every day."
     parts = clean_parts(script.get("shots"), dur)
