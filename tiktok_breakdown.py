@@ -378,7 +378,7 @@ def build(day, key, out_path, src=None, base=None):
     hk = {"from": min(max(0.0, float(hk.get("from", dur * 0.3))), max(0.0, dur - 1)),
           "text_top": hook_line or hk.get("text_top"), "text_bottom": "Wait for the ending...",  # always this exact teaser (AI teasers can be confusing)
           "voice": spoken_hook(hook_line or hk.get("voice") or "Watch this.")}
-    intro = f"Here's the original, made with {model}." if model else "Here's the original."  # always this wording
+    opening = f"Watch this awesome AI video made with {model}." if model else "Watch this awesome AI video."
     outro = script.get("outro_voice") or "The full prompt is in the caption. Follow Mira AI for a new one every day."
     parts = clean_parts(script.get("shots"), dur)
     used = {(round(p["from"], 1), round(p["to"], 1)) for p in parts}
@@ -391,14 +391,13 @@ def build(day, key, out_path, src=None, base=None):
     # extra parts (only used if the video would be under a minute): spread out too, middle of the gaps first
     reserve.sort(key=lambda p: min([abs(p["from"] - q["from"]) for q in parts] or [0]), reverse=True)
 
-    spoken_lines = voices([hk["voice"], intro, outro] + [p["voice"] for p in parts + reserve], tmp)
+    spoken_lines = voices([opening, outro] + [p["voice"] for p in parts + reserve], tmp)
 
     def wav(name, text):
         return spoken_lines[text] if text in spoken_lines else voices([text], tmp)[text]
 
-    hook_vo = wav("hook", hk["voice"])
-    hook_dur = round(max(hook_vo[1] + 0.9, 3.5), 2)
-    intro_vo = wav("intro", intro)
+    open_vo = wav("opening", opening)
+    open_dur = round(open_vo[1] + 0.8, 2)
     outro_vo = wav("outro", outro)
     outro_dur = round(outro_vo[1] + 1.2, 2)
 
@@ -410,7 +409,7 @@ def build(day, key, out_path, src=None, base=None):
         p["_slow"] = round(min(p["_dur"] / length, 2.0), 3)
         return p["_dur"]
 
-    total = lambda: hook_dur + dur + sum(p["_dur"] for p in parts) + outro_dur
+    total = lambda: open_dur + dur + sum(p["_dur"] for p in parts) + outro_dur
     for i, p in enumerate(parts):
         plan(p, i)
     while total() < MIN_SECONDS and reserve:  # too short: add parts made from the prompt
@@ -427,13 +426,12 @@ def build(day, key, out_path, src=None, base=None):
         outro_dur = round(outro_dur + (MIN_SECONDS - total()), 2)
 
     segs = []
-    png = os.path.join(tmp, "hook.png")
-    overlay_hook(hk["text_top"], hk["text_bottom"], cy, center[1], png)
-    segs.append(("hook", hk["from"], min(hook_dur, dur - hk["from"]), hook_dur, png, "center", center,
-                 hook_vo[0], 0.35, 1.0))
+    png = os.path.join(tmp, "opening.png")
+    canvas().save(png)  # no text: the first frame held while the voice plays
+    segs.append(("opening", 0, 0.1, open_dur, png, "center", center, open_vo[0], 0.0, 1.0))
     png = os.path.join(tmp, "orig.png")
     overlay_original(credit, cy, center[1], png)
-    segs.append(("orig", 0, dur, round(dur, 2), png, "center", center, intro_vo[0], 0.8, 1.0))
+    segs.append(("orig", 0, dur, round(dur, 2), png, "center", center, None, 1.0, 1.0))
     for i, p in enumerate(parts):
         png = os.path.join(tmp, f"part{i}.png")
         overlay_shot(p, top[1], png)
