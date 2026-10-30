@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-31",
+  "videos": [
+    {
+      "slug": "fashion-crowd-sync-video-10887",
+      "title": "Fashion Crowd Synchronization",
+      "url": "https://youmind.com/video-prompts/fashion-crowd-sync-video-10887",
+      "source": "youmind",
+      "duration": 30.09,
+      "dir": "days/2026-10-31/fashion-crowd-sync-video-10887",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "still-woman-moving-traffic-city-13132",
+      "title": "Still Woman Moving Traffic City",
+      "url": "https://youmind.com/video-prompts/still-woman-moving-traffic-city-13132",
+      "source": "youmind",
+      "duration": 30.24,
+      "dir": "days/2026-10-31/still-woman-moving-traffic-city-13132",
+      "user_pick": true,
+      "pick_order": 2
+    }
+  ],
+  "auto_fill": false
+}

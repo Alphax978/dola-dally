@@ -1,0 +1,28 @@
+{
+  "url": "https://youmind.com/video-prompts/fashion-crowd-sync-video-10887",
+  "source": "youmind",
+  "slug": "fashion-crowd-sync-video-10887",
+  "title": "Fashion Crowd Synchronization",
+  "video_url": "https://cms-assets.youmind.com/media/1789456363098_7vn79v_Smoking-Woman-Crowd-Sync-Video.mp4",
+  "x_post": "https://x.com/AIwithkhan/status/2099707375943066094",
+  "wm_flag": "{'band': '0.3-0.5', 'score': 30.4, 'edges': (0.0, 0, 0.0), 'still': (0.0066, 6, 0.701), 'hit': True, 'motion': 39.4}",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 30.09,
+  "width": 1112,
+  "height": 834,
+  "cuts": [
+    20.0,
+    21.0,
+    21.5
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}

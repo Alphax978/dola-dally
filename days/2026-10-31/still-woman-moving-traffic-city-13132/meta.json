@@ -1,0 +1,27 @@
+{
+  "url": "https://youmind.com/video-prompts/still-woman-moving-traffic-city-13132",
+  "source": "youmind",
+  "slug": "still-woman-moving-traffic-city-13132",
+  "title": "Still Woman Moving Traffic City",
+  "video_url": "https://cms-assets.youmind.com/media/1793257754135_09ub4d_Still-Woman-Moving-Traffic-City.mp4",
+  "x_post": "https://x.com/AiwithAlyar/status/2115432850845737321",
+  "user_pick": true,
+  "pick_order": 2,
+  "duration": 30.24,
+  "width": 1278,
+  "height": 720,
+  "cuts": [
+    2.12,
+    9.5,
+    20.67
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}
