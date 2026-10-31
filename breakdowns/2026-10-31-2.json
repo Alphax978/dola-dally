@@ -1,0 +1,72 @@
+{
+ "hook": {
+  "from": 21,
+  "text_top": "This samurai cat beat an entire ninja clan.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "This samurai cat beat an entire ninja clan."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "n": 1,
+   "from": 0,
+   "to": 1.9,
+   "excerpt": "Medium close-up, three-quarter side view: orange tabby in a woven straw kasa hat, katana slung across its back, reed stalk in its mouth; very slow push-in.",
+   "highlight": [
+    "three-quarter side view",
+    "woven straw kasa hat",
+    "very slow push-in"
+   ],
+   "voice": "Shot 1. A slow push-in on our ronin. The hat, the katana and the reed stalk sell the character instantly."
+  },
+  {
+   "n": 2,
+   "from": 1.9,
+   "to": 5.3,
+   "excerpt": "Wide, ground-level low angle: the cat leaps off the mossy boulder and sprints at the camera; the camera tracks backward with heavy motion blur.",
+   "highlight": [
+    "ground-level low angle",
+    "tracks backward",
+    "heavy motion blur"
+   ],
+   "voice": "Shot 2. The camera sits at cat height and runs backward, so every ninja towers over it."
+  },
+  {
+   "n": 3,
+   "from": 5.3,
+   "to": 6.9,
+   "excerpt": "Ground-level side close-up, slow motion: the cat slides on its belly as a katana blade sweeps just above the brim of its hat.",
+   "highlight": [
+    "slow motion",
+    "slides on its belly",
+    "just above the brim of its hat"
+   ],
+   "voice": "Shot 3. Slow motion and a blade just above the hat. That near miss is pure tension."
+  },
+  {
+   "n": 6,
+   "from": 10.4,
+   "to": 15.2,
+   "excerpt": "The cat rides a bundle of reeds as they bend low, springs off and somersaults upside down mid-air in slow motion, the hat spinning.",
+   "highlight": [
+    "rides a bundle of reeds",
+    "somersaults upside down",
+    "the hat spinning"
+   ],
+   "voice": "Shot 6. The reeds bend like a spring and launch it into a slow-motion flip."
+  },
+  {
+   "n": 10,
+   "from": 20.6,
+   "to": 30.2,
+   "excerpt": "Low locked-off camera at deck level. The cat spins like a whirlwind mid-air, ninjas blasted into the water, then walks calmly to the lens.",
+   "highlight": [
+    "Low locked-off camera at deck level",
+    "spins like a whirlwind",
+    "walks calmly to the lens"
+   ],
+   "voice": "Shot 10. A locked-off camera on the boat deck. The cat spins, the ninjas fly, and it strolls up to the lens."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

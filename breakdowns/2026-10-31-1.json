@@ -1,0 +1,72 @@
+{
+ "hook": {
+  "from": 19,
+  "text_top": "She freezes as the faceless crowd erupts.",
+  "text_bottom": "Wait for the ending...",
+  "voice": "She freezes as the faceless crowd erupts."
+ },
+ "intro_voice": "Here's the original, made with Seedance 2.5.",
+ "shots": [
+  {
+   "label": "The look",
+   "from": 0,
+   "to": 2.5,
+   "excerpt": "Close-up at eye level, looking straight into the lens. She slowly exhales a soft cloud of white smoke, lowers her eyes and turns her back to the camera.",
+   "highlight": [
+    "Close-up at eye level",
+    "exhales a soft cloud of white smoke",
+    "turns her back to the camera"
+   ],
+   "voice": "It opens on a close-up. She exhales, looks down and turns away from us."
+  },
+  {
+   "label": "The crowd",
+   "from": 3,
+   "to": 12,
+   "excerpt": "About 300 men, each head completely wrapped in smooth cream-white fabric like a featureless cloth hood. She squeezes between two rows of masked men; the camera keeps pulling back.",
+   "highlight": [
+    "featureless cloth hood",
+    "squeezes between two rows",
+    "the camera keeps pulling back"
+   ],
+   "voice": "The crowd is the secret. Featureless cloth hoods turn 300 extras into one eerie wall."
+  },
+  {
+   "label": "The stillness",
+   "from": 14,
+   "to": 19,
+   "excerpt": "Wide frontal shot from slightly above: she stands completely still, staring into the lens; the entire crowd is frozen. Her bare face and black sweater the only contrast.",
+   "highlight": [
+    "Wide frontal shot from slightly above",
+    "completely still",
+    "the only contrast"
+   ],
+   "voice": "Five seconds of total stillness. The black sweater is the only dark thing in the frame, so your eye locks on her."
+  },
+  {
+   "label": "The trigger",
+   "from": 19,
+   "to": 23.5,
+   "excerpt": "On a steady beat every man clutches his stomach and snaps forward at the waist, then snaps back upright with heads cocked to one side. She stays perfectly still.",
+   "highlight": [
+    "On a steady beat",
+    "snaps forward at the waist",
+    "She stays perfectly still"
+   ],
+   "voice": "Then the beat drops. Everyone folds in sync, while she does not move at all."
+  },
+  {
+   "label": "The camera",
+   "from": 24,
+   "to": 30,
+   "excerpt": "One continuous take. The camera continues a smooth pull-back and rise to extreme wide, revealing the full half-dome brick arch and the empty plaza.",
+   "highlight": [
+    "One continuous take",
+    "smooth pull-back and rise",
+    "half-dome brick arch"
+   ],
+   "voice": "And it's all one take. The camera keeps rising until the giant brick arch is revealed."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
