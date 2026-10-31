@@ -607,6 +607,27 @@
   "post_id": "2116482144084394071",
   "slug": "fashion-crowd-sync-video-10887",
   "posted_at": "2026-10-31T16:32:20.645849+05:45",
-  "reply_id": "2116482175667405171"
+  "reply_id": "2116482175667405171",
+  "other": {
+   "youtube": {
+    "id": "kUFYmALJt7Q",
+    "url": "https://youtube.com/shorts/kUFYmALJt7Q",
+    "note": " on Mira AI"
+   },
+   "facebook": {
+    "id": "2367886217303001",
+    "url": "https://www.facebook.com/1402835976246648/videos/2367886217303001"
+   },
+   "instagram": {
+    "id": "17921362902455242",
+    "url": "https://www.instagram.com/reel/DfJ-0eDDyIz/",
+    "note": ""
+   },
+   "tiktok": {
+    "id": "2026-10-31-1",
+    "url": "https://github.com/Alphax978/dola-dally/releases/download/tiktok-videos/2026-10-31-1.mp4",
+    "note": " (queued for Buffer: Zapier picks it up from the feed within ~15 min)"
+   }
+  }
  }
 }
