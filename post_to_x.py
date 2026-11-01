@@ -111,7 +111,11 @@ def x_len(text):
 def main_text(job):
     """3 lines: hook / line naming the model / Prompt: ⤵️"""
     tail = "\n\nPrompt: ⤵️"
-    caption = "\n\n".join(caption_lines(job))
+    lines = caption_lines(job)
+    if job.get("date") and str(job.get("slot", "")).isdigit():  # line 1 on X: the same rotating line as the video
+        from opening_lines import opening_line
+        lines = [opening_line(job["date"], job["slot"])] + lines[1:]
+    caption = "\n\n".join(lines)
     while caption and x_len(caption + tail) > 280:
         caption = caption[: max(0, len(caption) - 10)].rsplit(" ", 1)[0].rstrip(" ,.;:-") + "…"
     return (caption + tail).strip()

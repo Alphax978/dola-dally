@@ -247,16 +247,30 @@ def overlay_hook(top, bottom, clip_y, clip_h, path):
     im.save(path)
 
 
-def overlay_caption(text, clip_y, path):
-    """The opening screen: only the caption (the post's line 1) above the clip."""
+from opening_lines import opening_line  # noqa: E402  (the rotating line above the clip)
+
+
+def overlay_caption(text, clip_y, path, clip_h=0, teaser=None):
+    """The opening screen: the line above the clip, and optionally a small teaser below it."""
     im = canvas()
     d = ImageDraw.Draw(im)
     f = font(78)
     lines = wrap(d, text, f, W - 120)
+    if len(lines) == 2:  # even out two lines ("This AI video / is pure art." rather than a lone last word)
+        words = text.split()
+        splits = [(" ".join(words[:i]), " ".join(words[i:])) for i in range(1, len(words))]
+        splits = [s for s in splits if max(d.textlength(t, font=f) for t in s) <= W - 120]
+        if splits:
+            lines = list(min(splits, key=lambda s: max(d.textlength(t, font=f) for t in s)))
     y = max(130, clip_y - 70 - len(lines) * 95)
     for line in lines:
         centered(d, y, line, f, WHITE, stroke=5)
         y += 95
+    if teaser:  # centered on the words, the trailing dots hang to the right (so it looks centered)
+        tf = font(42, False)
+        words = teaser.rstrip(".…")
+        x = (W - d.textlength(words, font=tf)) / 2
+        d.text((x, min(1720, clip_y + clip_h + 45)), teaser, font=tf, fill=YEL, stroke_width=4, stroke_fill=(0, 0, 0))
     im.save(path)
 
 
@@ -396,8 +410,7 @@ def build(day, key, out_path, src=None, base=None):
 
     # the script, checked and completed
     # the opening: the whole clip plays with its own sound and the post's caption line 1 on top, no voice
-    cap_text = (job.get("caption") or meta.get("title") or "").split("\n")[0]
-    cap_text = re.sub(r"[\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F\u200D]+", "", cap_text).strip()  # no emoji on screen
+    cap_text = opening_line(day, key)
     # then, on the clip's last real frame, the model line (always this wording)
     made = (f"This video was made using {model}." if model else "This video was made with AI.") + " Here's the prompt that made this."
     outro = script.get("outro_voice") or "The full prompt is in the caption. Follow Mira AI for a new one every day."
@@ -448,8 +461,10 @@ def build(day, key, out_path, src=None, base=None):
 
     segs = []
     png = os.path.join(tmp, "caption.png")
-    overlay_caption(cap_text, cy, png)
+    overlay_caption(cap_text, cy, png, center[1], teaser="Wait for the ending...")
     segs.append(("clip", 0, dur, round(dur, 2), png, "center", center, None, 1.0, 1.0))
+    png = os.path.join(tmp, "caption_end.png")
+    overlay_caption(cap_text, cy, png)  # the clip is over: no teaser while the model line is read
     segs.append(("made", last_picture(src, dur), 0.05, made_dur, png, "center", center, made_vo[0], 0.0, 1.0))
     for i, p in enumerate(parts):
         png = os.path.join(tmp, f"part{i}.png")
