@@ -92,18 +92,18 @@ details (lens, grade, light, era, architecture) explicitly. Never summarise seve
 ALSO WRITE:
 - caption: {cap.group(1) if cap else 'exactly TWO short lines, one sentence each; line 1 the hook, line 2 names the model.'}
 - prompt_short: {short.group(1).split(':', 1)[1].strip() if short else 'the prompt condensed to at most 270 characters.'}
-  Make line 1 concrete: name the specific surprising thing that happens on screen (for example "He opened the
-  fridge and a whole ocean poured out."). Never use vague filler words such as cinematic, epic, chaos, insane,
+  Make line 1 concrete: who does what in the whole clip, in the form "A [who] [does what to] [whom/what].", at
+  most 7 words (for example "A chef floods a kitchen with ocean."). Never use vague filler words such as cinematic, epic, chaos, insane,
   pure, effortlessly, stunning, mind-blowing.
 - hook_score: 1-10, how likely the clip is to stop someone scrolling.
 - breakdown: the TikTok "prompt breakdown" script for this video, in this format (times are seconds in the original clip):
-{bd.group(1) if bd else '{"hook": {...}, "intro_voice": "...", "shots": [...], "outro_voice": "..."}'}
+{bd.group(1) if bd else '{"shots": [...], "outro_voice": "..."}'}
 
 Reply with ONLY this JSON object:
 {{"pass": true|false, "watermark": true|false, "fail_reason": "<why it failed, or null>",
  "title": "<short title>", "hook_score": <1-10>, "characters_swapped": true|false,
  "caption": "<line 1>\\n<line 2>", "prompt": "<full prompt or null>", "prompt_short": "<or null>",
- "breakdown": {{"hook": {{...}}, "intro_voice": "...", "shots": [...], "outro_voice": "..."}} or null}}"""
+ "breakdown": {{"shots": [...], "outro_voice": "..."}} or null}}"""
 
 
 # ---------- Gemini ----------

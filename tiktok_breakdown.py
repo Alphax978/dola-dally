@@ -247,6 +247,30 @@ def overlay_hook(top, bottom, clip_y, clip_h, path):
     im.save(path)
 
 
+def overlay_caption(text, clip_y, path):
+    """The opening screen: only the caption (the post's line 1) above the clip."""
+    im = canvas()
+    d = ImageDraw.Draw(im)
+    f = font(78)
+    lines = wrap(d, text, f, W - 120)
+    y = max(130, clip_y - 70 - len(lines) * 95)
+    for line in lines:
+        centered(d, y, line, f, WHITE, stroke=5)
+        y += 95
+    im.save(path)
+
+
+def last_picture(src, dur):
+    """The time of the last frame that isn't black (many clips end on a cut to black)."""
+    r = subprocess.run(["ffmpeg", "-v", "info", "-i", src, "-vf", "blackdetect=d=0.1:pix_th=0.10", "-an", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    end = dur
+    for m in re.finditer(r"black_start:([0-9.]+) black_end:([0-9.]+)", r.stderr):
+        if float(m.group(2)) >= dur - 0.15:
+            end = float(m.group(1))
+    return max(0.0, min(end, dur) - 0.5)
+
+
 def overlay_original(credit, clip_y, clip_h, path):
     im = canvas()
     d = ImageDraw.Draw(im)
@@ -358,7 +382,6 @@ def build(day, key, out_path, src=None, base=None):
     sys.path.insert(0, ROOT)
     import models
     model = models.detect_in_dir(meta, folder) or ""
-    credit = f"Made with {model}" if model else "AI video"  # no creator name on screen: credits go in the comments
 
     tmp = tempfile.mkdtemp()
     if not src:
@@ -372,13 +395,11 @@ def build(day, key, out_path, src=None, base=None):
     cy = (H - center[1]) // 2
 
     # the script, checked and completed
-    hook_line = (job.get("caption") or meta.get("title") or "").split("\n")[0]
-    hk = script.get("hook") or {}
-    # the opening text and the opening voice are always exactly the post's caption line 1
-    hk = {"from": min(max(0.0, float(hk.get("from", dur * 0.3))), max(0.0, dur - 1)),
-          "text_top": hook_line or hk.get("text_top"), "text_bottom": "Wait for the ending...",  # always this exact teaser (AI teasers can be confusing)
-          "voice": spoken_hook(hook_line or hk.get("voice") or "Watch this.")}
-    intro = f"Here's the original, made with {model}." if model else "Here's the original."  # always this wording
+    # the opening: the whole clip plays with its own sound and the post's caption line 1 on top, no voice
+    cap_text = (job.get("caption") or meta.get("title") or "").split("\n")[0]
+    cap_text = re.sub(r"[\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F\u200D]+", "", cap_text).strip()  # no emoji on screen
+    # then, on the clip's last real frame, the model line (always this wording)
+    made = (f"This video was made using {model}." if model else "This video was made with AI.") + " Here's the prompt that made this."
     outro = script.get("outro_voice") or "The full prompt is in the caption. Follow Mira AI for a new one every day."
     parts = clean_parts(script.get("shots"), dur)
     used = {(round(p["from"], 1), round(p["to"], 1)) for p in parts}
@@ -391,14 +412,13 @@ def build(day, key, out_path, src=None, base=None):
     # extra parts (only used if the video would be under a minute): spread out too, middle of the gaps first
     reserve.sort(key=lambda p: min([abs(p["from"] - q["from"]) for q in parts] or [0]), reverse=True)
 
-    spoken_lines = voices([hk["voice"], intro, outro] + [p["voice"] for p in parts + reserve], tmp)
+    spoken_lines = voices([made, outro] + [p["voice"] for p in parts + reserve], tmp)
 
     def wav(name, text):
         return spoken_lines[text] if text in spoken_lines else voices([text], tmp)[text]
 
-    hook_vo = wav("hook", hk["voice"])
-    hook_dur = round(max(hook_vo[1] + 0.9, 3.5), 2)
-    intro_vo = wav("intro", intro)
+    made_vo = wav("made", made)
+    made_dur = round(made_vo[1] + 0.9, 2)  # the clip's last real frame, held while the model line is read
     outro_vo = wav("outro", outro)
     outro_dur = round(outro_vo[1] + 1.2, 2)
 
@@ -410,7 +430,7 @@ def build(day, key, out_path, src=None, base=None):
         p["_slow"] = round(min(p["_dur"] / length, 2.0), 3)
         return p["_dur"]
 
-    total = lambda: hook_dur + dur + sum(p["_dur"] for p in parts) + outro_dur
+    total = lambda: dur + made_dur + sum(p["_dur"] for p in parts) + outro_dur
     for i, p in enumerate(parts):
         plan(p, i)
     while total() < MIN_SECONDS and reserve:  # too short: add parts made from the prompt
@@ -427,13 +447,10 @@ def build(day, key, out_path, src=None, base=None):
         outro_dur = round(outro_dur + (MIN_SECONDS - total()), 2)
 
     segs = []
-    png = os.path.join(tmp, "hook.png")
-    overlay_hook(hk["text_top"], hk["text_bottom"], cy, center[1], png)
-    segs.append(("hook", hk["from"], min(hook_dur, dur - hk["from"]), hook_dur, png, "center", center,
-                 hook_vo[0], 0.35, 1.0))
-    png = os.path.join(tmp, "orig.png")
-    overlay_original(credit, cy, center[1], png)
-    segs.append(("orig", 0, dur, round(dur, 2), png, "center", center, intro_vo[0], 0.8, 1.0))
+    png = os.path.join(tmp, "caption.png")
+    overlay_caption(cap_text, cy, png)
+    segs.append(("clip", 0, dur, round(dur, 2), png, "center", center, None, 1.0, 1.0))
+    segs.append(("made", last_picture(src, dur), 0.05, made_dur, png, "center", center, made_vo[0], 0.0, 1.0))
     for i, p in enumerate(parts):
         png = os.path.join(tmp, f"part{i}.png")
         overlay_shot(p, top[1], png)
