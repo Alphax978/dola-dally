@@ -1,0 +1,27 @@
+{
+  "url": "https://youmind.com/video-prompts/black-rose-enforcer-action-scene-13302",
+  "source": "youmind",
+  "slug": "black-rose-enforcer-action-scene-13302",
+  "title": "Black Rose Enforcer Action Scene Prompt",
+  "video_url": "https://cms-assets.youmind.com/media/1793516509216_032q9o_Black-Rose-Enforcer-Action-Scene-Prompt.mp4",
+  "x_post": "https://x.com/ChillaiKalan__/status/2116775135067689114",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 20.06,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    4.21,
+    7.33,
+    11.0
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}
