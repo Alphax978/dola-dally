@@ -403,6 +403,8 @@ def build(day, key, out_path, src=None, base=None):
         req = urllib.request.Request(meta["video_url"], headers={"User-Agent": UA})
         with urllib.request.urlopen(req, timeout=300) as r, open(src, "wb") as f:
             f.write(r.read())
+    import shutil
+    shutil.copy(src, out_path[:-4] + "-original.mp4")  # TEST ONLY: keep the original clip (what X posts)
     dur, w, h, has_audio = probe(src)
     center = fit(w, h, W, CENTER_BOX_H)
     top = fit(w, h, W, TOP_BOX_H)

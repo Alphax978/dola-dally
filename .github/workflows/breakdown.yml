@@ -55,4 +55,4 @@ jobs:
       - name: Upload for review
         run: |
           gh release view demos >/dev/null 2>&1 || gh release create demos --title "Demos" --notes "Demo videos for review."
-          gh release upload demos "breakdown-$DAY-$SLOT.mp4" --clobber
+          gh release upload demos "breakdown-$DAY-$SLOT.mp4" "breakdown-$DAY-$SLOT-original.mp4" --clobber
