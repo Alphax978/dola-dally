@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0,
+   "to": 4.2,
+   "excerpt": "Camera inside a black taxi's back seat, looking out its open rear door: she steps out in the foreground as Thug A slaps the driver beyond her.",
+   "highlight": [
+    "inside a black taxi's back seat",
+    "looking out its open rear door",
+    "slaps the driver"
+   ],
+   "voice": "Shot 1. The camera hides inside the taxi, so the open door frames the slap like a window."
+  },
+  {
+   "n": 2,
+   "from": 4.2,
+   "to": 7.3,
+   "excerpt": "Medium-wide side view, slow lateral tracking: she steps between them, slips his right punch, traps his arm and throws him onto the pavement.",
+   "highlight": [
+    "Medium-wide side view",
+    "slow lateral tracking",
+    "traps his arm"
+   ],
+   "voice": "Shot 2. A side view with slow tracking keeps the whole interception readable in one move."
+  },
+  {
+   "n": 3,
+   "from": 7.3,
+   "to": 11.0,
+   "excerpt": "Wide, low lateral angle near ground level: she ducks, drives a knee and a side kick into Thug B, then elbows Thug C.",
+   "highlight": [
+    "low lateral angle",
+    "near ground level",
+    "drives a knee"
+   ],
+   "voice": "Shot 3. Keeping the camera near the ground makes every kick feel bigger and heavier."
+  },
+  {
+   "n": 4,
+   "from": 11.0,
+   "to": 15.5,
+   "excerpt": "She whips into a spinning back kick; her long black rose-embroidered coat fans out wide like a cape, a brief slow-motion beat at contact.",
+   "highlight": [
+    "spinning back kick",
+    "fans out wide like a cape",
+    "brief slow-motion beat"
+   ],
+   "voice": "Shot 4. One short slow-motion beat at contact, and the rose coat turns into a cape."
+  },
+  {
+   "label": "The ending",
+   "from": 16.0,
+   "to": 20.06,
+   "excerpt": "Locked wide frame: she stands facing the camera, coat settling, a small sideways glance; the driver safe by the white taxi, three thugs on the pavement.",
+   "highlight": [
+    "Locked wide frame",
+    "small sideways glance",
+    "three thugs on the pavement"
+   ],
+   "voice": "The ending. No victory pose, just a still frame and a glance. That restraint is what makes it cool."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

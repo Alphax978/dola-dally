@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 2,
+   "from": 2.5,
+   "to": 8.9,
+   "excerpt": "Front close-up at water level, slow push-in: pinned face-down, bubbles streaming; the runes on his staff ignite with molten-gold light.",
+   "highlight": [
+    "Front close-up at water level",
+    "slow push-in",
+    "molten-gold light"
+   ],
+   "voice": "Shot 2. A water-level close-up with a slow push-in. Then the runes on the staff ignite."
+  },
+  {
+   "n": 3,
+   "from": 8.9,
+   "to": 11.2,
+   "excerpt": "A brief white flash, then wide: the river explodes upward in front of the waterfall and the warrior bursts out, flying high through the air.",
+   "highlight": [
+    "brief white flash",
+    "river explodes upward",
+    "flying high through the air"
+   ],
+   "voice": "Shot 3. A white flash hides the cut, then the whole river explodes and he flies out."
+  },
+  {
+   "n": 6,
+   "from": 18.0,
+   "to": 22.3,
+   "excerpt": "Extreme close-up of the warrior's face, almost locked-off, shallow focus: water droplets on his wrinkled skin. \"All I see is a beast trapped in a river.\"",
+   "highlight": [
+    "Extreme close-up",
+    "shallow focus",
+    "water droplets"
+   ],
+   "voice": "Shot 6. An extreme close-up with shallow focus. Every droplet and wrinkle carries the line."
+  },
+  {
+   "n": 7,
+   "from": 22.3,
+   "to": 25.9,
+   "excerpt": "Fast cuts: the tiger crashes through the river in a huge wall of spray; he drives the staff into its flank in a burst of golden sparks.",
+   "highlight": [
+    "Fast cuts",
+    "huge wall of spray",
+    "burst of golden sparks"
+   ],
+   "voice": "Shot 7. Half-second cuts, a wall of spray, and golden sparks at the moment of impact."
+  },
+  {
+   "n": 12,
+   "from": 37.7,
+   "to": 46.11,
+   "excerpt": "Low angle behind the snarling tiger; the camera cranes up to reveal the warrior on a high mossy ledge as a waterfall pours down between them.",
+   "highlight": [
+    "Low angle behind the snarling tiger",
+    "cranes up to reveal",
+    "waterfall pours down"
+   ],
+   "voice": "Shot 12. The camera cranes up from the beast to the warrior, and a waterfall drops between them."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
