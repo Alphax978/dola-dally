@@ -9,7 +9,6 @@ OPENING_LINES = [  # shown above the clip; one per video, rotating day by day
     "This AI video looks unreal.",
     "This AI video is next level.",
     "This AI video is a work of art.",
-    "This AI video deserves an award.",
     "AI cinema at its finest.",
     "This AI video is breathtaking.",
     "Hollywood quality, made by AI.",
