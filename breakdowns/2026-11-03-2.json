@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 6,
+   "from": 3.6,
+   "to": 5.7,
+   "excerpt": "Wide, camera circling then pulling up: pink petals form a giant coiling serpent-dragon of crystal scales in a ring around her, then a vast petal vortex.",
+   "highlight": [
+    "camera circling then pulling up",
+    "giant coiling serpent-dragon",
+    "vast petal vortex"
+   ],
+   "voice": "Shot 6. The camera circles and rises as millions of petals become a dragon coiling around her."
+  },
+  {
+   "n": 13,
+   "from": 10.4,
+   "to": 11.9,
+   "excerpt": "Wide side view: a colossal dragon head made of glowing white-blue water surges out of the sea, jaws wide, roaring at the spear army; lightning behind.",
+   "highlight": [
+    "Wide side view",
+    "dragon head made of glowing white-blue water",
+    "lightning behind"
+   ],
+   "voice": "Shot 13. A wide side view. A dragon made of water rises from the sea and roars at the army."
+  },
+  {
+   "n": 21,
+   "from": 17.0,
+   "to": 19.4,
+   "excerpt": "Wide from below the hill: a pillar of fire erupts into a gigantic blazing phoenix, wings spread across the whole frame above her.",
+   "highlight": [
+    "Wide from below the hill",
+    "pillar of fire",
+    "gigantic blazing phoenix"
+   ],
+   "voice": "Shot 21. Shot from below the hill, a pillar of fire becomes a phoenix as wide as the screen."
+  },
+  {
+   "n": 29,
+   "from": 25.0,
+   "to": 27.0,
+   "excerpt": "A colossal glowing crystal lotus of translucent pale-blue ice unfolds at the center of the frozen lake, ghostly ice archers on its petals.",
+   "highlight": [
+    "colossal glowing crystal lotus",
+    "translucent pale-blue ice",
+    "ghostly ice archers"
+   ],
+   "voice": "Shot 29. In the ice realm, a giant crystal lotus unfolds, with ghost archers on its petals."
+  },
+  {
+   "n": 31,
+   "from": 27.4,
+   "to": 29.0,
+   "excerpt": "A spinning rainbow vortex portal, green core with pink, orange and white rings, her floating at its center, sword raised, over a sunrise valley.",
+   "highlight": [
+    "spinning rainbow vortex portal",
+    "green core",
+    "sword raised"
+   ],
+   "voice": "Shot 31. A rainbow portal spins open and carries her over a golden sunrise valley."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

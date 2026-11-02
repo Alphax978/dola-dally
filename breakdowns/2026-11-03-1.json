@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 4.6,
+   "excerpt": "Wide establishing shot from just above ice level, very slow drift: she stands small at the center of a misty frozen lake, six mages in a ring, blue energy glowing around their hands.",
+   "highlight": [
+    "just above ice level",
+    "very slow drift",
+    "blue energy glowing"
+   ],
+   "voice": "Shot 1. A wide shot from just above the ice. Six mages circle her, their hands glowing blue."
+  },
+  {
+   "n": 2,
+   "from": 4.6,
+   "to": 10.4,
+   "excerpt": "Medium close-up over the blurred shoulder of a mage, very slow push-in: cool, confident gaze, red hair lifting in the wind, a mocking half-smile.",
+   "highlight": [
+    "over the blurred shoulder",
+    "very slow push-in",
+    "mocking half-smile"
+   ],
+   "voice": "Shot 2. An over-the-shoulder close-up with a slow push-in. Her calm smile is the threat."
+  },
+  {
+   "n": 5,
+   "from": 11.9,
+   "to": 14.8,
+   "excerpt": "Low tracking shot: the blast explodes in blue mist and ice shards; she slides low across the ice on one knee, sword held out behind her.",
+   "highlight": [
+    "Low tracking shot",
+    "blue mist and ice shards",
+    "slides low across the ice"
+   ],
+   "voice": "Shot 5. A low tracking shot. The blast explodes behind her and she slides out of it on the ice."
+  },
+  {
+   "n": 11,
+   "from": 20.2,
+   "to": 22.6,
+   "excerpt": "She drives the sword point into the ice; a crackling wave of cyan energy veins rips across the surface and hurls a mage backward.",
+   "highlight": [
+    "sword point into the ice",
+    "crackling wave of cyan energy veins",
+    "hurls a mage backward"
+   ],
+   "voice": "Shot 11. One stab into the ice sends a wave of glowing blue cracks across the lake."
+  },
+  {
+   "n": 13,
+   "from": 25.4,
+   "to": 29.6,
+   "excerpt": "A huge burst of blue light and ice fog behind her; the mist rolls away to reveal mages scattered on the ice. Slow push-in as she turns her head toward camera.",
+   "highlight": [
+    "huge burst of blue light",
+    "mages scattered on the ice",
+    "Slow push-in"
+   ],
+   "voice": "Shot 13. The blast clears to show every mage down. A slow push-in as she turns her cold gaze."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
