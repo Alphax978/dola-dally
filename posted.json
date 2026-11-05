@@ -742,6 +742,27 @@
   "post_id": "2118293942861004918",
   "slug": "seedance-fpv-drone-city-flythrough-13511",
   "posted_at": "2026-11-05T16:31:46.792791+05:45",
-  "reply_id": "2118293966516859312"
+  "reply_id": "2118293966516859312",
+  "other": {
+   "youtube": {
+    "id": "YvfwY90v60k",
+    "url": "https://youtube.com/shorts/YvfwY90v60k",
+    "note": " on Mira AI"
+   },
+   "facebook": {
+    "id": "1130693846209955",
+    "url": "https://www.facebook.com/1402835976246648/videos/1130693846209955"
+   },
+   "instagram": {
+    "id": "18396529405165440",
+    "url": "https://www.instagram.com/reel/DfW2j8GEd4r/",
+    "note": " (direct upload failed: Instagram upload: 400 {\"debug_info\":{\"retriable\":false,\"type\":\"ProcessingFailedError\",\"message\":\"Request processing failed\"}}; sent by link)"
+   },
+   "tiktok": {
+    "id": "2026-11-05-1",
+    "url": "https://github.com/Alphax978/dola-dally/releases/download/tiktok-videos/2026-11-05-1.mp4",
+    "note": " (queued for Buffer: Zapier picks it up from the feed within ~15 min)"
+   }
+  }
  }
 }
