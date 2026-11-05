@@ -1,0 +1,77 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 0.8,
+   "excerpt": "Wide side view: the schoolgirl sprints off the broken edge of the bridge and dives forward through the air, arms stretched ahead, zombies lunging after her.",
+   "highlight": [
+    "Wide side view",
+    "broken edge of the bridge",
+    "arms stretched ahead"
+   ],
+   "voice": "Shot 1. A wide side view. She dives off the broken bridge with the zombies right behind her."
+  },
+  {
+   "n": 3,
+   "from": 1.7,
+   "to": 3.3,
+   "excerpt": "Low angle from below the broken edge: she hangs by both hands from the pole; zombies leap off the edge and tumble past her toward the river.",
+   "highlight": [
+    "Low angle from below",
+    "hangs by both hands from the pole",
+    "tumble past her"
+   ],
+   "voice": "Shot 3. Shot from below, she hangs from a broken lamp pole while zombies fall past her into the river."
+  },
+  {
+   "n": 6,
+   "from": 5.8,
+   "to": 8.3,
+   "excerpt": "A fast tilt down to a top-down view: she drops and grabs the jagged concrete edge; the steel pole falls and smashes into the river with a white splash.",
+   "highlight": [
+    "fast tilt down",
+    "top-down view",
+    "white splash"
+   ],
+   "voice": "Shot 6. The camera tilts straight down. She catches the concrete edge as the pole splashes into the river."
+  },
+  {
+   "n": 11,
+   "from": 15.4,
+   "to": 16.8,
+   "excerpt": "High angle on the green bus roof: her loafers race past a baseball bat; below, dozens of zombie hands reach up through the smashed windows.",
+   "highlight": [
+    "High angle",
+    "green bus roof",
+    "zombie hands reach up"
+   ],
+   "voice": "Shot 11. A high angle on the bus roof. She runs across it while zombie hands reach out of every window."
+  },
+  {
+   "n": 14,
+   "from": 18.9,
+   "to": 20.0,
+   "excerpt": "Over-the-shoulder high wide: the whole bridge is packed with thousands of zombies flowing toward camera, a big smoke column rising from the city.",
+   "highlight": [
+    "Over-the-shoulder high wide",
+    "thousands of zombies",
+    "smoke column"
+   ],
+   "voice": "Shot 14. Over her shoulder, the camera reveals the scale. Thousands of zombies fill the whole bridge."
+  },
+  {
+   "n": 20,
+   "from": 24.8,
+   "to": 27.0,
+   "excerpt": "From behind the zombies' heads: she leaps off the edge over the river, arms spread wide; then a black military helicopter swoops over the broken bridge.",
+   "highlight": [
+    "From behind the zombies' heads",
+    "arms spread wide",
+    "black military helicopter"
+   ],
+   "voice": "The ending. She jumps from the edge with her arms wide open, and a helicopter swoops in over the bridge."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

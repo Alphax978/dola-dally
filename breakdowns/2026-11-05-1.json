@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 3,
+   "from": 3.7,
+   "to": 5.6,
+   "excerpt": "Gum girl in profile blows a pink bubble that swells bigger than her head; the bullet flies straight into the centre of the bubble and, in slow motion, pierces it.",
+   "highlight": [
+    "in profile",
+    "pink bubble",
+    "in slow motion, pierces it"
+   ],
+   "voice": "Shot 3. The camera rides right behind the bullet. A girl blows a pink bubble, and the bullet pierces it in slow motion."
+  },
+  {
+   "n": 6,
+   "from": 8.9,
+   "to": 12.2,
+   "excerpt": "Slow motion, camera gliding along the aisle at seat height: the bullet floats past the passenger's face, he lifts his head and his eyes track it in disbelief.",
+   "highlight": [
+    "Slow motion",
+    "gliding along the aisle at seat height",
+    "his eyes track it in disbelief"
+   ],
+   "voice": "Shot 6. Inside the bus, time slows down. A passenger looks up from his phone and watches the bullet float past."
+  },
+  {
+   "n": 7,
+   "from": 12.2,
+   "to": 14.9,
+   "excerpt": "The camera rushes in and the bullet threads exactly through the centre of the burning hoop, flames filling the frame edges.",
+   "highlight": [
+    "camera rushes in",
+    "through the centre of the burning hoop",
+    "flames filling the frame edges"
+   ],
+   "voice": "Shot 7. A street performer holds up a ring of fire, and the bullet threads right through the middle."
+  },
+  {
+   "n": 10,
+   "from": 18.5,
+   "to": 20.9,
+   "excerpt": "She stretches her arm toward the lens and makes an OK sign; the bullet passes exactly through the ring of her thumb and index finger in a slow-motion close-up.",
+   "highlight": [
+    "toward the lens",
+    "OK sign",
+    "slow-motion close-up"
+   ],
+   "voice": "Shot 10. A girl makes an OK sign, and the bullet flies straight through the ring of her fingers."
+  },
+  {
+   "n": 19,
+   "from": 37.4,
+   "to": 39.3,
+   "excerpt": "The bullet strikes a pane of glass right in front of the lens: spiderweb cracks shoot out across the whole frame, then it punches through into the lens.",
+   "highlight": [
+    "right in front of the lens",
+    "spiderweb cracks",
+    "punches through"
+   ],
+   "voice": "The ending. The shooter fires at us, and the bullet cracks the glass in front of the lens before punching through."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
