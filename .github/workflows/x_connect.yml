@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   connect:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: the voice (Kokoro) needs Python 3.12; newer images broke it
     env:
       X_API_KEY: ${{ secrets.X_API_KEY }}
       X_API_SECRET: ${{ secrets.X_API_SECRET }}

@@ -11,7 +11,7 @@ permissions:
   contents: write
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: the voice (Kokoro) needs Python 3.12; newer images broke it
     timeout-minutes: 30
     env:
       SLOT: ${{ inputs.slot }}

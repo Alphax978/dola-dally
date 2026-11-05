@@ -312,7 +312,12 @@ def cross_post(key, job, video, entry):
             import tiktok_breakdown
             out = os.path.join(os.path.dirname(video), "breakdown.mp4")
             src = original if os.path.exists(original) else video
-            length = tiktok_breakdown.build(key[:10], key[11:], out, src=src)
+            try:
+                length = tiktok_breakdown.build(key[:10], key[11:], out, src=src)
+            except Exception as e:  # remembered so the nightly Telegram report flags it
+                entry["format_missing"] = str(e)[:200]
+                raise
+            entry.pop("format_missing", None)
             log(f"[{key}] Breakdown video ready: {length:.0f}s")
             return out
 

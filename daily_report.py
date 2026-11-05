@@ -181,6 +181,10 @@ def slot_report(day, slot, posted):
     if entry.get("skipped"):
         return head + f"\n⛔ Skipped: {html.escape(str(entry['skipped']))}", [f"{TIMES[slot]} video skipped ({entry['skipped']})"]
     off, other, parts, problems = paused(), entry.get("other") or {}, [], []
+    if entry.get("format_missing"):  # the new-format video couldn't be made, so plain clips went out
+        why = str(entry["format_missing"])[:120]
+        parts.append(f"⚠️ New video format NOT used: plain clips were posted ({html.escape(why)})")
+        problems.append(f"{TIMES[slot]} video: new format missing, plain clips posted ({why})")
     for site, name in SITES:
         if site in off:
             parts.append(f"⏸ {name}")
