@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 3.0,
+   "excerpt": "Medium shot from the front, slightly low angle, camera dollying slowly backward. She walks toward the lens, crimson blade glowing low beside her leg, the army advancing behind her.",
+   "highlight": [
+    "slightly low angle",
+    "dollying slowly backward",
+    "crimson blade glowing low"
+   ],
+   "voice": "Shot 1. A slow backward dolly. She walks straight at the lens while an entire army closes in behind her."
+  },
+  {
+   "n": 7,
+   "from": 12.0,
+   "to": 15.0,
+   "excerpt": "Low orbit to a view from behind-left: deep low stance, katana extended. The glow stretches into a crimson beam, and jagged crimson lightning crawls along the blade.",
+   "highlight": [
+    "Low orbit",
+    "deep low stance",
+    "jagged crimson lightning crawls along the blade"
+   ],
+   "voice": "Shot 7. The camera orbits low behind her. These words charge the blade with crimson lightning under the blood moon."
+  },
+  {
+   "n": 8,
+   "from": 15.0,
+   "to": 17.0,
+   "excerpt": "FPV pursuit from behind: she sprints at the army, blade trailing a crimson streak and faint afterimages. A wide sweep cuts a glowing arc that knocks the front rank down.",
+   "highlight": [
+    "FPV pursuit from behind",
+    "faint afterimages",
+    "glowing arc"
+   ],
+   "voice": "Shot 8. An FPV pursuit camera. One wide sweep throws the whole front rank off its feet."
+  },
+  {
+   "n": 13,
+   "from": 24.0,
+   "to": 26.5,
+   "excerpt": "Camera low, tilting up as she flips over the commander. In brief slow motion she spins mid-air: a huge ring of crimson light and a burst of sparks knocks his sword away.",
+   "highlight": [
+    "tilting up",
+    "brief slow motion",
+    "huge ring of crimson light"
+   ],
+   "voice": "Shot 13. A low camera tilting up. She flips over the giant commander and spins a ring of crimson light."
+  },
+  {
+   "n": 14,
+   "from": 26.5,
+   "to": 28.5,
+   "excerpt": "Low front angle close to the ground: she lands in a deep crouch, blade to the stones. Branching crimson lightning races across the wet stone slabs in every direction.",
+   "highlight": [
+    "Low front angle",
+    "deep crouch",
+    "Branching crimson lightning"
+   ],
+   "voice": "Shot 14. Low to the ground. She lands, and crimson lightning spreads across every stone in the courtyard."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
