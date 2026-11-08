@@ -1,0 +1,27 @@
+{
+  "url": "https://youmind.com/video-prompts/korean-zombie-prison-horror-13667",
+  "source": "youmind",
+  "slug": "korean-zombie-prison-horror-13667",
+  "title": "Korean Zombie Prison Horror",
+  "video_url": "https://cms-assets.youmind.com/media/1794121568025_e2t5v2_Korean-Zombie-Prison-Horror.mp4",
+  "x_post": "https://x.com/AIwithSynthia/status/2119275943357546798",
+  "wm_flag": "{'band': '0.0-0.2', 'score': 174.0, 'edges': (0.0, 0, 0.0), 'still': (0.0174, 3, 0.162), 'hit': True, 'motion': 30.5}",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 30.14,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    19.5,
+    24.75
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}
