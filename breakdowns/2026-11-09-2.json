@@ -1,0 +1,76 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 3.0,
+   "to": 5.5,
+   "excerpt": "She stops and smiles sweetly into the lens. A thin dark vein cracks under her left eye. Both eyes turn solid milky-white, the smile freezes.",
+   "highlight": [
+    "smiles sweetly into the lens",
+    "thin dark vein",
+    "solid milky-white"
+   ],
+   "voice": "Shot 1. A sweet close-up, then one vein cracks under her eye and both eyes turn milky-white."
+  },
+  {
+   "n": 1,
+   "from": 8.0,
+   "to": 10.7,
+   "excerpt": "A wide, bloody grin. Her head tilts to an unnatural, almost horizontal angle, then snaps back, laughing hysterically, while the guard keeps smiling, unaware.",
+   "highlight": [
+    "unnatural, almost horizontal angle",
+    "laughing hysterically",
+    "keeps smiling, unaware"
+   ],
+   "voice": "Unnatural angle is the key phrase. Her head bends too far, and the guard behind her keeps smiling."
+  },
+  {
+   "n": 2,
+   "from": 10.7,
+   "to": 14.7,
+   "excerpt": "Wide shot from behind, handheld with hard shake. She spins and slams the guard back against the cell bars with a metal clang.",
+   "highlight": [
+    "handheld with hard shake",
+    "slams the guard back against the cell bars"
+   ],
+   "voice": "Shot 2. The camera switches to rough handheld shake, so the attack feels real and sudden."
+  },
+  {
+   "n": 3,
+   "from": 14.7,
+   "to": 17.8,
+   "excerpt": "Low, floor-level tracking shot from behind. She is on all fours like an animal, knees high, and scuttles fast down the corridor.",
+   "highlight": [
+    "floor-level tracking shot",
+    "on all fours like an animal",
+    "scuttles fast"
+   ],
+   "voice": "Shot 3. A floor-level tracking shot keeps the camera at her height as she scuttles away like an animal."
+  },
+  {
+   "n": 5,
+   "from": 19.5,
+   "to": 24.7,
+   "excerpt": "Symmetrical one-point wide, light strobing red and white. She crawls upside down across the ceiling like a spider while prisoners scream at the bars.",
+   "highlight": [
+    "Symmetrical one-point wide",
+    "light strobing red and white",
+    "upside down across the ceiling"
+   ],
+   "voice": "Shot 5. A symmetrical wide with strobing red light, and she is crawling upside down across the ceiling."
+  },
+  {
+   "n": 6,
+   "from": 24.7,
+   "to": 30.1,
+   "excerpt": "Locked-off, total black frame. Two small glowing milky-white eyes. A blood-covered hand presses flat against the glass, fingers spread.",
+   "highlight": [
+    "total black frame",
+    "glowing milky-white eyes",
+    "presses flat against the glass"
+   ],
+   "voice": "Shot 6. A total black frame, two glowing eyes, then a bloody hand on the glass. That is the ending."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
