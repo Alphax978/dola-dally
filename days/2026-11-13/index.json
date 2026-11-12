@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-13",
+  "videos": [
+    {
+      "slug": "lightning-fire-warriors-13762",
+      "title": "Lightning vs Fire Elemental Battle",
+      "url": "https://youmind.com/video-prompts/lightning-fire-warriors-13762",
+      "source": "youmind",
+      "duration": 64.21,
+      "dir": "days/2026-11-13/lightning-fire-warriors-13762",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "beach-disaster-action-comedy-13701",
+      "title": "Beach Disaster Action Comedy",
+      "url": "https://youmind.com/video-prompts/beach-disaster-action-comedy-13701",
+      "source": "youmind",
+      "duration": 25.12,
+      "dir": "days/2026-11-13/beach-disaster-action-comedy-13701",
+      "user_pick": true,
+      "pick_order": 2
+    }
+  ],
+  "auto_fill": false
+}
