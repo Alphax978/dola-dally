@@ -1,0 +1,73 @@
+{
+ "shots": [
+  {
+   "n": 3,
+   "from": 0.9,
+   "to": 2.0,
+   "excerpt": "Front close-up of his face: glowing white-blue eyes, blue-tinted skin, hair stirring in the wind, clouds behind; very slow push-in.",
+   "highlight": [
+    "glowing white-blue eyes",
+    "very slow push-in"
+   ],
+   "voice": "Shot 3. A front close-up with a very slow push-in. Glowing white-blue eyes set the hero's power in one second."
+  },
+  {
+   "n": 5,
+   "from": 3.8,
+   "to": 5.7,
+   "excerpt": "Slow-motion side close-up: he ducks as the burning katana slices just above his hair, gold round guard at frame left, flames streaming along the blade.",
+   "highlight": [
+    "Slow-motion side close-up",
+    "burning katana",
+    "gold round guard"
+   ],
+   "voice": "Shot 5. A slow-motion side close-up. The burning katana passes just above his hair, so the dodge feels razor close."
+  },
+  {
+   "n": 8,
+   "from": 13.8,
+   "to": 18.6,
+   "excerpt": "A large mossy boulder glows blue from inside, then explodes into flying rocks and dust; the lightning fighter bursts out of the debris in a blue energy blur.",
+   "highlight": [
+    "glows blue from inside",
+    "explodes into flying rocks and dust"
+   ],
+   "voice": "Shot 8. Glows blue from inside is the trick. The boulder lights up first, then he blasts straight through it."
+  },
+  {
+   "n": 20,
+   "from": 35.4,
+   "to": 41.1,
+   "excerpt": "Camera cranes up and back into a locked-off wide. MUST SHOW: a colossal serpentine dragon of roaring orange flame rises at frame right, coiling in a tall S-curve.",
+   "highlight": [
+    "cranes up and back",
+    "colossal serpentine dragon",
+    "tall S-curve"
+   ],
+   "voice": "Shot 20. The camera cranes up and back, and a colossal fire dragon coils into the sky, taller than the mountains."
+  },
+  {
+   "n": 26,
+   "from": 58.1,
+   "to": 60.9,
+   "excerpt": "MUST SHOW: the dragon's giant glowing face looms behind them, its flaming body coiled in a full circle framing both fighters.",
+   "highlight": [
+    "giant glowing face",
+    "coiled in a full circle"
+   ],
+   "voice": "Shot 26. Coiled in a full circle turns the dragon's body into a ring of fire that frames the final clash."
+  },
+  {
+   "n": 27,
+   "from": 60.9,
+   "to": 63.1,
+   "excerpt": "High aerial looking down. MUST SHOW: a huge circular shockwave ring of white dust and water spray expanding across the valley floor from the two glowing figures.",
+   "highlight": [
+    "High aerial looking down",
+    "circular shockwave ring"
+   ],
+   "voice": "Shot 27. A high aerial looking down, so the shockwave ring spreads across the whole valley."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

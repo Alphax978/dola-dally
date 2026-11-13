@@ -1,0 +1,76 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 3.6,
+   "excerpt": "Low side tracking shot at sand level, moving left to right with them. His front foot digs into the sand and he pitches forward, hands slamming down in a spray of sand.",
+   "highlight": [
+    "Low side tracking shot at sand level",
+    "pitches forward"
+   ],
+   "voice": "Shot 1. A low side tracking shot at sand level. His foot digs in and he faceplants mid-sprint."
+  },
+  {
+   "n": 2,
+   "from": 3.6,
+   "to": 6.5,
+   "excerpt": "Front tracking shot, camera backing up. MUST SHOW: a column of sand taller than a person bursts straight up beside him as she throws her hand out.",
+   "highlight": [
+    "camera backing up",
+    "column of sand taller than a person",
+    "throws her hand out"
+   ],
+   "voice": "Shot 2. The camera backs up ahead of them, and a column of sand bursts up the moment she throws her hand out."
+  },
+  {
+   "n": 2,
+   "from": 6.5,
+   "to": 9.7,
+   "excerpt": "The camera whips right to follow as he crashes face-first into the sand in a cloud of dust, rolls, and ends on hands and knees, suit coated in sand.",
+   "highlight": [
+    "whips right to follow",
+    "face-first into the sand",
+    "suit coated in sand"
+   ],
+   "voice": "The camera whips right to follow him. Suit coated in sand sells the comedy of the crash."
+  },
+  {
+   "n": 3,
+   "from": 11.5,
+   "to": 14.7,
+   "excerpt": "Wide, low angle. MUST SHOW: a huge transparent mass of sea water lifts out of the ocean and flies through the air, a glassy curling sheet hanging in the sky.",
+   "highlight": [
+    "Wide, low angle",
+    "huge transparent mass of sea water",
+    "glassy curling sheet"
+   ],
+   "voice": "Shot 3. A wide low angle. A huge glassy sheet of sea water lifts out of the ocean and hangs in the sky."
+  },
+  {
+   "n": 4,
+   "from": 16.0,
+   "to": 20.9,
+   "excerpt": "He stares straight up at it; both stop. The whole water mass slams straight down on him in a crashing white wall, exploding into foam.",
+   "highlight": [
+    "stares straight up at it",
+    "slams straight down on him",
+    "crashing white wall"
+   ],
+   "voice": "Shot 4. He stops and stares straight up. Then the whole wall of water slams straight down on him."
+  },
+  {
+   "n": 5,
+   "from": 20.9,
+   "to": 25.1,
+   "excerpt": "Locked-off low-angle medium shot at sand level: he sits soaked, defeated deadpan. A big lump of wet sand drops onto his head and stays there like a hat.",
+   "highlight": [
+    "Locked-off low-angle medium shot",
+    "defeated deadpan",
+    "like a hat"
+   ],
+   "voice": "Shot 5. A locked-off shot and a deadpan face. The wet sand landing like a hat is the final punchline."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
