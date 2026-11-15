@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0,
+   "to": 2.1,
+   "excerpt": "Extreme close-up pulling back slowly from the skater's face, glowing blue eyes gazing forward.",
+   "highlight": [
+    "Extreme close-up",
+    "pulling back slowly",
+    "glowing blue eyes"
+   ],
+   "voice": "Shot one opens on an intense close-up of her focused eyes before the routine."
+  },
+  {
+   "n": 4,
+   "from": 3.3,
+   "to": 4.0,
+   "excerpt": "Ice-level profile tracking shot of a single white skate boot gliding on steel blade.",
+   "highlight": [
+    "Ice-level profile tracking",
+    "single white skate boot",
+    "steel blade"
+   ],
+   "voice": "Shot four drops right to the ice, tracking the blade slicing across the surface."
+  },
+  {
+   "n": 6,
+   "from": 5.1,
+   "to": 10.8,
+   "excerpt": "Wide orbiting camera tracks the skater into an arabesque spiral and a fast sit spin.",
+   "highlight": [
+    "Wide orbiting camera",
+    "arabesque spiral",
+    "fast sit spin"
+   ],
+   "voice": "Shot six tracks her choreography, sweeping from an arabesque into a tight sit spin."
+  },
+  {
+   "n": 8,
+   "from": 11.6,
+   "to": 18.4,
+   "excerpt": "Wide dynamic tracking shot as she launches into technical jumps and glides backward into a final pose.",
+   "highlight": [
+    "Wide dynamic tracking shot",
+    "technical jumps",
+    "final pose"
+   ],
+   "voice": "Shot eight captures the jump sequence, gliding backward into her finishing stance."
+  },
+  {
+   "n": 9,
+   "from": 18.4,
+   "to": 20.1,
+   "excerpt": "Medium close-up of the skater exhaling, lifting her head, and smiling with her hand over her heart.",
+   "highlight": [
+    "Medium close-up",
+    "smiling warmly",
+    "hand over her heart"
+   ],
+   "voice": "Shot nine cuts to her face as she smiles and bows to the cheering crowd."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
