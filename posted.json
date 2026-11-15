@@ -877,6 +877,27 @@
   "post_id": "2121993442532217139",
   "slug": "anime-figure-skating-video-prompt-13799",
   "posted_at": "2026-11-15T21:32:16.263992+05:45",
-  "reply_id": "2121993474052329525"
+  "reply_id": "2121993474052329525",
+  "other": {
+   "youtube": {
+    "id": "V-jpPclgBCw",
+    "url": "https://youtube.com/shorts/V-jpPclgBCw",
+    "note": " on Mira AI"
+   },
+   "facebook": {
+    "id": "1712274243784576",
+    "url": "https://www.facebook.com/1402835976246648/videos/1712274243784576"
+   },
+   "instagram": {
+    "id": "17888487210626111",
+    "url": "https://www.instagram.com/reel/DfxJEUMEr_5/",
+    "note": ""
+   },
+   "tiktok": {
+    "id": "2026-11-15-2",
+    "url": "https://github.com/Alphax978/dola-dally/releases/download/tiktok-videos/2026-11-15-2.mp4",
+    "note": " (queued for Buffer: Zapier picks it up from the feed within ~15 min)"
+   }
+  }
  }
 }
