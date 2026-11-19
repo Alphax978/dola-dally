@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 3,
+   "from": 2.2,
+   "to": 4.6,
+   "excerpt": "Medium two-shot at seat level, lavender-blue light: the man sleeps as dark veins creep up his neck; she frowns and slides her headphones down. Slow subtle push-in.",
+   "highlight": [
+    "Medium two-shot",
+    "dark veins creep up his neck",
+    "Slow subtle push-in"
+   ],
+   "voice": "Shot 3. A quiet two-shot with a slow push-in. Dark veins creep up his neck while she starts to notice."
+  },
+  {
+   "n": 6,
+   "from": 7.6,
+   "to": 9.8,
+   "excerpt": "Perfectly symmetrical wide shot down the central aisle. Must show: dozens of yellow oxygen masks dropping at once; light shifts from white to flashing emergency red.",
+   "highlight": [
+    "Perfectly symmetrical wide shot",
+    "yellow oxygen masks",
+    "flashing emergency red"
+   ],
+   "voice": "Shot 6. A symmetrical aisle shot. Every oxygen mask drops at once and the cabin flips to emergency red."
+  },
+  {
+   "n": 14,
+   "from": 18.4,
+   "to": 19.7,
+   "excerpt": "Medium close-up, frontal, locked-off: the pilot facing camera, eyes now solid glowing white, face pale with dark veins, instrument lights behind him.",
+   "highlight": [
+    "Medium close-up, frontal, locked-off",
+    "solid glowing white",
+    "instrument lights"
+   ],
+   "voice": "Shot 14. A locked-off frontal close-up. The pilot stares back with solid white eyes, and you know it's over."
+  },
+  {
+   "n": 17,
+   "from": 22.0,
+   "to": 24.3,
+   "excerpt": "Low-angle medium-wide in red light. Must show: she floats weightless above her seat, held by a loose seatbelt, long hair streaming upward, masks and phones floating.",
+   "highlight": [
+    "Low-angle medium-wide",
+    "floats weightless",
+    "long hair streaming upward"
+   ],
+   "voice": "Shot 17. A low angle in red light. The dive makes her float, hair streaming upward, debris drifting around her."
+  },
+  {
+   "n": 20,
+   "from": 27.6,
+   "to": 29.8,
+   "excerpt": "Locked-off extreme wide of the night city. Must show: a massive orange fireball erupts behind the mountain ridge and swells into a mushroom of flame.",
+   "highlight": [
+    "Locked-off extreme wide",
+    "massive orange fireball",
+    "mushroom of flame"
+   ],
+   "voice": "Shot 20. A still, extreme wide of the city. Then a massive fireball rises behind the mountains."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
