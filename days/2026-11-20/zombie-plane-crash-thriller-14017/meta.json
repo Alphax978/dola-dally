@@ -1,0 +1,43 @@
+{
+  "url": "https://youmind.com/video-prompts/zombie-plane-crash-thriller-14017",
+  "source": "youmind",
+  "slug": "zombie-plane-crash-thriller-14017",
+  "title": "Zombie Protocol Plane Crash",
+  "video_url": "https://cms-assets.youmind.com/media/1795067572267_boj5rk_Zombie-Thriller-Airplane-Crash-Prompt.mp4",
+  "x_post": "https://x.com/doctorwasif/status/2123282204507926713",
+  "wm_flag": "{'band': '0.6-0.8', 'score': 34.7, 'edges': (0.0, 0, 0.0), 'still': (0.0035, 3, 0.055), 'hit': True, 'motion': 38.8}",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 30.14,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    1.08,
+    2.17,
+    4.62,
+    7.62,
+    9.83,
+    12.17,
+    13.12,
+    14.0,
+    15.25,
+    16.04,
+    17.42,
+    18.38,
+    19.67,
+    20.92,
+    21.96,
+    24.25,
+    27.62,
+    29.75
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}

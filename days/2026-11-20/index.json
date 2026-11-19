@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-20",
+  "videos": [
+    {
+      "slug": "zombie-plane-crash-thriller-14017",
+      "title": "Zombie Protocol Plane Crash",
+      "url": "https://youmind.com/video-prompts/zombie-plane-crash-thriller-14017",
+      "source": "youmind",
+      "duration": 30.14,
+      "dir": "days/2026-11-20/zombie-plane-crash-thriller-14017",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "train-fight-supernatural-action-14020",
+      "title": "Photorealistic Train Fight Supernatural Action",
+      "url": "https://youmind.com/video-prompts/train-fight-supernatural-action-14020",
+      "source": "youmind",
+      "duration": 30.12,
+      "dir": "days/2026-11-20/train-fight-supernatural-action-14020",
+      "user_pick": true,
+      "pick_order": 2
+    }
+  ],
+  "auto_fill": false
+}
