@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-25",
+  "videos": [
+    {
+      "slug": "pink-hair-street-food-story-14125",
+      "title": "Pink Hair Street Food Story",
+      "url": "https://youmind.com/video-prompts/pink-hair-street-food-story-14125",
+      "source": "youmind",
+      "duration": 25.82,
+      "dir": "days/2026-11-25/pink-hair-street-food-story-14125",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "paris-cinematic-action-sequence-14142",
+      "title": "Cinematic Paris Action Sequence Prompt",
+      "url": "https://youmind.com/video-prompts/paris-cinematic-action-sequence-14142",
+      "source": "youmind",
+      "duration": 30.08,
+      "dir": "days/2026-11-25/paris-cinematic-action-sequence-14142",
+      "user_pick": true,
+      "pick_order": 2
+    }
+  ],
+  "auto_fill": false
+}

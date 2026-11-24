@@ -1,0 +1,34 @@
+{
+  "url": "https://youmind.com/video-prompts/pink-hair-street-food-story-14125",
+  "source": "youmind",
+  "slug": "pink-hair-street-food-story-14125",
+  "title": "Pink Hair Street Food Story",
+  "video_url": "https://cms-assets.youmind.com/media/1795330231168_agdc1a_Pink-Hair-Street-Food-Story.mp4",
+  "x_post": "https://x.com/AizaAi12/status/2124349863022502284",
+  "wm_flag": "{'band': '0.0-0.2', 'score': 32.3, 'edges': (0.0001, 0, 0.0), 'still': (0.0082, 6, 0.303), 'hit': True, 'motion': 46.8}",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 25.82,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    2.88,
+    6.17,
+    8.17,
+    9.0,
+    14.46,
+    17.46,
+    19.71,
+    21.88,
+    23.42
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}
