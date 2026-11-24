@@ -298,7 +298,7 @@ def cross_post(key, job, video, entry):
             ow, oh = _size(original if os.path.exists(original) else video)
             log(f"[{key}] " + ("Already 9:16: sending the original as is" if oh / ow >= 1.7
                                else f"Made a 9:16 version (black bars) from the {ow}x{oh} original")
-                + "; Facebook gets the original shape")
+                + " for YouTube, Facebook and Instagram")
         except Exception as e:  # never lose the post over the reframe
             log(f"[{key}] Couldn't make the 9:16 version ({e}); posting the original shape")
             tall = video
@@ -322,7 +322,7 @@ def cross_post(key, job, video, entry):
             return out
 
         # X keeps the original clip. Platforms in breakdown.txt get the breakdown video; the rest get the clips
-        # (Facebook's clip is the original shape, which fills the player on PC and phones).
+        # (the 9:16 version).
         entry["other"] = post_all(tall, texts, entry.get("other"), job["meta"].get("video_url"),
                                   log=lambda m: log(f"[{key}] {m}"), wide=video,
                                   breakdown=breakdown_video, breakdown_for=breakdown_platforms())

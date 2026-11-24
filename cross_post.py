@@ -364,10 +364,19 @@ def post_all(video, t, done=None, video_url=None, log=print, wide=None, breakdow
         try:
             bv = breakdown_video() if breakdown and name in breakdown_for else None
             if name == "instagram":
-                res = (instagram(bv, t, made.get("url"), prefer_link=True) if bv
-                       else instagram(video, t, video_url))
+                if bv:
+                    res = instagram(bv, t, made.get("url"), prefer_link=True)
+                else:  # the 9:16 clip, by a public link to that same file (direct uploads often fail)
+                    link = None
+                    if os.environ.get("GITHUB_ACTIONS"):
+                        try:
+                            import buffer_feed
+                            link = buffer_feed.upload(video, f"{t.get('key') or 'video'}-vertical.mp4")
+                        except Exception as e:
+                            log(f"(couldn't make a public link for the 9:16 clip: {str(e)[:200]})")
+                    res = instagram(video, t, link, prefer_link=True) if link else instagram(video, t, video_url)
             elif name == "facebook":
-                res = facebook(bv or wide or video, t)
+                res = facebook(bv or video, t)  # the 9:16 clip (or the breakdown, if Facebook is in breakdown.txt)
             else:
                 res = POSTERS[name](bv or video, t)
             done[name] = res
