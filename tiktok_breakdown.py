@@ -360,6 +360,9 @@ def segment(src, has_audio, start, length, out_dur, png, layout, size, out, voic
     if layout == "top":
         v = (f"{clip},scale={cw}:{ch},setsar=1[fg];color=c=0x0C0C10:s={W}x{H}:r={FPS}:d={out_dur}[bg];"
              f"[bg][fg]overlay={(W - cw) // 2}:{CLIP_TOP}:shortest=1[v0]")
+    elif layout == "black":  # the clip centered on plain black (the same 9:16 look as YouTube/Facebook/Instagram)
+        v = (f"{clip},scale={cw}:{ch},setsar=1[fg];color=c=black:s={W}x{H}:r={FPS}:d={out_dur}[bg];"
+             f"[bg][fg]overlay={(W - cw) // 2}:{(H - ch) // 2}:shortest=1[v0]")
     else:  # the clip centered on a blurred, darkened copy of itself
         v = (f"{clip},split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},"
              f"boxblur=30:3,eq=brightness=-0.2,setsar=1[bg];[b]scale={cw}:{ch},setsar=1[fg];"
@@ -461,11 +464,11 @@ def build(day, key, out_path, src=None, base=None):
 
     segs = []
     png = os.path.join(tmp, "caption.png")
-    overlay_caption(cap_text, cy, png, center[1], teaser="Wait for the ending...")
-    segs.append(("clip", 0, dur, round(dur, 2), png, "center", center, None, 1.0, 1.0))
+    canvas().save(png)  # no text over the clip: the same plain 9:16 look as YouTube/Facebook/Instagram
+    segs.append(("clip", 0, dur, round(dur, 2), png, "black", center, None, 1.0, 1.0))
     png = os.path.join(tmp, "caption_end.png")
-    overlay_caption(cap_text, cy, png)  # the clip is over: no teaser while the model line is read
-    segs.append(("made", last_picture(src, dur), 0.05, made_dur, png, "center", center, made_vo[0], 0.0, 1.0))
+    canvas().save(png)  # still no text while the model line is read
+    segs.append(("made", last_picture(src, dur), 0.05, made_dur, png, "black", center, made_vo[0], 0.0, 1.0))
     for i, p in enumerate(parts):
         png = os.path.join(tmp, f"part{i}.png")
         overlay_shot(p, top[1], png)
