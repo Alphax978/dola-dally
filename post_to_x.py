@@ -514,4 +514,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except BaseException as e:  # show the real reason on the run page (the full log isn't always readable)
+        if os.environ.get("GITHUB_ACTIONS") and not (isinstance(e, SystemExit) and not e.code):
+            import traceback
+            tb = traceback.format_exc().strip().splitlines()
+            where = " | ".join(l.strip() for l in tb[-6:])
+            print(f"::error title=Posting crashed::{type(e).__name__}: {str(e)[:300]} || {where[:600]}", flush=True)
+        raise
