@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-26",
+  "videos": [
+    {
+      "slug": "gym-shadow-battle-sequence-14127",
+      "title": "Gymnasium Shadow Battle Sequence",
+      "url": "https://youmind.com/video-prompts/gym-shadow-battle-sequence-14127",
+      "source": "youmind",
+      "duration": 30.19,
+      "dir": "days/2026-11-26/gym-shadow-battle-sequence-14127",
+      "user_pick": true,
+      "pick_order": 1
+    },
+    {
+      "slug": "winter-academy-anime-snow-fight-13846",
+      "title": "Winter Academy Snowball Fight Anime Prompt",
+      "url": "https://youmind.com/video-prompts/winter-academy-anime-snow-fight-13846",
+      "source": "youmind",
+      "duration": 20.11,
+      "dir": "days/2026-11-26/winter-academy-anime-snow-fight-13846",
+      "user_pick": true,
+      "pick_order": 2
+    }
+  ],
+  "auto_fill": false
+}

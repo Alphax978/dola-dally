@@ -1,0 +1,47 @@
+{
+  "url": "https://youmind.com/video-prompts/winter-academy-anime-snow-fight-13846",
+  "source": "youmind",
+  "slug": "winter-academy-anime-snow-fight-13846",
+  "title": "Winter Academy Snowball Fight Anime Prompt",
+  "video_url": "https://cms-assets.youmind.com/media/1794639516619_tu9g2c_Winter-Academy-Snowball-Fight-Anime-Prompt.mp4",
+  "x_post": "https://x.com/AyeshaEvie/status/2121465762556633423",
+  "wm_flag": "{'band': '0.8-1.0', 'score': 27.4, 'edges': (0.0027, 9, 0.745), 'still': (0.0, 0, 0.0), 'hit': True, 'motion': 40.2}",
+  "user_pick": true,
+  "pick_order": 2,
+  "duration": 20.11,
+  "width": 852,
+  "height": 478,
+  "cuts": [
+    1.54,
+    2.38,
+    2.54,
+    2.88,
+    4.12,
+    5.38,
+    6.71,
+    8.04,
+    8.88,
+    8.92,
+    10.29,
+    10.33,
+    11.04,
+    12.96,
+    14.21,
+    14.83,
+    15.38,
+    15.79,
+    16.12,
+    16.58,
+    17.21,
+    18.38
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}
