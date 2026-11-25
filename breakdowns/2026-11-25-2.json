@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 3,
+   "from": 1.6,
+   "to": 4.1,
+   "excerpt": "Low tracking shot just behind the spinning blade as it skims wet asphalt. Must show: the blade centred; a little girl in a yellow raincoat blows up a pink balloon until it hides her face.",
+   "highlight": [
+    "Low tracking shot",
+    "just behind the spinning blade",
+    "yellow raincoat"
+   ],
+   "voice": "Shot 3. The camera rides right behind the blade, low over the wet road, straight at the pink balloon."
+  },
+  {
+   "n": 7,
+   "from": 9.0,
+   "to": 11.0,
+   "excerpt": "Interior side view inside the bus: the blade punches through the window. Must show: a radial spiderweb of cracks and flying white shards; a passenger covers her face.",
+   "highlight": [
+    "Interior side view",
+    "radial spiderweb of cracks",
+    "flying white shards"
+   ],
+   "voice": "Shot 7. We cut inside the bus. The blade punches through the glass in a perfect spiderweb of cracks."
+  },
+  {
+   "n": 10,
+   "from": 12.5,
+   "to": 14.2,
+   "excerpt": "Low frontal push-in: a figure in a red hood charges with a blazing ring of fire; the blade flies through its centre and the camera follows, flames washing the frame.",
+   "highlight": [
+    "Low frontal push-in",
+    "blazing ring of fire",
+    "camera follows"
+   ],
+   "voice": "Shot 10. A ring of fire erupts, and the camera dives straight through it with the blade."
+  },
+  {
+   "n": 15,
+   "from": 19.4,
+   "to": 21.0,
+   "excerpt": "The orange balloon bursts into shreds, revealing far down the cobbled alley a blonde girl sitting on a rattan chair, looking at her phone.",
+   "highlight": [
+    "orange balloon bursts",
+    "cobbled alley",
+    "rattan chair"
+   ],
+   "voice": "Shot 15. The second balloon pops, and the reveal: the girl was waiting at the end of the alley the whole time."
+  },
+  {
+   "n": 16,
+   "from": 21.0,
+   "to": 25.0,
+   "excerpt": "Medium frontal shot, locked-off: without looking up from her phone she raises one finger and the blade lands on her fingertip, still spinning. Must show: blade balanced flat.",
+   "highlight": [
+    "locked-off",
+    "without looking up",
+    "lands on her fingertip"
+   ],
+   "voice": "Shot 16. A calm locked-off shot. She catches the blade on one fingertip, without even looking up from her phone."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

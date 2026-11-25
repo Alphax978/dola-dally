@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 2.9,
+   "excerpt": "Medium shot across the grill, locked-off. She pours batter from a dented kettle; a grey-skinned zombie grabs her and she flips him over her back without looking up.",
+   "highlight": [
+    "locked-off",
+    "flips him over her back",
+    "without looking up"
+   ],
+   "voice": "Shot 1. A locked-off shot across the grill. She flips the zombie over her shoulder without even looking up."
+  },
+  {
+   "n": 3,
+   "from": 6.2,
+   "to": 8.2,
+   "excerpt": "Wide shot from the road side at knee height. She crouches by the cooler; two zombies charge from left and right and slam into each other above her head.",
+   "highlight": [
+    "Wide shot",
+    "knee height",
+    "slam into each other above her head"
+   ],
+   "voice": "Shot 3. A low wide shot. She just crouches, and the two zombies crash into each other right above her."
+  },
+  {
+   "n": 5,
+   "from": 9.0,
+   "to": 14.5,
+   "excerpt": "Medium side-angle over the grill: she spoons red-bean paste into the moulds and flips out golden pastries. Must show: two zombies wrestling out of focus behind her.",
+   "highlight": [
+    "Medium side-angle",
+    "golden pastries",
+    "wrestling out of focus"
+   ],
+   "voice": "Shot 5. The pastries come out golden, while two zombies wrestle in the blurry background. She never turns around."
+  },
+  {
+   "n": 6,
+   "from": 14.5,
+   "to": 17.5,
+   "excerpt": "Wide frontal shot, she stands dead centre holding the paper bag; two zombies lunge from both sides and crash head-first into each other. She does not blink.",
+   "highlight": [
+    "Wide frontal shot",
+    "dead centre",
+    "She does not blink"
+   ],
+   "voice": "Shot 6. A symmetrical wide shot. Two zombies crash into each other in front of her, and she doesn't move at all."
+  },
+  {
+   "n": 10,
+   "from": 23.4,
+   "to": 25.8,
+   "excerpt": "Medium two-shot, frontal, warm amber basement: she and the older girl eat pastries side by side; she breaks into a small satisfied smile.",
+   "highlight": [
+    "Medium two-shot",
+    "warm amber",
+    "small satisfied smile"
+   ],
+   "voice": "Shot 10. The warm amber basement. The whole mission was just to feed the kids, and she finally smiles."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
