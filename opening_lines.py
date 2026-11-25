@@ -15,6 +15,16 @@ OPENING_LINES = [  # shown above the clip; one per video, rotating day by day
 ]
 
 
+EMOJIS = ["🔥", "⚡", "🤯", "💥", "✨", "🎬", "😱", "👀"]  # added to caption line 1, rotating too
+
+
+def caption_line(day, key):
+    """Caption line 1 on every site: the rotating line + a rotating emoji, e.g. "This AI video looks unreal 🔥".
+    (The line shown on the TikTok video itself has no emoji: the video font can't draw them.)"""
+    n = datetime.date.fromisoformat(day).toordinal() * 2 + (int(key) if str(key).isdigit() else 0)
+    return opening_line(day, key).rstrip(".") + " " + EMOJIS[n % len(EMOJIS)]
+
+
 def opening_line(day, key):
     """day: YYYY-MM-DD, key: 1 or 2 (that day's video)."""
     n = datetime.date.fromisoformat(day).toordinal() * 2 + (int(key) if str(key).isdigit() else 0)

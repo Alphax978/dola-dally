@@ -90,11 +90,11 @@ def cut(text, limit, measure=len):
     return text.rstrip(" ,.;:-\n") + "…"
 
 
-def texts(hook, credit, prompt, prompt_short):
+def texts(hook, credit, prompt, prompt_short, title=None):
     """Title + descriptions for each platform."""
     hook = clean_hook(hook)
     credit = f"\n\n{credit}" if credit else ""  # empty: no credit line (credits are added by hand in comments)
-    title = cut(re.sub(r"[<>]", "", hook.split("\n")[0]) or "AI video of the day", 90)  # first line only
+    title = cut(re.sub(r"[<>]", "", (title or hook).split("\n")[0]) or "AI video of the day", 90)  # first line only
     nb = lambda s: len(s.encode("utf-8"))
     # YouTube: description max 5000 bytes, no angle brackets
     yt_head = f"{hook}{credit}\n\nPrompt to recreate it:\n"
