@@ -464,10 +464,10 @@ def build(day, key, out_path, src=None, base=None):
 
     segs = []
     png = os.path.join(tmp, "caption.png")
-    overlay_caption(cap_text, cy, png, center[1], teaser="Wait for the ending...")
+    canvas().save(png)  # no text over the clip: the same plain 9:16 look as YouTube/Facebook/Instagram
     segs.append(("clip", 0, dur, round(dur, 2), png, "black", center, None, 1.0, 1.0))
     png = os.path.join(tmp, "caption_end.png")
-    overlay_caption(cap_text, cy, png)  # the clip is over: no teaser while the model line is read
+    canvas().save(png)  # still no text while the model line is read
     segs.append(("made", last_picture(src, dur), 0.05, made_dur, png, "black", center, made_vo[0], 0.0, 1.0))
     for i, p in enumerate(parts):
         png = os.path.join(tmp, f"part{i}.png")
