@@ -108,14 +108,20 @@ def x_len(text):
     return sum(2 if ord(c) > 0x2FFF else 1 for c in text)
 
 
-def main_text(job):
-    """3 lines: hook / line naming the model / Prompt: ⤵️"""
-    tail = "\n\nPrompt: ⤵️"
+def head_lines(job):
+    """Caption lines 1-2 on every site: the rotating line + emoji, then only the model name.
+    (If the model isn't known, line 2 stays the writer's line.)"""
     lines = caption_lines(job)
-    if job.get("date") and str(job.get("slot", "")).isdigit():  # line 1 on X: the same rotating line as the video
-        from opening_lines import opening_line
-        lines = [opening_line(job["date"], job["slot"])] + lines[1:]
-    caption = "\n\n".join(lines)
+    if job.get("date") and str(job.get("slot", "")).isdigit():
+        from opening_lines import caption_line
+        lines = [caption_line(job["date"], job["slot"])] + ([job["model"]] if job.get("model") else lines[1:])
+    return lines
+
+
+def main_text(job):
+    """3 lines: rotating line + emoji / model name / Prompt: ⤵️"""
+    tail = "\n\nPrompt: ⤵️"
+    caption = "\n\n".join(head_lines(job))
     while caption and x_len(caption + tail) > 280:
         caption = caption[: max(0, len(caption) - 10)].rsplit(" ", 1)[0].rstrip(" ,.;:-") + "…"
     return (caption + tail).strip()
@@ -269,8 +275,9 @@ def commit_posted(msg="Posted to X"):
 
 def cross_texts(job):
     from cross_post import texts
-    return texts("\n".join(caption_lines(job)), "",  # hook + model line; no credit (credits go in comments by hand)
-                 public_prompt(job["prompt"]), public_prompt(job.get("prompt_short") or job["prompt"]))
+    return texts("\n".join(head_lines(job)), "",  # line 1 + model name; no credit (credits go in comments by hand)
+                 public_prompt(job["prompt"]), public_prompt(job.get("prompt_short") or job["prompt"]),
+                 title=caption_lines(job)[0])  # the YouTube title stays the writer's line about the video
 
 
 def needs_cross(entry):
