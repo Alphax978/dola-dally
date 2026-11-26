@@ -1,0 +1,65 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 1.9,
+   "excerpt": "Wide, low locked-off shot from court level: the girl stands perfectly still in the centre of the court as three thugs close in from both sides.",
+   "highlight": [
+    "Wide, low locked-off shot",
+    "stands perfectly still",
+    "close in from both sides"
+   ],
+   "voice": "Shot 1. A low locked-off wide. She stands perfectly still while three thugs close in."
+  },
+  {
+   "n": 12,
+   "from": 10.9,
+   "to": 12.4,
+   "excerpt": "Close-up, very slow push-in: hair over her eyes, she lifts her gaze into the lens with a faint smile as black shadow tendrils coil around her right arm.",
+   "highlight": [
+    "very slow push-in",
+    "lifts her gaze into the lens",
+    "black shadow tendrils"
+   ],
+   "voice": "Shot 12. A very slow push-in. She lifts her eyes into the lens as shadow tendrils coil around her arm."
+  },
+  {
+   "n": 13,
+   "from": 12.4,
+   "to": 13.7,
+   "excerpt": "Low tracking shot: she bursts forward across the court, floor planks ripping up and spraying into the air in a wake behind her.",
+   "highlight": [
+    "Low tracking shot",
+    "floor planks ripping up",
+    "in a wake behind her"
+   ],
+   "voice": "Shot 13. A low tracking shot, and the floor rips up in a wake behind her as she charges."
+  },
+  {
+   "n": 19,
+   "from": 18.4,
+   "to": 20.9,
+   "excerpt": "Extreme low angle looking up: she soars mid-air, right fist cocked back trailing shadow tendrils; side view slow motion as her fist slams into his guard.",
+   "highlight": [
+    "Extreme low angle",
+    "fist cocked back",
+    "side view slow motion"
+   ],
+   "voice": "Shot 19. An extreme low angle as she leaps, then a slow-motion side view as the shadow fist lands."
+  },
+  {
+   "n": 21,
+   "from": 20.9,
+   "to": 21.9,
+   "excerpt": "Top-down shot: he is driven through the hardwood and a jagged starburst crater explodes outward, planks snapping up, black smoke and dust blasting out.",
+   "highlight": [
+    "Top-down shot",
+    "jagged starburst crater",
+    "black smoke and dust"
+   ],
+   "voice": "Shot 21. Straight top-down. He goes through the floor in a starburst crater of snapped planks."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}

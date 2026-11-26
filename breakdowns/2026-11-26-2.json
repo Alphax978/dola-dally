@@ -1,0 +1,77 @@
+{
+ "shots": [
+  {
+   "n": 1,
+   "from": 0.0,
+   "to": 1.5,
+   "excerpt": "Low-angle wide: the witch walks calmly through the courtyard; behind her the frozen tiered fountain with icicles, the twins peeking out from behind it, grinning.",
+   "highlight": [
+    "Low-angle wide",
+    "frozen tiered fountain",
+    "peeking out"
+   ],
+   "voice": "Shot 1. A low-angle wide. She walks past the frozen fountain while two twins hide behind it."
+  },
+  {
+   "n": 4,
+   "from": 2.9,
+   "to": 5.4,
+   "excerpt": "The snowball smashes into the back of her shoulder in a burst of snow spray, braid whipping; close-up push-in as her eyes snap open into a cold glare.",
+   "highlight": [
+    "burst of snow spray",
+    "braid whipping",
+    "eyes snap open"
+   ],
+   "voice": "Shot 4. The snowball bursts on her shoulder, then a push-in as her eyes snap open in a glare."
+  },
+  {
+   "n": 7,
+   "from": 6.3,
+   "to": 8.0,
+   "excerpt": "Close side tracking shot at high speed: the witch sprints low and fast, braid streaming behind her, snow streaking past.",
+   "highlight": [
+    "side tracking shot",
+    "sprints low and fast",
+    "braid streaming behind her"
+   ],
+   "voice": "Shot 7. A fast side tracking shot keeps her face sharp while the snow streaks past."
+  },
+  {
+   "n": 11,
+   "from": 11.0,
+   "to": 13.0,
+   "excerpt": "Wide side tracking along a long arcade, roof piled with snow and icicles: the twins race past the columns with the witch close behind.",
+   "highlight": [
+    "Wide side tracking",
+    "roof piled with snow",
+    "icicles"
+   ],
+   "voice": "Shot 11. A wide tracking shot along the arcade, and the snow piled on the roof sets up the ending."
+  },
+  {
+   "n": 15,
+   "from": 15.4,
+   "to": 16.1,
+   "excerpt": "Close-up of the twin, smug and grinning, chin raised, unaware.",
+   "highlight": [
+    "Close-up",
+    "smug and grinning",
+    "unaware"
+   ],
+   "voice": "Shot 15. A smug close-up. He has no idea what is coming."
+  },
+  {
+   "n": 19,
+   "from": 17.2,
+   "to": 20.1,
+   "excerpt": "The whole mass of roof snow slides off in an avalanche and buries the twins; they end up buried to their necks while the witch tugs her gloves tight.",
+   "highlight": [
+    "avalanche",
+    "buried to their necks",
+    "tugs her gloves tight"
+   ],
+   "voice": "Shot 19. The roof avalanche buries them to their necks, and she just tightens her gloves."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
