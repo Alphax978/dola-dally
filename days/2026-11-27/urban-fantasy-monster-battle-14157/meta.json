@@ -1,0 +1,26 @@
+{
+  "url": "https://youmind.com/video-prompts/urban-fantasy-monster-battle-14157",
+  "source": "youmind",
+  "slug": "urban-fantasy-monster-battle-14157",
+  "title": "Urban Fantasy Monster Battle Prompt",
+  "video_url": "https://cms-assets.youmind.com/media/1795589670110_mav08o_Urban-Fantasy-Monster-Battle-Prompt.mp4",
+  "x_post": "https://x.com/laviniavelle/status/2125096392628560268",
+  "user_pick": true,
+  "pick_order": 1,
+  "duration": 30.14,
+  "width": 1280,
+  "height": 720,
+  "cuts": [
+    15.92,
+    27.38
+  ],
+  "frame_grids": [
+    "frames_1.jpg",
+    "frames_2.jpg"
+  ],
+  "text_strips": [
+    "text_1.jpg",
+    "text_2.jpg"
+  ],
+  "model": "Seedance 2.5"
+}
