@@ -1,0 +1,77 @@
+{
+ "shots": [
+  {
+   "n": 2,
+   "from": 1.3,
+   "to": 3.8,
+   "excerpt": "Ground-level front wide, slow push-in: the glass facade behind her explodes in glittering shards and dust, the beast crashes through and lands behind her. She does not move.",
+   "highlight": [
+    "slow push-in",
+    "glittering shards",
+    "She does not move"
+   ],
+   "voice": "Shot 2. A slow push-in while the glass tower explodes behind her. She doesn't even flinch."
+  },
+  {
+   "n": 3,
+   "from": 3.8,
+   "to": 8.8,
+   "excerpt": "Very low angle, tilted dutch frame: the beast reaches a giant clawed hand toward the lens; she dissolves into dark smoke with emerald-green particles, the claw closes on nothing.",
+   "highlight": [
+    "Very low angle",
+    "tilted dutch frame",
+    "dark smoke with emerald-green particles"
+   ],
+   "voice": "Shot 3. A low dutch angle makes the beast huge. Then she melts into green smoke right under its claw."
+  },
+  {
+   "n": 4,
+   "from": 8.8,
+   "to": 11.3,
+   "excerpt": "Street-level side tracking shot: she sprints low, draws the katana and drops into a crouched lunge, the blade trailing glowing green and cyan energy.",
+   "highlight": [
+    "side tracking shot",
+    "crouched lunge",
+    "glowing green and cyan energy"
+   ],
+   "voice": "Shot 4. A side tracking shot at street level, and the blade leaves a glowing ribbon of green energy."
+  },
+  {
+   "n": 5,
+   "from": 11.3,
+   "to": 13.3,
+   "excerpt": "Low angle, camera swinging upward: she flies high above the street and drives a mid-air flying side kick into the beast's jaw.",
+   "highlight": [
+    "Low angle",
+    "camera swinging upward",
+    "flying side kick"
+   ],
+   "voice": "Shot 5. The camera swings up with her into a flying side kick straight to its jaw."
+  },
+  {
+   "n": 7,
+   "from": 15.9,
+   "to": 20.3,
+   "excerpt": "Low front wide: the beast rears up and slams both fists into the street; the asphalt cracks and a massive wall of dust swallows the frame.",
+   "highlight": [
+    "Low front wide",
+    "slams both fists",
+    "massive wall of dust"
+   ],
+   "voice": "Shot 7. Describing the cracking asphalt and the wall of dust is what gives every hit real weight."
+  },
+  {
+   "n": 10,
+   "from": 27.4,
+   "to": 30.1,
+   "excerpt": "Close-up, shallow depth of field: she holds the katana across her lower face, green smoke curling off the blade, staring straight into the lens.",
+   "highlight": [
+    "shallow depth of field",
+    "katana across her lower face",
+    "staring straight into the lens"
+   ],
+   "voice": "Shot 10. A shallow focus close-up. The blade crosses her face and she stares right into the lens."
+  }
+ ],
+ "outro_voice": "The full prompt is in the caption. Follow Mira AI for a new one every day."
+}
